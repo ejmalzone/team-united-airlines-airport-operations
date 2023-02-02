@@ -2,6 +2,7 @@ import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/passenger.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/extensions.dart';
+import 'package:airportops_frontend/baggage.dart';
 
 void main() {
   runApp(PassengerProfileApp());
@@ -37,7 +38,8 @@ class PassengerProfileApp extends StatelessWidget {
 }
 
 class PassengerProfile extends StatelessWidget {
-  const PassengerProfile({super.key, required this.title, required this.passenger});
+  const PassengerProfile(
+      {super.key, required this.title, required this.passenger});
 
   final String title;
   final Passenger passenger;
