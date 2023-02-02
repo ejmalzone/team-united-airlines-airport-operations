@@ -1,3 +1,4 @@
+import 'enums.dart';
 
 class Passenger {
   final String nameFirst;
@@ -9,6 +10,8 @@ class Passenger {
   final DateTime flightDestinationDate;
   final String citizenship;
   final String seat;
+
+  Status status = Status.unboarded;
 
   Passenger(
       this.nameFirst,
