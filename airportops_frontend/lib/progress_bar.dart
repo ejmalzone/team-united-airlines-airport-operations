@@ -1,22 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProgressBar extends StatefulWidget {
-  const ProgressBar({
-    super.key,
-    required this.size
-  });
-
-  final Size size;
-
-  @override
-  State<ProgressBar> createState() {
-    return ProgressBarState(size: size);
-  }
-}
-
-class ProgressBarState extends State<ProgressBar> {
-  ProgressBarState({required this.size});
+class ProgressBar extends StatelessWidget {
+  ProgressBar({required this.size});
 
   final Size size;
 
@@ -24,37 +10,37 @@ class ProgressBarState extends State<ProgressBar> {
   double _maxProgress = 1.0;
 
   void setCurrentProgress(double progress) {
-    setState(() {
-      if (progress < 0.0) {
-        _currentProgress = 0.0;
-      } else if (progress > _maxProgress) {
-        _currentProgress = _maxProgress;
-      } else {
-        _currentProgress = progress;
-      }
-    });
+    if (progress < 0.0) {
+      _currentProgress = 0.0;
+    } else if (progress > _maxProgress) {
+      _currentProgress = _maxProgress;
+    } else {
+      _currentProgress = progress;
+    }
   }
 
   void setMaxProgress(double newMax) {
-    setState(() {
-      _maxProgress = newMax;
-      setCurrentProgress(_currentProgress);
-    });
+    _maxProgress = newMax;
+    setCurrentProgress(_currentProgress);
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       size: size,
-      painter: ProgressPainter(state: this)
+      painter: ProgressPainter(progress: _currentProgress)
     );
   }
 }
 
 class ProgressPainter extends CustomPainter {
-  ProgressPainter({required this.state});
+  ProgressPainter({required this.progress});
 
-  final ProgressBarState state;
+  double progress;
+
+  set setProgress(double p) {
+    progress = p;
+  }
 
   Color progressColor(double prog) {
     if (prog < 0.3) {
@@ -70,17 +56,15 @@ class ProgressPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var progress = state._currentProgress / state._maxProgress;
-
     var paint1 = Paint()
-      ..color = progressColor(state._currentProgress)
+      ..color = progressColor(progress)
       ..style = PaintingStyle.fill;
 
     var undone = Paint()
       ..color = Colors.blueGrey
       ..style = PaintingStyle.fill;
 
-    double fill = state._currentProgress * size.width;
+    double fill = progress * size.width;
 
     // background rect
     canvas.drawRect(Offset(fill, 0) & Size((1.0 - progress) * size.width, size.height), undone);
