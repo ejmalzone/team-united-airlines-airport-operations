@@ -4,6 +4,7 @@ import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/events.dart';
 import 'package:airportops_frontend/passenger.dart';
+import 'package:airportops_frontend/progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/baggage.dart';
@@ -33,27 +34,32 @@ class HomeRoute extends StatelessWidget {
         title: const Text('Home Page'),
       ),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          ElevatedButton(
-            child: const Text('Passenger Check-in'),
-            onPressed: () {
-              Navigator.pushNamed(context, '/passenger');
-            },
-          ),
-          ElevatedButton(
-              child: const Text('Baggage Information'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              child: const Text('Passenger Check-in'),
               onPressed: () {
-                Navigator.pushNamed(context, '/baggage');
-              }),
-          ElevatedButton(
-              child: const Text('Admin Panel'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/admin');
-              }),
-        ],
-      )),
+                Navigator.pushNamed(context, '/passenger');
+              },
+            ),
+            SizedBox(height: 8),
+            ElevatedButton(
+                child: const Text('Baggage Information'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/baggage');
+                }),
+            SizedBox(height: 8),
+            ElevatedButton(
+                child: const Text('Admin Panel'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/admin');
+                }),
+            SizedBox(height: 8),
+            ProgressBar(size: Size(400, 150))
+          ],
+        )
+      )
     );
   }
 }
@@ -69,7 +75,6 @@ class BaggageRoute extends StatelessWidget {
     );
   }
 }
-
 
 class PassengerProfileApp extends StatelessWidget {
   PassengerProfileApp({super.key});
@@ -119,28 +124,27 @@ class PassengerProfile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Card(
-                child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 5.0, horizontal: 16.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Column(children: <Widget>[
-                            Text(passenger.fullName,
-                                textAlign: TextAlign.left,
-                                style: const TextStyle(fontSize: 24)),
-                            Text(
-                              '${passenger.birthday.toString().split(' ')[0]} | ${passenger.citizenship}',
-                              textAlign: TextAlign.justify,
-                              style: const TextStyle(fontSize: 12),
-                            )
-                          ]),
-                          Text(passenger.status.name.titleCase(),
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                  fontSize: 36, color: passenger.status.color))
-                        ]))),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 16.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(children: <Widget>[
+                        Text(passenger.fullName,
+                            textAlign: TextAlign.left,
+                            style: const TextStyle(fontSize: 24)),
+                        Text(
+                          '${passenger.birthday.toString().split(' ')[0]} | ${passenger.citizenship}',
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(fontSize: 12),
+                        )
+                      ]),
+                      Text(passenger.status.name.titleCase(),
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                              fontSize: 36, color: passenger.status.color))
+                    ]))),
           ],
         ),
       ),
