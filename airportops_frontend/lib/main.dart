@@ -1,4 +1,8 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_print, non_constant_identifier_names
+
+import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/enums.dart';
+import 'package:airportops_frontend/events.dart';
 import 'package:airportops_frontend/passenger.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/extensions.dart';
@@ -14,7 +18,7 @@ void main() {
       '/': (context) => const HomeRoute(),
       '/passenger': (context) => PassengerProfileApp(),
       '/baggage': (context) => const BaggageRoute(),
-      '/admin': (context) => const AdminRoute(),
+      '/admin': (context) => AdminRoute(),
     },
   ));
 }
@@ -66,17 +70,6 @@ class BaggageRoute extends StatelessWidget {
   }
 }
 
-class AdminRoute extends StatelessWidget {
-  const AdminRoute({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Admin Page"),
-      ),
-    );
-  }
-}
 
 class PassengerProfileApp extends StatelessWidget {
   PassengerProfileApp({super.key});
