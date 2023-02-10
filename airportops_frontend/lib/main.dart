@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/passenger.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ void main() {
       '/passenger': (context) => PassengerProfileApp(),
       '/baggage': (context) => const BaggageRoute(),
       '/admin': (context) => const AdminRoute(),
+      '/newPassenger': (context) => const NewPassenger(),
     },
   ));
 }
@@ -48,9 +51,70 @@ class HomeRoute extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/admin');
               }),
+          ElevatedButton(
+            child: const Text('New Passenger'),
+            onPressed: () {
+              Navigator.pushNamed(context, '/newPassenger');
+            },
+          )
         ],
       )),
     );
+  }
+}
+
+class NewPassenger extends StatefulWidget {
+  const NewPassenger({Key? key}) : super(key: key);
+
+  @override
+  State<NewPassenger> createState() => _NewPassengerState();
+}
+
+class _NewPassengerState extends State<NewPassenger> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter First Name',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text.';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter Last Name',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text.';
+                    }
+                    return null;
+                  },
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // Process data
+                        }
+                      },
+                      child: const Text('Submit'),
+                    ))
+              ],
+            )));
   }
 }
 
