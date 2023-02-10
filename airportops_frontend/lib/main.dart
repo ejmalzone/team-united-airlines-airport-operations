@@ -90,6 +90,7 @@ class _NewPassengerState extends State<NewPassenger> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(title: const Text("New Passenger Page")),
         body: Form(
             key: _formKey,
             child: Column(
