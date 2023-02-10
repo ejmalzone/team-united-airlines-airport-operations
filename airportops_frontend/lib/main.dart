@@ -7,6 +7,7 @@ import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/events.dart';
 import 'package:airportops_frontend/passenger.dart';
 import 'package:airportops_frontend/progress_bar.dart';
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/baggage.dart';
@@ -110,6 +111,71 @@ class _NewPassengerState extends State<NewPassenger> {
                 TextFormField(
                   decoration: const InputDecoration(
                     hintText: 'Enter Last Name',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text.';
+                    }
+                    return null;
+                  },
+                ),
+                DateTimeFormField(
+                    decoration: const InputDecoration(
+                        labelText: 'Select your birthday'),
+                    mode: DateTimeFieldPickerMode.date,
+                    onDateSelected: (DateTime value) {
+                      print(value);
+                    }),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter Flight Source',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text.';
+                    }
+                    return null;
+                  },
+                ),
+                DateTimeFormField(
+                    decoration: const InputDecoration(
+                        labelText: 'Select Flight Source Date'),
+                    mode: DateTimeFieldPickerMode.date,
+                    onDateSelected: (DateTime value) {
+                      print(value);
+                    }),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter Flight Destination',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text.';
+                    }
+                    return null;
+                  },
+                ),
+                DateTimeFormField(
+                    decoration: const InputDecoration(
+                        labelText: 'Select Flight Destination Date'),
+                    mode: DateTimeFieldPickerMode.date,
+                    onDateSelected: (DateTime value) {
+                      print(value);
+                    }),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter Country of Citizenship',
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text.';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter Seat No.',
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
