@@ -11,6 +11,7 @@ import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/baggage.dart';
+import 'package:airportops_frontend/database.dart';
 
 /*void main() {
   runApp(PassengerProfileApp());
@@ -24,9 +25,33 @@ void main() {
       '/baggage': (context) => const BaggageRoute(),
       '/admin': (context) => AdminRoute(),
       '/newPassenger': (context) => const NewPassenger(),
-      '/bars': (context) => ProgressBarRoute()
+      '/bars': (context) => ProgressBarRoute(),
+      '/dbTesting': (context) => DatabaseRoute(),
     },
   ));
+}
+
+class DatabaseRoute extends StatelessWidget {
+  const DatabaseRoute({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Db testing page'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () async {
+            print('Testing: ');
+            var req = await testRequest();
+            print(req);
+          },
+          child: const Text('Submit'),
+        ),
+      ),
+    );
+  }
 }
 
 class HomeRoute extends StatelessWidget {
@@ -71,6 +96,11 @@ class HomeRoute extends StatelessWidget {
                 child: const Text('Progress Bar Demo'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/bars');
+                }),
+            ElevatedButton(
+                child: const Text('Database Testing'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/dbTesting');
                 }),
             SizedBox(height: 8),
           ],
