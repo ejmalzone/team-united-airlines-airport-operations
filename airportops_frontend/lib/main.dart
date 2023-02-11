@@ -1,7 +1,3 @@
-import 'dart:html';
-
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, avoid_print, non_constant_identifier_names
-
 import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/events.dart';
@@ -13,9 +9,6 @@ import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/baggage.dart';
 import 'package:airportops_frontend/database.dart';
 
-/*void main() {
-  runApp(PassengerProfileApp());
-}*/
 void main() {
   runApp(MaterialApp(
     initialRoute: '/',
@@ -300,9 +293,6 @@ class PassengerProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*appBar: AppBar(
-        title: Text(title, textAlign: TextAlign.center),
-      ),*/
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
