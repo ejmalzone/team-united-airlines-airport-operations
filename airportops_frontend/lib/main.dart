@@ -45,7 +45,7 @@ class DatabaseRoute extends StatelessWidget {
           onPressed: () async {
             print('Testing: ');
             var req = await testRequest();
-            print(req);
+            print(req['data']);
           },
           child: const Text('Submit'),
         ),
