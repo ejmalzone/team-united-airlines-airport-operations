@@ -35,18 +35,11 @@ class EventRoute extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          '${event.Date} | ${event.flight}',
+                          event.Date,
                           style:
                               TextStyle(
                                     fontFamily: 'Open Sans',
                                     fontWeight: FontWeight.normal,
-                                  ),
-                        ),
-                        Text(
-                          'Gate',
-                          style:
-                              TextStyle(
-                                    fontFamily: 'Open Sans',
                                   ),
                         ),
                       ],
@@ -56,7 +49,7 @@ class EventRoute extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${event.flightSource} to ${event.flightDestination}',
+                          'Event Status',
                           style:
                               TextStyle(
                                     fontFamily: 'Open Sans',
@@ -64,21 +57,128 @@ class EventRoute extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                         ),
-                        Text(
-                          event.Gate,
-                          style:
-                              TextStyle(
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                        ),
+                        TextButton(
+                          child: Text('View Competitors >',
+                            style: TextStyle(
+                              fontFamily: 'Open Sans',
+                              color: Color(0xFF00239E),
+                            ),
+                          ),
+                          onPressed: () {
+                            print('Pressed');
+                          }
+                        )
                       ],
                     ),
                   ],
                 ),
               ),
-            )
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          event.numBoarded.toString(),
+                          style:
+                              TextStyle(
+                                    fontFamily: 'Open Sans',
+                                    color: Color(0xFF008525),
+                                    fontSize: 50,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                        ),
+                        Text(
+                          'BOARDED',
+                          style:
+                              TextStyle(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 100,
+                    child: VerticalDivider(
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Container(
+                    width: 100,
+                    height: 100,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          event.numNoShow.toString(),
+                          style:
+                              TextStyle(
+                                    fontFamily: 'Open Sans',
+                                    color: Color(0xFF850000),
+                                    fontSize: 50,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                        ),
+                        Text(
+                          'NO SHOW',
+                          style:
+                              TextStyle(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 100,
+                    child: VerticalDivider(
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Container(
+                    width: 100,
+                    height: 100,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          event.numWrong.toString(),
+                          style:
+                              TextStyle(
+                                    fontFamily: 'Open Sans',
+                                    color: Color(0xFFBCBF14),
+                                    fontSize: 50,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                        ),
+                        Text(
+                          'WRONG',
+                          style:
+                              TextStyle(
+                                    fontFamily: 'Open Sans',
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
