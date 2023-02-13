@@ -34,6 +34,9 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   date_field: ^3.0.0
   requests: ^4.7.0
+  camera:
+  path_provider:
+  path:
     
 
 

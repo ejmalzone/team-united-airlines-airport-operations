@@ -3,25 +3,42 @@ import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/events.dart';
 import 'package:airportops_frontend/passenger.dart';
 import 'package:airportops_frontend/progress_bar.dart';
+import 'package:camera/camera.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/baggage.dart';
 import 'package:airportops_frontend/database.dart';
+import 'package:airportops_frontend/scanning.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
       '/': (context) => const HomeRoute(),
-      '/passenger': (context) => PassengerProfileApp(),
+      '/examplePassenger': (context) => PassengerProfileApp(),
       '/baggage': (context) => const BaggageRoute(),
       '/admin': (context) => AdminRoute(),
       '/newPassenger': (context) => const NewPassenger(),
       '/bars': (context) => ProgressBarRoute(),
       '/dbTesting': (context) => DatabaseRoute(),
+      '/scanning': (context) => ScanRoute(),
     },
   ));
+}
+
+class ScanRoute extends StatelessWidget {
+  const ScanRoute({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Scanning Testing'),
+      ),
+      body: Center(),
+    );
+  }
 }
 
 class DatabaseRoute extends StatelessWidget {
@@ -61,41 +78,49 @@ class HomeRoute extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
-              child: const Text('Passenger Check-in'),
+              child: const Text('Example Passenger'),
               onPressed: () {
-                Navigator.pushNamed(context, '/passenger');
+                Navigator.pushNamed(context, '/examplePassenger');
               },
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             ElevatedButton(
                 child: const Text('Baggage Information'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/baggage');
                 }),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             ElevatedButton(
                 child: const Text('Admin Panel'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/admin');
                 }),
+            const SizedBox(height: 8),
             ElevatedButton(
               child: const Text('New Passenger'),
               onPressed: () {
                 Navigator.pushNamed(context, '/newPassenger');
               },
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             ElevatedButton(
                 child: const Text('Progress Bar Demo'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/bars');
                 }),
+            const SizedBox(height: 8),
             ElevatedButton(
                 child: const Text('Database Testing'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/dbTesting');
                 }),
-            SizedBox(height: 8),
+            ElevatedButton(
+              child: const Text('Scanning Testing'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/scanning');
+              },
+            ),
+            const SizedBox(height: 8),
           ],
         )));
   }
