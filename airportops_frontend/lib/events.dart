@@ -21,9 +21,9 @@ class Event {
       this.numBoarded,
       this.numNoShow,
       this.numWrong,
-      passengers,
-      bags,
-      competitors);
+      this.passengers,
+      this.bags,
+      this.competitors);
 
   String get Date {
     String result = Jiffy(DateTime.now()).format('MMM do yyyy');
