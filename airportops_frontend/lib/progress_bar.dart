@@ -1,53 +1,62 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ProgressBar extends StatelessWidget {
-  ProgressBar({required this.size});
-
+class ProgressBar extends StatefulWidget {
   final Size size;
 
-  double _currentProgress = 0.0;
+  ProgressBar({Key? key, required this.size}) : super(key: key);
+
+  @override
+  ProgressState createState() => ProgressState();
+}
+
+class ProgressState extends State<ProgressBar> {
+  final _currentProgress = ValueNotifier<double>(0.0);
   double _maxProgress = 1.0;
 
-  void setCurrentProgress(double progress) {
-    if (progress < 0.0) {
-      _currentProgress = 0.0;
-    } else if (progress > _maxProgress) {
-      _currentProgress = _maxProgress;
-    } else {
-      _currentProgress = progress;
-    }
+  set currentProgress(double progress) {
+    setState(() {
+      if (progress < 0.0) {
+        _currentProgress.value = 0.0;
+      } else if (progress > _maxProgress) {
+        _currentProgress.value = _maxProgress;
+      } else {
+        _currentProgress.value = progress;
+      }
+    });
   }
 
   void setMaxProgress(double newMax) {
-    _maxProgress = newMax;
-    setCurrentProgress(_currentProgress);
+    setState(() {
+      _maxProgress = newMax;
+      currentProgress = _currentProgress.value;
+    });
+  }
+
+  double get currentProgress {
+    return _currentProgress.value;
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: size,
-      painter: ProgressPainter(progress: _currentProgress)
+        size: widget.size,
+        painter: ProgressPainter(repaint: _currentProgress)
     );
   }
 }
 
 class ProgressPainter extends CustomPainter {
-  ProgressPainter({required this.progress});
+  final ValueNotifier<double> repaint;
 
-  double progress;
-
-  set setProgress(double p) {
-    progress = p;
-  }
+  ProgressPainter({required this.repaint}) : super(repaint: repaint);
 
   Color progressColor(double prog) {
     if (prog < 0.3) {
       return Colors.red;
     } else if (prog < 0.6) {
       return Colors.orange;
-    } else if (prog < 1.0) {
+    } else if (prog < .99) {
       return Colors.yellow;
     } else {
       return Colors.green;
@@ -56,18 +65,18 @@ class ProgressPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var paint1 = Paint()
-      ..color = progressColor(progress)
+    final paint1 = Paint()
+      ..color = progressColor(repaint.value)
       ..style = PaintingStyle.fill;
 
-    var undone = Paint()
+    final undone = Paint()
       ..color = Colors.blueGrey
       ..style = PaintingStyle.fill;
 
-    double fill = progress * size.width;
+    final fill = repaint.value * size.width;
 
     // background rect
-    canvas.drawRect(Offset(fill, 0) & Size((1.0 - progress) * size.width, size.height), undone);
+    canvas.drawRect(Offset(fill, 0) & Size((1.0 - repaint.value) * size.width, size.height), undone);
     // filling rect
     canvas.drawRect(const Offset(0, 0) & Size(fill + 1, size.height), paint1);
   }

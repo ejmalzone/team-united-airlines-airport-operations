@@ -292,25 +292,32 @@ class ProgressBarRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var barA = ProgressBar(size: Size(200, 120))..setCurrentProgress(0.2);
-    var barB = ProgressBar(size: Size(200, 120))..setCurrentProgress(0.5);
-    var barC = ProgressBar(size: Size(200, 120))..setCurrentProgress(0.8);
-    var barD = ProgressBar(size: Size(200, 120))..setCurrentProgress(1.0);
+    GlobalKey<ProgressState> myKey = GlobalKey();
+    var barA = ProgressBar(key: myKey, size: Size(200, 120));
 
     return Scaffold(
         appBar: AppBar(title: const Text('Progress Bars Demo')),
         body: Center(
             child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:
-              <Widget>[barA, barB, barC, barD].withSpaceBetween(height: 8),
-        )));
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:
+                  <Widget>[
+                    barA,
+                    OutlinedButton(
+                      onPressed: () {
+                        myKey.currentState!.currentProgress = myKey.currentState!.currentProgress + 0.1;
+                      },
+                      child: Image.asset('assets/icons8-airport-64.png'),
+                    )
+                  ].withSpaceBetween(height: 8),
+            )
+        )
+    );
   }
 }
 
 class PassengerProfile extends StatelessWidget {
-  const PassengerProfile(
-      {super.key, required this.title, required this.passenger});
+  const PassengerProfile({super.key, required this.title, required this.passenger});
 
   final String title;
   final Passenger passenger;
