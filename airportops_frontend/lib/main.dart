@@ -265,6 +265,7 @@ class PassengerProfileApp extends StatelessWidget {
   final Passenger testP = Passenger(
       nameFirst: "Ethan",
       nameLast: "Malzone",
+      reservationNum: 1234,
       birthday: DateTime(2001, 1, 4),
       flightSource: "DTW",
       flightSourceDate: DateTime(2023, 2, 2),

@@ -3,6 +3,7 @@ import 'enums.dart';
 class Passenger {
   final String nameFirst;
   final String nameLast;
+  final int reservationNum;
   final DateTime birthday;
   final String flightSource;
   final DateTime flightSourceDate;
@@ -14,17 +15,18 @@ class Passenger {
   List<String> requests = [];
   Status status = Status.unboarded;
 
-  Passenger({
-    required this.nameFirst,
-    required this.nameLast,
-    required this.birthday,
-    required this.flightSource,
-    required this.flightSourceDate,
-    required this.flightDestination,
-    required this.flightDestinationDate,
-    required this.citizenship,
-    required this.seat,
-    requests});
+  Passenger(
+      {required this.nameFirst,
+      required this.nameLast,
+      required this.reservationNum,
+      required this.birthday,
+      required this.flightSource,
+      required this.flightSourceDate,
+      required this.flightDestination,
+      required this.flightDestinationDate,
+      required this.citizenship,
+      required this.seat,
+      requests});
 
   bool isAdult() {
     return DateTime.now().difference(birthday).inDays > (365 * 18);
