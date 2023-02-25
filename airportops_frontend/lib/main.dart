@@ -11,8 +11,10 @@ import 'package:airportops_frontend/baggage.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/scanning.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  var cameras = await availableCameras();
+  final firstCamera = cameras.first;
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
@@ -24,6 +26,7 @@ void main() {
       '/bars': (context) => ProgressBarRoute(),
       '/dbTesting': (context) => DatabaseRoute(),
       '/scanning': (context) => ScanRoute(),
+      '/camera': (context) => TakePictureScreen(camera: firstCamera),
     },
   ));
 }
@@ -36,7 +39,14 @@ class ScanRoute extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Scanning Testing'),
       ),
-      body: Center(),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/camera');
+          },
+          child: const Text('Open Camera'),
+        ),
+      ),
     );
   }
 }
@@ -300,25 +310,24 @@ class ProgressBarRoute extends StatelessWidget {
         appBar: AppBar(title: const Text('Progress Bars Demo')),
         body: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children:
-                  <Widget>[
-                    barA,
-                    OutlinedButton(
-                      onPressed: () {
-                        myKey.currentState!.currentProgress = myKey.currentState!.currentProgress + 0.1;
-                      },
-                      child: Image.asset('assets/icons8-airport-64.png'),
-                    )
-                  ].withSpaceBetween(height: 8),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            barA,
+            OutlinedButton(
+              onPressed: () {
+                myKey.currentState!.currentProgress =
+                    myKey.currentState!.currentProgress + 0.1;
+              },
+              child: Image.asset('assets/icons8-airport-64.png'),
             )
-        )
-    );
+          ].withSpaceBetween(height: 8),
+        )));
   }
 }
 
 class PassengerProfile extends StatelessWidget {
-  const PassengerProfile({super.key, required this.title, required this.passenger});
+  const PassengerProfile(
+      {super.key, required this.title, required this.passenger});
 
   final String title;
   final Passenger passenger;
