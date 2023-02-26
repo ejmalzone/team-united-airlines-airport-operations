@@ -1,13 +1,13 @@
 import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/enums.dart';
-import 'package:airportops_frontend/events.dart';
-import 'package:airportops_frontend/passenger.dart';
+import 'package:airportops_frontend/classes/events.dart';
+import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/progress_bar.dart';
 import 'package:camera/camera.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/extensions.dart';
-import 'package:airportops_frontend/baggage.dart';
+import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/scanning.dart';
 
@@ -22,7 +22,7 @@ Future<void> main() async {
       '/examplePassenger': (context) => PassengerProfileApp(),
       '/baggage': (context) => const BaggageRoute(),
       '/admin': (context) => AdminRoute(),
-      '/newPassenger': (context) => const NewPassenger(),
+      // '/newPassenger': (context) => const NewPassenger(),
       '/bars': (context) => ProgressBarRoute(),
       '/dbTesting': (context) => DatabaseRoute(),
       '/scanning': (context) => ScanRoute(),
@@ -106,12 +106,12 @@ class HomeRoute extends StatelessWidget {
                   Navigator.pushNamed(context, '/admin');
                 }),
             const SizedBox(height: 8),
-            ElevatedButton(
-              child: const Text('New Passenger'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/newPassenger');
-              },
-            ),
+            // ElevatedButton(
+            //   child: const Text('New Passenger'),
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/newPassenger');
+            //   },
+            // ),
             const SizedBox(height: 8),
             ElevatedButton(
                 child: const Text('Progress Bar Demo'),
@@ -136,126 +136,7 @@ class HomeRoute extends StatelessWidget {
   }
 }
 
-class NewPassenger extends StatefulWidget {
-  const NewPassenger({Key? key}) : super(key: key);
 
-  @override
-  State<NewPassenger> createState() => _NewPassengerState();
-}
-
-class _NewPassengerState extends State<NewPassenger> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: const Text("New Passenger Page")),
-        body: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Enter First Name',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text.';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Enter Last Name',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text.';
-                    }
-                    return null;
-                  },
-                ),
-                DateTimeFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Select your birthday'),
-                    mode: DateTimeFieldPickerMode.date,
-                    onDateSelected: (DateTime value) {
-                      print(value);
-                    }),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Enter Flight Source',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text.';
-                    }
-                    return null;
-                  },
-                ),
-                DateTimeFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Select Flight Source Date'),
-                    mode: DateTimeFieldPickerMode.date,
-                    onDateSelected: (DateTime value) {
-                      print(value);
-                    }),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Enter Flight Destination',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text.';
-                    }
-                    return null;
-                  },
-                ),
-                DateTimeFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Select Flight Destination Date'),
-                    mode: DateTimeFieldPickerMode.date,
-                    onDateSelected: (DateTime value) {
-                      print(value);
-                    }),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Enter Country of Citizenship',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text.';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Enter Seat No.',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text.';
-                    }
-                    return null;
-                  },
-                ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          // Process data
-                        }
-                      },
-                      child: const Text('Submit'),
-                    ))
-              ],
-            )));
-  }
-}
 
 class BaggageRoute extends StatelessWidget {
   const BaggageRoute({Key? key}) : super(key: key);

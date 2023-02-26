@@ -1,14 +1,21 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, must_be_immutable
 
-import 'package:airportops_frontend/passenger.dart';
+import 'package:airportops_frontend/admin/new_passenger.dart';
+import 'package:airportops_frontend/main.dart';
+import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:flutter/material.dart';
-import '../events.dart';
+import '../classes/events.dart';
+import '../widgets.dart';
 
-class EventRoute extends StatelessWidget {
-  EventRoute({super.key, required this.event});
-
+class EventRoute extends StatefulWidget {
   final Event event;
+  EventRoute({Key? key, required this.event}) : super(key: key);
 
+  @override
+  EventRouteState createState() => EventRouteState();
+}
+
+class EventRouteState extends State<EventRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +43,7 @@ class EventRoute extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          event.Date,
+                          widget.event.Date,
                           style: TextStyle(
                             fontFamily: 'Open Sans',
                             fontWeight: FontWeight.normal,
@@ -87,7 +94,7 @@ class EventRoute extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          event.numBoarded.toString(),
+                          widget.event.numBoarded.toString(),
                           style: TextStyle(
                             fontFamily: 'Open Sans',
                             color: Color(0xFF008525),
@@ -119,7 +126,7 @@ class EventRoute extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          event.numNoShow.toString(),
+                          widget.event.numNoShow.toString(),
                           style: TextStyle(
                             fontFamily: 'Open Sans',
                             color: Color(0xFF850000),
@@ -151,7 +158,7 @@ class EventRoute extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          event.numWrong.toString(),
+                          widget.event.numWrong.toString(),
                           style: TextStyle(
                             fontFamily: 'Open Sans',
                             color: Color(0xFFBCBF14),
@@ -189,113 +196,68 @@ class EventRoute extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: List.generate(event.passengers.length, (index) {
-                    return PCard(p: event.passengers[index]);
+                  children:
+                      List.generate(widget.event.passengers.length, (index) {
+                    return PCard(p: widget.event.passengers[index]);
                   }),
                 ),
               ),
+            ),
+            SizedBox(
+              height: 60,
+              child: Center(
+                  child: ElevatedButton(
+                onPressed: () async {
+                  print("pressed add passengers");
+                  
+                  final newPassenger = await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NewPassenger()));
+
+                  setState(() {
+                    widget.event.addPassenger(newPassenger);
+                  });
+                  for (int i = 0; i < widget.event.passengers.length; i++){
+                    print(widget.event.passengers[i].fullName);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xFF00239E),
+                ),
+                child: Text(
+                  "Add Passenger",
+                  style: TextStyle(
+                    fontFamily: 'Open Sans',
+                  ),
+                ),
+              )),
             )
           ],
         ),
       ),
-    );
-  }
-}
-
-class PCard extends StatelessWidget {
-  const PCard({super.key, required this.p});
-
-  final Passenger p;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        print('tapped card');
-      },
-      child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(30, 10, 30, 0),
-        child: Card(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          color: Color(0xFFD9D9D9),
-          elevation: 5,
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 8, 0, 0),
-                      child: Text(
-                        p.fullName,
-                        style: TextStyle(
-                          fontFamily: 'Open Sans',
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
-                      child: Text(
-                        'R-${p.reservationNum}| ${p.flightSource} to ${p.flightDestination}',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontFamily: 'Open Sans',
-                          fontSize: 10,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    )
-                  ],
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 0),
-                      child: Container(
-                        width: 70,
-                        height: 34.7,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF850000),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(23),
-                            bottomRight: Radius.circular(20),
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        child: Align(
-                          alignment: AlignmentDirectional(0, 0),
-                          child: Text(
-                            p.status.name,
-                            style: TextStyle(
-                                fontFamily: 'Open Sans',
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Color.fromARGB(255, 0, 34, 158),
+      //   onPressed: () {},
+      //   tooltip: 'Add passenger',
+      //   child: Icon(Icons.add),
+      // ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items:<BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.business),
+      //       label: 'Business',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.school),
+      //       label: 'School',
+      //     ),
+      //   ],
+      // ),
     );
   }
 }

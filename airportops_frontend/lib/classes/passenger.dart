@@ -1,4 +1,4 @@
-import 'enums.dart';
+import '../enums.dart';
 
 class Passenger {
   final String nameFirst;
@@ -27,6 +27,8 @@ class Passenger {
       required this.citizenship,
       required this.seat,
       requests});
+
+  
 
   bool isAdult() {
     return DateTime.now().difference(birthday).inDays > (365 * 18);
