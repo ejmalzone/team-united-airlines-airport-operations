@@ -1,15 +1,22 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, avoid_print
 
-import 'package:airportops_frontend/competitor.dart';
+import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/enums.dart';
-import 'package:airportops_frontend/passenger.dart';
+import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:airportops_frontend/events.dart';
+import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/admin/event_details.dart';
 
-class AdminRoute extends StatelessWidget {
-  AdminRoute({Key? key}) : super(key: key);
+class AdminRoute extends StatefulWidget {
+  AdminRoute({super.key});
+
+  @override
+  State<AdminRoute> createState() => AdminRouteState();
+}
+
+class AdminRouteState extends State<AdminRoute> {
+  AdminRouteState({Key? key});
 
   Passenger p1 = Passenger(
       nameFirst: "John",
@@ -56,19 +63,37 @@ class AdminRoute extends StatelessWidget {
   final Competitor c = Competitor("Stanley", "Duru", Position.Admin);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
+  String newEventName = '';
+
+  List<Event> events = [];
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     void submit() {
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(controller.text);
+      controller.clear();
     }
 
-    Future openDialog() => showDialog(
+    Future<String?> openDialog() => showDialog<String?>(
         context: context,
         builder: (context) => AlertDialog(
               title: Text('Create Event'),
               content: TextField(
                 decoration: InputDecoration(hintText: 'Enter event name'),
+                controller: controller,
               ),
               actions: [TextButton(onPressed: submit, child: Text('Submit'))],
             ));
@@ -98,7 +123,15 @@ class AdminRoute extends StatelessWidget {
               ),
             ),
             EventBox(event: e1),
-            EventBox(event: e2),
+            SizedBox(
+              child: Column(
+                children: List.generate(events.length, (index) {
+                  return EventBox(
+                    event: events[index],
+                  );
+                }),
+              )
+            ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 0),
               child: ElevatedButton(
@@ -106,9 +139,16 @@ class AdminRoute extends StatelessWidget {
                   foregroundColor: Colors.white,
                   backgroundColor: Color(0xFF00239E),
                 ),
-                onPressed: () {
-                  openDialog();
-                  print("pressed generate");
+                onPressed: () async {
+                  final eventName = await openDialog();
+                  if (eventName == null || eventName.isEmpty) return;
+                  setState(() {
+                    newEventName = eventName;
+                  });
+                  Event newEvent = Event(newEventName, 0, 0, 0, [], [], []);
+                  events.add(newEvent);
+                  print(newEventName);
+                  print(events);
                 },
                 child: Text(
                   "Generate New Event",
@@ -177,11 +217,7 @@ class EventBox extends StatelessWidget {
                         child: IconButton(
                           onPressed: () {
                             print(event.passengers);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        EventRoute(event: event)));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => EventRoute(event: event)));
                           },
                           icon: Icon(
                             Icons.arrow_right,

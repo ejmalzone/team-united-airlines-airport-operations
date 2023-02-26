@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_const_literals_to_create_immutables
 
-import 'package:airportops_frontend/competitor.dart';
+import 'package:airportops_frontend/classes/competitor.dart';
+import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:flutter/material.dart';
 
 
 /* Creates Profile box
-  required: competitor, icon image */
+  params: competitor, icon image */
 class ProfileBox extends StatelessWidget {
   ProfileBox({super.key, required this.competitior, required this.image});
 
@@ -126,5 +127,106 @@ class ProfileBox extends StatelessWidget {
                 ]),
           ),
         ));
+  }
+}
+
+/* Creates passenger card
+param: passenger
+*/
+class PCard extends StatelessWidget {
+  const PCard({super.key, required this.p});
+
+  final Passenger p;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        print('tapped card');
+      },
+      child: Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(30, 10, 30, 0),
+        child: Card(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          color: Color.fromARGB(255, 238, 238, 238),
+          elevation: 5,
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 8, 0, 0),
+                      child: Text(
+                        p.fullName,
+                        style: TextStyle(
+                          fontFamily: 'Open Sans',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
+                      child: Text(
+                        'R-${p.reservationNum}| ${p.flightSource} to ${p.flightDestination}',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontFamily: 'Open Sans',
+                          fontSize: 10,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    )
+                  ],
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 0),
+                      child: Container(
+                        width: 70,
+                        height: 34.7,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF850000),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(23),
+                            bottomRight: Radius.circular(20),
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Text(
+                            p.status.name,
+                            style: TextStyle(
+                                fontFamily: 'Open Sans',
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
