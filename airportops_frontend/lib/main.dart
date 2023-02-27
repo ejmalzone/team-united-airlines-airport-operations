@@ -136,8 +136,6 @@ class HomeRoute extends StatelessWidget {
   }
 }
 
-
-
 class BaggageRoute extends StatelessWidget {
   const BaggageRoute({Key? key}) : super(key: key);
   @override

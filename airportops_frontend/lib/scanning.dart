@@ -1,6 +1,7 @@
 // A screen that allows users to take a picture using a given camera.
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
@@ -107,11 +108,29 @@ class DisplayPictureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
-    );
+    //const bool kIsWeb = bool.fromEnvironment('dart.library.js_util');
+    if (kIsWeb) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Display the Picture')),
+        // The image is stored as a file on the device. Use the `Image.file`
+        // constructor with the given path to display the image.
+        body: Column(children: <Widget>[
+          Image.network(imagePath),
+        ]), // WORKS FOR WEB, NOT MOBILE
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Display the Picture')),
+        // The image is stored as a file on the device. Use the `Image.file`
+        // constructor with the given path to display the image.
+        body: Column(
+          children: <Widget>[
+            Image.file(File(imagePath)),
+            ElevatedButton(
+                onPressed: () {}, child: const Text('Process image?'))
+          ],
+        ),
+      );
+    }
   }
 }
