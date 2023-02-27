@@ -31,4 +31,8 @@ class Baggage {
   int get totalBags {
     return numberOfBags;
   }
+
+  String get baggageBar {
+    return '$originiatingAirport';
+  }
 }
