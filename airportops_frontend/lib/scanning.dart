@@ -80,6 +80,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             if (!mounted) return;
 
+            //ScanController controller = ScanController();
             //String? barcodeResult = await Scan.parse(image.path);
             //print(barcodeResult);
 
