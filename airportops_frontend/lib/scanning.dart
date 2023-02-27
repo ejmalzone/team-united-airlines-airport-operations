@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:scan/scan.dart';
+import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -22,6 +23,9 @@ class TakePictureScreen extends StatefulWidget {
 class TakePictureScreenState extends State<TakePictureScreen> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
+
+  final _qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
+  String? code;
 
   @override
   void initState() {
@@ -119,6 +123,13 @@ class DisplayPictureScreen extends StatelessWidget {
         body: Column(
           children: <Widget>[
             Image.network(imagePath),
+            ElevatedButton(
+                onPressed: () async {
+                  String? result = await Scan.parse(imagePath);
+                  print('RESULT');
+                  print('Result: $result');
+                },
+                child: const Text('Process QR')),
           ],
         ),
       );
@@ -133,5 +144,43 @@ class DisplayPictureScreen extends StatelessWidget {
         )),
       );
     }
+  }
+}
+
+class UniversalScanApp extends StatefulWidget {
+  @override
+  _UniversalScanAppState createState() => _UniversalScanAppState();
+}
+
+class _UniversalScanAppState extends State<UniversalScanApp> {
+  final _qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
+  String? code;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: Builder(builder: (context) {
+          return Material(
+            child: Center(
+              child: ElevatedButton(
+                  onPressed: () {
+                    _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
+                        context: context,
+                        onCode: (code) {
+                          setState(() {
+                            this.code = code;
+                          });
+                        });
+                  },
+                  child: Text(code ?? "Scan Boarding Pass")),
+            ),
+          );
+        }),
+      ),
+    );
   }
 }
