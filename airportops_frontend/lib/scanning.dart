@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:scan/scan.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -79,6 +80,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             if (!mounted) return;
 
+            //String? barcodeResult = await Scan.parse(image.path);
+            //print(barcodeResult);
+
             // If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(
               MaterialPageRoute(
@@ -108,28 +112,24 @@ class DisplayPictureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //const bool kIsWeb = bool.fromEnvironment('dart.library.js_util');
     if (kIsWeb) {
       return Scaffold(
         appBar: AppBar(title: const Text('Display the Picture')),
-        // The image is stored as a file on the device. Use the `Image.file`
-        // constructor with the given path to display the image.
-        body: Column(children: <Widget>[
-          Image.network(imagePath),
-        ]), // WORKS FOR WEB, NOT MOBILE
+        body: Column(
+          children: <Widget>[
+            Image.network(imagePath),
+          ],
+        ),
       );
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('Display the Picture')),
-        // The image is stored as a file on the device. Use the `Image.file`
-        // constructor with the given path to display the image.
-        body: Column(
+        body: Center(
+            child: Column(
           children: <Widget>[
             Image.file(File(imagePath)),
-            ElevatedButton(
-                onPressed: () {}, child: const Text('Process image?'))
           ],
-        ),
+        )),
       );
     }
   }
