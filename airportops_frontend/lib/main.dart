@@ -10,6 +10,7 @@ import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/scanning.dart';
+import 'package:airportops_frontend/rampservices/rampservices_profile.dart';
 
 Future<void> main() async {
   //WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +21,7 @@ Future<void> main() async {
     routes: {
       '/': (context) => const HomeRoute(),
       '/examplePassenger': (context) => PassengerProfileApp(),
-      '/baggage': (context) => const BaggageRoute(),
+      '/baggage': (context) => BaggageRoute(),
       '/admin': (context) => AdminRoute(),
       // '/newPassenger': (context) => const NewPassenger(),
       '/bars': (context) => ProgressBarRoute(),
@@ -134,18 +135,6 @@ class HomeRoute extends StatelessWidget {
             const SizedBox(height: 8),
           ],
         )));
-  }
-}
-
-class BaggageRoute extends StatelessWidget {
-  const BaggageRoute({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Baggage Page"),
-      ),
-    );
   }
 }
 
