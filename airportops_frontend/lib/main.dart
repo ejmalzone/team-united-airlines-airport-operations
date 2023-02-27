@@ -12,9 +12,9 @@ import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/scanning.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  var cameras = await availableCameras();
-  final firstCamera = cameras.first;
+  //WidgetsFlutterBinding.ensureInitialized();
+  //var cameras = await availableCameras();
+  //final firstCamera = cameras.first;
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
@@ -26,7 +26,8 @@ Future<void> main() async {
       '/bars': (context) => ProgressBarRoute(),
       '/dbTesting': (context) => DatabaseRoute(),
       '/scanning': (context) => ScanRoute(),
-      '/camera': (context) => TakePictureScreen(camera: firstCamera),
+      //'/camera': (context) => TakePictureScreen(camera: firstCamera),
+      '/camera': (context) => UniversalScanApp(),
     },
   ));
 }
@@ -125,9 +126,9 @@ class HomeRoute extends StatelessWidget {
                   Navigator.pushNamed(context, '/dbTesting');
                 }),
             ElevatedButton(
-              child: const Text('Scanning Testing'),
+              child: const Text('Scan Boarding Pass'),
               onPressed: () {
-                Navigator.pushNamed(context, '/scanning');
+                Navigator.pushNamed(context, '/camera');
               },
             ),
             const SizedBox(height: 8),
