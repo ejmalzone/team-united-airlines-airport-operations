@@ -162,6 +162,25 @@ class EventRoute extends StatelessWidget {
                   }),
                 ),
               ),
+            ),
+            SizedBox(
+              height: 60,
+              child: Center(
+                  child: ElevatedButton(
+                onPressed: () async {
+                  print("SCAN");
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xFF00239E),
+                ),
+                child: Text(
+                  "SCAN",
+                  style: TextStyle(
+                    fontFamily: 'Open Sans',
+                  ),
+                ),
+              )),
             )
           ],
         ),
@@ -182,13 +201,13 @@ class PCard extends StatelessWidget {
         print('tapped card');
       },
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(30, 10, 30, 0),
+        padding: EdgeInsetsDirectional.fromSTEB(25, 8, 25, 0),
         child: Card(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           color: Color(0xFFD9D9D9),
           elevation: 5,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -200,7 +219,7 @@ class PCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 8, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(11, 9, 0, 0),
                       child: Text(
                         p.fullName,
                         style: TextStyle(
@@ -236,7 +255,7 @@ class PCard extends StatelessWidget {
                         width: 70,
                         height: 34.7,
                         decoration: BoxDecoration(
-                          color: Color(0xFF850000),
+                          color: Color.fromARGB(255, 0, 73, 133),
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(23),
                             bottomRight: Radius.circular(20),
@@ -246,14 +265,14 @@ class PCard extends StatelessWidget {
                         ),
                         child: Align(
                           alignment: AlignmentDirectional(0, 0),
-                          child: Text(
-                            p.status.name,
-                            style: TextStyle(
-                                fontFamily: 'Open Sans',
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10),
-                          ),
+                          // child: Text(
+                          //   p.status.name,
+                          //   style: TextStyle(
+                          //       fontFamily: 'Open Sans',
+                          //       color: Colors.white,
+                          //       fontWeight: FontWeight.w500,
+                          //       fontSize: 10),
+                          // ),
                         ),
                       ),
                     ),
