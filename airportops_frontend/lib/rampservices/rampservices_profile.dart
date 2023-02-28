@@ -47,8 +47,20 @@ class BaggageRoute extends StatelessWidget {
       citizenship: "USA",
       seat: "125");
 
-  late List<Passenger> l1 = [p1, p2, p3];
-  late List<Passenger> l2 = [p2, p3];
+  Passenger p4 = Passenger(
+      nameFirst: "Test",
+      nameLast: "Subject",
+      reservationNum: 1237,
+      birthday: DateTime(1921, 7, 12),
+      flightSource: "DTW",
+      flightSourceDate: DateTime(2023, 6, 5),
+      flightDestination: "ORD",
+      flightDestinationDate: DateTime(2023, 5, 5),
+      citizenship: "USA",
+      seat: "198");
+
+  late List<Passenger> l1 = [p1, p2, p3, p4];
+  late List<Passenger> l2 = [p2, p3, p4];
 
   late Event e1 = Event("Line Dancing", 0, 0, 0, l1, [], []);
   late Event e2 = Event("Cowboy Rodeo", 0, 15, 0, l2, [], []);
