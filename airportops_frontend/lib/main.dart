@@ -13,9 +13,6 @@ import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/rampservices/rampservices_profile.dart';
 
 Future<void> main() async {
-  //WidgetsFlutterBinding.ensureInitialized();
-  //var cameras = await availableCameras();
-  //final firstCamera = cameras.first;
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
@@ -23,11 +20,9 @@ Future<void> main() async {
       '/examplePassenger': (context) => PassengerProfileApp(),
       '/baggage': (context) => BaggageRoute(),
       '/admin': (context) => AdminRoute(),
-      // '/newPassenger': (context) => const NewPassenger(),
       '/bars': (context) => ProgressBarRoute(),
       '/dbTesting': (context) => DatabaseRoute(),
       '/scanning': (context) => ScanRoute(),
-      //'/camera': (context) => TakePictureScreen(camera: firstCamera),
       '/camera': (context) => UniversalScanApp(),
     },
   ));
@@ -108,13 +103,6 @@ class HomeRoute extends StatelessWidget {
                   Navigator.pushNamed(context, '/admin');
                 }),
             const SizedBox(height: 8),
-            // ElevatedButton(
-            //   child: const Text('New Passenger'),
-            //   onPressed: () {
-            //     Navigator.pushNamed(context, '/newPassenger');
-            //   },
-            // ),
-            const SizedBox(height: 8),
             ElevatedButton(
                 child: const Text('Progress Bar Demo'),
                 onPressed: () {
@@ -127,11 +115,10 @@ class HomeRoute extends StatelessWidget {
                   Navigator.pushNamed(context, '/dbTesting');
                 }),
             ElevatedButton(
-              child: const Text('Scan Boarding Pass'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/camera');
-              },
-            ),
+                child: const Text('Scan Boarding Pass'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/camera');
+                }),
             const SizedBox(height: 8),
           ],
         )));
