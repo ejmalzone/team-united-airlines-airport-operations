@@ -58,14 +58,29 @@ class DatabaseRoute extends StatelessWidget {
         title: const Text('Db testing page'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            print('Testing: ');
-            var req = await testRequest();
-            print(req['data']);
-          },
-          child: const Text('Submit'),
-        ),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ElevatedButton(
+                onPressed: () async {
+                  print('Testing: ');
+                  var req = await testRequest();
+                  print(req['data']);
+                },
+                child: const Text('Event Query'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  print('Testing: ');
+                  var req = await passengerRequest();
+                  //print(req['data']);
+                  for (final person in req['data']) {
+                    print('Passenger: $person');
+                  }
+                },
+                child: const Text('Passenger Query'),
+              ),
+            ]),
       ),
     );
   }

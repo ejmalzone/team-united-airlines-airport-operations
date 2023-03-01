@@ -22,34 +22,40 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
         ),
         body: Builder(builder: (context) {
           if (code != null) {
-            return Material(
-                child: Column(
-              children: <Widget>[
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
-                          context: context,
-                          onCode: (code) {
-                            setState(() {
-                              this.code = code?.substring(15);
+            //return Material(
+            //child: Center(
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
+                            context: context,
+                            onCode: (code) {
+                              setState(() {
+                                this.code = code?.substring(15);
+                              });
                             });
-                          });
-                    },
-                    child: Text((() {
-                      if (code == null) {
-                        return 'Scan Tag';
-                      }
-                      return 'Scan Another Tag';
-                    }())),
+                      },
+                      child: Text((() {
+                        if (code == null) {
+                          return 'Scan Tag';
+                        }
+                        return 'Scan Another Tag';
+                      }())),
+                    ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Query based on ${this.code}'),
-                ),
-              ],
-            ));
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('Query based on ${this.code}'),
+                  ),
+                ],
+              ),
+              //),
+            );
+            //);
           }
 
           return Material(
