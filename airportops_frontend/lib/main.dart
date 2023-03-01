@@ -13,6 +13,7 @@ import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/rampservices/rampservices_profile.dart';
 
 Future<void> main() async {
+  var req = await passengerRequest();
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
@@ -24,8 +25,51 @@ Future<void> main() async {
       '/dbTesting': (context) => DatabaseRoute(),
       '/scanning': (context) => ScanRoute(),
       '/camera': (context) => UniversalScanApp(),
+      '/passengerTesting': (context) => PassengerDisplayRoute(
+            data: req,
+          ),
     },
   ));
+}
+
+class PassengerDisplayRoute extends StatelessWidget {
+  final Map<String, dynamic> data;
+  const PassengerDisplayRoute({Key? key, required this.data}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    List<Passenger> passengers = [];
+    List<PassengerProfile> profiles = [];
+    for (var passenger in data['data']) {
+      passengers.add(Passenger(
+          accommodations: passenger['accommodations'],
+          passengerId: passenger['_id'],
+          birthday: DateTime.now(),
+          boarded: passenger['boarded'] == 'true',
+          event: passenger['event'],
+          flightDestination: passenger['destination'],
+          flightSource: passenger['origin'],
+          nameFirst: passenger['firstName'],
+          nameLast: passenger['lastName'],
+          row: passenger['row'],
+          seat: passenger['seat']));
+    }
+
+    for (var person in passengers) {
+      profiles.add(PassengerProfile(title: 'test', passenger: person));
+    }
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Passenger Status Page'),
+        ),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(children: <Widget>[
+              ...profiles,
+            ]),
+          ),
+        ));
+  }
 }
 
 class ScanRoute extends StatelessWidget {
@@ -71,12 +115,9 @@ class DatabaseRoute extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  print('Testing: ');
                   var req = await passengerRequest();
-                  //print(req['data']);
-                  for (final person in req['data']) {
-                    print('Passenger: $person');
-                  }
+                  for (final person in req['data']) {}
+                  await Navigator.of(context).pushNamed('/passengerTesting');
                 },
                 child: const Text('Passenger Query'),
               ),
@@ -135,6 +176,12 @@ class HomeRoute extends StatelessWidget {
                   Navigator.pushNamed(context, '/camera');
                 }),
             const SizedBox(height: 8),
+            ElevatedButton(
+                child: const Text('View Passenger Status'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/passengerTesting');
+                }),
+            const SizedBox(height: 8),
           ],
         )));
   }
@@ -146,25 +193,30 @@ class PassengerProfileApp extends StatelessWidget {
   final Passenger testP = Passenger(
       nameFirst: "Ethan",
       nameLast: "Malzone",
-      reservationNum: 1234,
+      //reservationNum: 1234,
       birthday: DateTime(2001, 1, 4),
       flightSource: "DTW",
-      flightSourceDate: DateTime(2023, 2, 2),
+      //flightSourceDate: DateTime(2023, 2, 2),
       flightDestination: "IAH",
-      flightDestinationDate: DateTime(2023, 2, 3),
-      citizenship: "United States",
-      seat: "21A");
+      //flightDestinationDate: DateTime(2023, 2, 3),
+      //citizenship: "United States",
+      seat: "A",
+      accommodations: [],
+      boarded: false,
+      event: 'Safety Rodeo',
+      passengerId: "3849673547ef8989",
+      row: 5);
 
   @override
   Widget build(BuildContext context) {
-    testP.status = Status.boarded;
+    //testP.status = Status.boarded;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Passenger Profile'),
       ),
       body: Center(
-          child:
-              PassengerProfile(title: 'Passenger Profile', passenger: testP)),
+        child: PassengerProfile(title: 'Passenger Profile', passenger: testP),
+      ),
     );
   }
 }
@@ -205,8 +257,8 @@ class PassengerProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
+    return Container(
+      child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -225,7 +277,7 @@ class PassengerProfile extends StatelessWidget {
                                 textAlign: TextAlign.left,
                                 style: const TextStyle(fontSize: 24)),
                             Text(
-                              '${passenger.birthday.toString().split(' ')[0]} | ${passenger.citizenship}',
+                              '${passenger.birthday.toString().split(' ')[0]}', // | ${passenger.citizenship}',
                               textAlign: TextAlign.justify,
                               style: const TextStyle(fontSize: 12),
                             )
@@ -268,19 +320,19 @@ class PassengerProfile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Text(
+                            /*Text(
                                 passenger.flightSourceDate
                                     .toLocal()
                                     .toIso8601String(),
                                 style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.bold)),
+                                    fontSize: 13, fontWeight: FontWeight.bold)),*/
                             Expanded(child: Text('. ' * 1000, maxLines: 1)),
-                            Text(
+                            /*Text(
                                 passenger.flightDestinationDate
                                     .toLocal()
                                     .toIso8601String(),
                                 style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.bold)),
+                                    fontSize: 13, fontWeight: FontWeight.bold)),*/
                           ]),
                       SizedBox(height: 80),
                       Text('Special Requests:',

@@ -5,7 +5,6 @@ import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:flutter/material.dart';
 
-
 /* Creates Profile box
   params: competitor, icon image */
 class ProfileBox extends StatelessWidget {
@@ -176,7 +175,8 @@ class PCard extends StatelessWidget {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
                       child: Text(
-                        'R-${p.reservationNum}| ${p.flightSource} to ${p.flightDestination}',
+                        //'R-${p.reservationNum}|
+                        '${p.flightSource} to ${p.flightDestination}',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontFamily: 'Open Sans',
