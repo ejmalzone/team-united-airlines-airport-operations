@@ -15,9 +15,14 @@ class _NewPassengerState extends State<NewPassenger> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _flightSourceController = TextEditingController();
-  final TextEditingController _flightDestinationController = TextEditingController();
+  final TextEditingController _flightDestinationController =
+      TextEditingController();
   final TextEditingController _citizenshipController = TextEditingController();
   final TextEditingController _seatController = TextEditingController();
+  final TextEditingController _passengerIdController = TextEditingController();
+  final TextEditingController _rowController = TextEditingController();
+  final TextEditingController _boardedController = TextEditingController();
+  final TextEditingController _eventController = TextEditingController();
 
   DateTime _birthday = DateTime.now();
   DateTime _flightSourceDate = DateTime.now();
@@ -30,17 +35,22 @@ class _NewPassengerState extends State<NewPassenger> {
       Passenger newPassenger = Passenger(
           nameFirst: _firstNameController.text,
           nameLast: _lastNameController.text,
-          reservationNum: 0, // You can set this to a unique value
+          //reservationNum: 0, // You can set this to a unique value
           birthday: _birthday, // Use the value from the DateTimeFormField
           flightSource: _flightSourceController.text,
-          flightSourceDate:
-              _flightSourceDate, // Use the value from the DateTimeFormField
+          //flightSourceDate:
+          //    _flightSourceDate, // Use the value from the DateTimeFormField
           flightDestination: _flightDestinationController.text,
-          flightDestinationDate:
-              _flightDestinationDate, // Use the value from the DateTimeFormField
-          citizenship: _citizenshipController.text,
+          //flightDestinationDate:
+          // _flightDestinationDate, // Use the value from the DateTimeFormField
+          //citizenship: _citizenshipController.text,
           seat: _seatController.text,
-          requests: []); // You can add requests here if needed
+          passengerId: _passengerIdController.text,
+          row: int.parse(_rowController.text),
+          boarded: _boardedController.text == 'true',
+          event: _eventController.text,
+          //requests: []); // You can add requests here if needed
+          accommodations: []); // TODO: Implement parsing accomodations
 
       Navigator.pop(context, newPassenger);
     }
@@ -80,14 +90,14 @@ class _NewPassengerState extends State<NewPassenger> {
                   },
                 ),
                 DateTimeFormField(
-                  decoration: const InputDecoration(
-                      labelText: 'Select your birthday'),
-                  mode: DateTimeFieldPickerMode.date,
-                  onDateSelected: (DateTime value) {
-                    setState(() {
-                      _birthday = value;
-                    });
-                  }),
+                    decoration: const InputDecoration(
+                        labelText: 'Select your birthday'),
+                    mode: DateTimeFieldPickerMode.date,
+                    onDateSelected: (DateTime value) {
+                      setState(() {
+                        _birthday = value;
+                      });
+                    }),
                 TextFormField(
                   controller: _flightSourceController,
                   decoration: const InputDecoration(

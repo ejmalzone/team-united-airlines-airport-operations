@@ -232,7 +232,8 @@ class PCard extends StatelessWidget {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
                       child: Text(
-                        'R-${p.reservationNum}| ${p.flightSource} to ${p.flightDestination}',
+                        //'R-${p.reservationNum}|
+                        '${p.flightSource} to ${p.flightDestination}',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontFamily: 'Open Sans',

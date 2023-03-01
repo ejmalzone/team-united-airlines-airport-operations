@@ -18,7 +18,7 @@ class AdminRoute extends StatefulWidget {
 class AdminRouteState extends State<AdminRoute> {
   AdminRouteState({Key? key});
 
-  Passenger p1 = Passenger(
+  /*Passenger p1 = Passenger(
       nameFirst: "John",
       nameLast: "Fester",
       reservationNum: 1234,
@@ -53,6 +53,60 @@ class AdminRouteState extends State<AdminRoute> {
       flightDestinationDate: DateTime(2023, 5, 5),
       citizenship: "USA",
       seat: "125");
+      */
+  Passenger p1 = Passenger(
+    nameFirst: "John",
+    nameLast: "Fester",
+    //reservationNum: 1234,
+    birthday: DateTime(2001, 9, 12),
+    flightSource: "DTW",
+    //flightSourceDate: DateTime(2023, 5, 5),
+    flightDestination: "IAH",
+    //flightDestinationDate: DateTime(2023, 5, 5),
+    //citizenship: "USA",
+    seat: "A",
+    passengerId: "12345",
+    row: 5,
+    boarded: false,
+    accommodations: [],
+    event: "Safety Rodeo",
+  );
+
+  Passenger p2 = Passenger(
+    nameFirst: "Linda",
+    nameLast: "Holmes",
+    //reservationNum: 1235,
+    birthday: DateTime(1998, 8, 3),
+    flightSource: "DTW",
+    //flightSourceDate: DateTime(2023, 5, 5),
+    flightDestination: "IAH",
+    //flightDestinationDate: DateTime(2023, 5, 5),
+    //citizenship: "USA",
+    seat: "B",
+    passengerId: "12345",
+    row: 5,
+    boarded: false,
+    accommodations: [],
+    event: "Safety Rodeo",
+  );
+
+  Passenger p3 = Passenger(
+    nameFirst: "Ray",
+    nameLast: "Palmer",
+    //reservationNum: 1236,
+    birthday: DateTime(1901, 7, 12),
+    flightSource: "DTW",
+    //flightSourceDate: DateTime(2023, 5, 5),
+    flightDestination: "IAH",
+    //flightDestinationDate: DateTime(2023, 5, 5),
+    //citizenship: "USA",
+    seat: "C",
+    passengerId: "12345",
+    row: 5,
+    boarded: false,
+    accommodations: [],
+    event: "Safety Rodeo",
+  );
 
   late List<Passenger> l1 = [p1, p2, p3];
   late List<Passenger> l2 = [p2, p3];
@@ -124,14 +178,13 @@ class AdminRouteState extends State<AdminRoute> {
             ),
             EventBox(event: e1),
             SizedBox(
-              child: Column(
-                children: List.generate(events.length, (index) {
-                  return EventBox(
-                    event: events[index],
-                  );
-                }),
-              )
-            ),
+                child: Column(
+              children: List.generate(events.length, (index) {
+                return EventBox(
+                  event: events[index],
+                );
+              }),
+            )),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 0),
               child: ElevatedButton(
@@ -217,7 +270,11 @@ class EventBox extends StatelessWidget {
                         child: IconButton(
                           onPressed: () {
                             print(event.passengers);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => EventRoute(event: event)));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EventRoute(event: event)));
                           },
                           icon: Icon(
                             Icons.arrow_right,
