@@ -1,4 +1,5 @@
 import 'package:airportops_frontend/admin/admin_profile.dart';
+import 'package:airportops_frontend/customerservice/customerservice_profile.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
@@ -29,7 +30,8 @@ Future<void> main() async {
       '/dbTesting': (context) => DatabaseRoute(),
       '/scanning': (context) => ScanRoute(),
       '/camera': (context) => UniversalScanApp(),
-      '/portal': (context) => PortalRoute()
+      '/portal': (context) => PortalRoute(),
+      '/customerservice' :(context) => CSRRoute()
       //'/passengerTesting': (context) => PassengerDisplayRoute(),
       //'/passengerTesting': (context) => PassengerDisplayRoute(
       //      data: req,
@@ -452,6 +454,7 @@ class QRImage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Passenger QR Code'),
+        backgroundColor: Colors.black,
         centerTitle: true,
       ),
       body: Center(

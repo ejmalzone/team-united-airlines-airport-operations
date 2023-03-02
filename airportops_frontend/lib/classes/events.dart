@@ -6,24 +6,18 @@ import 'package:jiffy/jiffy.dart';
 
 class Event {
   final String name;
-  
 
-  final int numBoarded;
-  final int numNoShow;
-  final int numWrong;
+  int numBoarded;
+  int numNoShow;
+  int numWrong;
 
   List<Passenger> passengers = [];
   List<Baggage> bags = [];
   List<Competitor> competitors = [];
 
-  Event(
-      this.name,
-      this.numBoarded,
-      this.numNoShow,
-      this.numWrong,
-      this.passengers,
-      this.bags,
-      this.competitors);
+  Event(this.name, this.numBoarded, this.numNoShow, this.numWrong,
+      this.passengers, this.bags, this.competitors) {
+  }
 
   String get Date {
     String result = Jiffy(DateTime.now()).format('MMM do yyyy');

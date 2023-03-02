@@ -1,17 +1,20 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:airportops_frontend/classes/competitor.dart';
+import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
+import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/customerservice/event_details.dart';
+import 'package:jiffy/jiffy.dart';
 
-class BaggageRoute extends StatelessWidget {
-  BaggageRoute({Key? key}) : super(key: key);
+class CSRRoute extends StatelessWidget {
+  CSRRoute({Key? key}) : super(key: key);
 
-  Passenger p1 = Passenger(
+ Passenger p1 = Passenger(
     nameFirst: "John",
     nameLast: "Fester",
     //reservationNum: 1234,
@@ -87,13 +90,13 @@ class BaggageRoute extends StatelessWidget {
     status: Status.unboarded,
   );
 
-  late List<Passenger> l1 = [p1, p2, p3, p4];
-  late List<Passenger> l2 = [p2, p3, p4];
+  Event e1 = Event("Line Dancing", 0, 0, 0, [], [], []);
 
-  late Event e1 = Event("Line Dancing", 0, 0, 0, l1, [], []);
-  late Event e2 = Event("Cowboy Rodeo", 0, 15, 0, l2, [], []);
+  List<Event> events = [];
 
-  final Competitor c = Competitor("Satvik", "Ravipati", Position.Csr);
+  late Event e2 = Event("Cowboy Rodeo", 0, 15, 0, [], [], []);
+
+  final Competitor c = Competitor("CSR", "Employee", Position.Csr);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   @override
@@ -102,15 +105,7 @@ class BaggageRoute extends StatelessWidget {
       Navigator.of(context).pop();
     }
 
-    Future openDialog() => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text('Create Event'),
-              content: TextField(
-                decoration: InputDecoration(hintText: 'Enter event name'),
-              ),
-              actions: [TextButton(onPressed: submit, child: Text('Submit'))],
-            ));
+
 
     return Scaffold(
       appBar: AppBar(
@@ -125,9 +120,6 @@ class BaggageRoute extends StatelessWidget {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(30, 30, 50, 0),
               child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -150,7 +142,7 @@ class BaggageRoute extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Current Date',
+                            Jiffy(DateTime.now()).format('MMM do yyyy'),
                             style: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 15,
@@ -169,7 +161,7 @@ class BaggageRoute extends StatelessWidget {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(25, 10, 0, 0),
                             child: Text(
-                              'Event Name - Team Name',
+                              '${e1.name} - Team Cowboys',
                               style: TextStyle(
                                 fontFamily: 'Open Sans',
                                 fontSize: 18,
@@ -185,12 +177,48 @@ class BaggageRoute extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Text(
-                            'View Itinerary',
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.normal,
+                          TextButton(
+                            child: Text(
+                              'View itinerary >',
+                              style: TextStyle(
+                                fontFamily: 'Open Sans',
+                                color: Color(0xFF00239E),
+                              ),
                             ),
+                            onPressed: () async {
+                              var req = await passengerRequest();
+                              List<Passenger> passengers = [p1,p2,p3];
+
+                              for (var passenger in req['data']) {
+                                passengers.add(Passenger(
+                                  accommodations: passenger['accommodations'],
+                                  passengerId: passenger['_id'],
+                                  birthday: DateTime.now(),
+                                  boarded: passenger['boarded'] == true,
+                                  event: passenger['event'],
+                                  flightDestination: passenger['destination'],
+                                  flightSource: passenger['origin'],
+                                  nameFirst: passenger['firstName'],
+                                  nameLast: passenger['lastName'],
+                                  row: passenger['row'],
+                                  seat: passenger['seat'],
+                                  status: passenger['boarded'] == true
+                                      ? Status.boarded
+                                      : Status.unboarded,
+                                ));
+                              }
+                              for (var person in passengers) {
+                                e1.addPassenger(person);
+                              }
+
+                              print(e1.passengers);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          EventRoute(event: e1)));
+                              print('Pressed');
+                            }
                           ),
                           Align(
                             alignment: AlignmentDirectional(0, 0),
@@ -221,7 +249,6 @@ class BaggageRoute extends StatelessWidget {
               ),
             ),
             EventBox(event: e1),
-            EventBox(event: e2),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 0),
               child: ElevatedButton(
@@ -230,7 +257,10 @@ class BaggageRoute extends StatelessWidget {
                   backgroundColor: Colors.green,
                 ),
                 onPressed: () {
-                  openDialog();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UniversalScanApp()));
                   print("LINK TO SCAN BUTTON");
                 },
                 child: Text(

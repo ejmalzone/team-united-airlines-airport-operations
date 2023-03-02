@@ -8,7 +8,7 @@ import '../classes/events.dart';
 import '../widgets.dart';
 
 class EventRoute extends StatefulWidget {
-  final Event event;
+  Event event;
   EventRoute({Key? key, required this.event}) : super(key: key);
 
   @override
@@ -193,9 +193,9 @@ class EventRouteState extends State<EventRoute> {
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 201, 201, 201),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                child: ListView(
+                  // mainAxisSize: MainAxisSize.max,
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
                   children:
                       List.generate(widget.event.passengers.length, (index) {
                     return PCard(p: widget.event.passengers[index]);
@@ -209,14 +209,15 @@ class EventRouteState extends State<EventRoute> {
                   child: ElevatedButton(
                 onPressed: () async {
                   print("pressed add passengers");
-                  
-                  final newPassenger = await Navigator.push(context,
+                  print(widget.event.passengers);
+
+                  var newPassenger = await Navigator.push(context,
                       MaterialPageRoute(builder: (context) => NewPassenger()));
 
                   setState(() {
                     widget.event.addPassenger(newPassenger);
                   });
-                  for (int i = 0; i < widget.event.passengers.length; i++){
+                  for (int i = 0; i < widget.event.passengers.length; i++) {
                     print(widget.event.passengers[i].fullName);
                   }
                 },
@@ -235,29 +236,6 @@ class EventRouteState extends State<EventRoute> {
           ],
         ),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Color.fromARGB(255, 0, 34, 158),
-      //   onPressed: () {},
-      //   tooltip: 'Add passenger',
-      //   child: Icon(Icons.add),
-      // ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items:<BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.business),
-      //       label: 'Business',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.school),
-      //       label: 'School',
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
