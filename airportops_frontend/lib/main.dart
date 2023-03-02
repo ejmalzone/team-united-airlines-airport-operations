@@ -443,7 +443,7 @@ class QRImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter + QR code'),
+        title: const Text('Passenger QR Code'),
         centerTitle: true,
       ),
       body: Center(
