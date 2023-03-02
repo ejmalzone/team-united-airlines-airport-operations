@@ -420,7 +420,6 @@ class PassengerProfile extends StatelessWidget {
                                     .toIso8601String(),
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.bold)),*/
-<<<<<<< Updated upstream
                               ]),
                           SizedBox(height: 80),
                           Text('Special Requests:',
@@ -435,11 +434,12 @@ class PassengerProfile extends StatelessWidget {
           ),
         ), //print('Tapped! ${passenger.passengerId}')
         onTap: () async => await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => QRImage(passenger.passengerId),
-              ),
-            ));
+          context,
+          MaterialPageRoute(
+            builder: (context) => QRImage(passenger.passengerId),
+          ),
+        )
+    );
   }
 }
 
@@ -466,22 +466,8 @@ class QRImage extends StatelessWidget {
               100,
             ),
           ),
-=======
-                          ]),
-                      SizedBox(height: 80),
-                      Text('Special Requests:',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      Text('    ${passenger.requestsString}',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                    ]
-                )
-            )
-          ],
->>>>>>> Stashed changes
-        ),
-      ),
+        )
+      )
     );
   }
 }
