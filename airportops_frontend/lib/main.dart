@@ -13,7 +13,7 @@ import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/rampservices/rampservices_profile.dart';
 
 Future<void> main() async {
-  var req = await passengerRequest();
+  //var req = await passengerRequest();
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
@@ -26,9 +26,9 @@ Future<void> main() async {
       '/scanning': (context) => ScanRoute(),
       '/camera': (context) => UniversalScanApp(),
       //'/passengerTesting': (context) => PassengerDisplayRoute(),
-      '/passengerTesting': (context) => PassengerDisplayRoute(
-            data: req,
-          ),
+      //'/passengerTesting': (context) => PassengerDisplayRoute(
+      //      data: req,
+      //    ),
     },
   ));
 }
@@ -43,17 +43,20 @@ class PassengerDisplayRoute extends StatelessWidget {
     List<PassengerProfile> profiles = [];
     for (var passenger in data['data']) {
       passengers.add(Passenger(
-          accommodations: passenger['accommodations'],
-          passengerId: passenger['_id'],
-          birthday: DateTime.now(),
-          boarded: passenger['boarded'] == 'true',
-          event: passenger['event'],
-          flightDestination: passenger['destination'],
-          flightSource: passenger['origin'],
-          nameFirst: passenger['firstName'],
-          nameLast: passenger['lastName'],
-          row: passenger['row'],
-          seat: passenger['seat']));
+        accommodations: passenger['accommodations'],
+        passengerId: passenger['_id'],
+        birthday: DateTime.now(),
+        boarded: passenger['boarded'] == true,
+        event: passenger['event'],
+        flightDestination: passenger['destination'],
+        flightSource: passenger['origin'],
+        nameFirst: passenger['firstName'],
+        nameLast: passenger['lastName'],
+        row: passenger['row'],
+        seat: passenger['seat'],
+        status:
+            passenger['boarded'] == true ? Status.boarded : Status.unboarded,
+      ));
     }
 
     for (var person in passengers) {
@@ -180,9 +183,9 @@ class DatabaseRoute extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  //var req = await passengerRequest();
-
-                  await Navigator.of(context).pushNamed('/passengerTesting');
+                  var req = await passengerRequest();
+                  print(req['data'][0]['boarded'] is bool);
+                  //await Navigator.of(context).pushNamed('/passengerTesting');
                 },
                 child: const Text('Passenger Query'),
               ),
@@ -243,10 +246,11 @@ class HomeRoute extends StatelessWidget {
             const SizedBox(height: 8),
             ElevatedButton(
                 child: const Text('View Passenger Status'),
-                onPressed: () {
-                  //var req = await passengerRequest();
-
-                  Navigator.pushNamed(context, '/passengerTesting');
+                onPressed: () async {
+                  var req = await passengerRequest();
+                  //Navigator.pushNamed(context, '/passengerTesting');
+                  await Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => PassengerDisplayRoute(data: req)));
                 }),
             const SizedBox(height: 8),
           ],
@@ -258,21 +262,23 @@ class PassengerProfileApp extends StatelessWidget {
   PassengerProfileApp({super.key});
 
   final Passenger testP = Passenger(
-      nameFirst: "Ethan",
-      nameLast: "Malzone",
-      //reservationNum: 1234,
-      birthday: DateTime(2001, 1, 4),
-      flightSource: "DTW",
-      //flightSourceDate: DateTime(2023, 2, 2),
-      flightDestination: "IAH",
-      //flightDestinationDate: DateTime(2023, 2, 3),
-      //citizenship: "United States",
-      seat: "A",
-      accommodations: [],
-      boarded: false,
-      event: 'Safety Rodeo',
-      passengerId: "3849673547ef8989",
-      row: 5);
+    nameFirst: "Ethan",
+    nameLast: "Malzone",
+    //reservationNum: 1234,
+    birthday: DateTime(2001, 1, 4),
+    flightSource: "DTW",
+    //flightSourceDate: DateTime(2023, 2, 2),
+    flightDestination: "IAH",
+    //flightDestinationDate: DateTime(2023, 2, 3),
+    //citizenship: "United States",
+    seat: "A",
+    accommodations: [],
+    boarded: false,
+    event: 'Safety Rodeo',
+    passengerId: "3849673547ef8989",
+    row: 5,
+    status: Status.unboarded,
+  );
 
   @override
   Widget build(BuildContext context) {

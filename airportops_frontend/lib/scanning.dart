@@ -49,8 +49,15 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       //Requests.put('http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/', )
+                      print('Attempting request!');
+                      var reply = await Requests.put(
+                          'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
+                          json: {"passengerId": this.code});
+                      reply.raiseForStatus();
+                      String body = reply.content();
+                      //print(body);
                     },
                     child: Text('Query based on ${this.code}'),
                   ),

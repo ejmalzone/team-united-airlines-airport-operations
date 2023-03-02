@@ -17,5 +17,6 @@ Future<Map<String, dynamic>> passengerRequest() async {
   reply.raiseForStatus();
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return data;
 }
