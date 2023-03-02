@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
+import 'package:requests/requests.dart';
 
 class UniversalScanApp extends StatefulWidget {
   @override
@@ -48,7 +49,9 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      //Requests.put('http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/', )
+                    },
                     child: Text('Query based on ${this.code}'),
                   ),
                 ],

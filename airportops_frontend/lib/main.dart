@@ -25,6 +25,7 @@ Future<void> main() async {
       '/dbTesting': (context) => DatabaseRoute(),
       '/scanning': (context) => ScanRoute(),
       '/camera': (context) => UniversalScanApp(),
+      //'/passengerTesting': (context) => PassengerDisplayRoute(),
       '/passengerTesting': (context) => PassengerDisplayRoute(
             data: req,
           ),
@@ -72,6 +73,70 @@ class PassengerDisplayRoute extends StatelessWidget {
   }
 }
 
+/*class PassengerDisplayRoute extends StatefulWidget {
+  PassengerDisplayRoute({Key? key}) : super(key: key);
+  _PassengerDisplayRouteState createState() => _PassengerDisplayRouteState();
+}
+
+class _PassengerDisplayRouteState extends State<PassengerDisplayRoute> {
+  Map<String, dynamic>? data;
+  bool _isLoading = false;
+  @override
+  void initState() {
+    super.initState();
+    getPassengers();
+  }
+
+  getPassengers() async {
+    setState(() {
+      _isLoading = true;
+    });
+    var requestData = await passengerRequest();
+    setState(() {
+      data = requestData;
+      _isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Passenger> passengers = [];
+    List<PassengerProfile> profiles = [];
+
+    for (var passenger in this.data?['data']) {
+      passengers.add(Passenger(
+          accommodations: passenger['accommodations'],
+          passengerId: passenger['_id'],
+          birthday: DateTime.now(),
+          boarded: passenger['boarded'] == 'true',
+          event: passenger['event'],
+          flightDestination: passenger['destination'],
+          flightSource: passenger['origin'],
+          nameFirst: passenger['firstName'],
+          nameLast: passenger['lastName'],
+          row: passenger['row'],
+          seat: passenger['seat']));
+    }
+
+    for (var person in passengers) {
+      profiles.add(PassengerProfile(title: 'test', passenger: person));
+    }
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Passenger Status Page'),
+        ),
+        body: _isLoading
+            ? CircularProgressIndicator()
+            : SingleChildScrollView(
+                child: Center(
+                  child: Column(children: <Widget>[
+                    ...profiles,
+                  ]),
+                ),
+              ));
+  }
+}
+*/
 class ScanRoute extends StatelessWidget {
   const ScanRoute({Key? key}) : super(key: key);
   @override
@@ -115,8 +180,8 @@ class DatabaseRoute extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  var req = await passengerRequest();
-                  for (final person in req['data']) {}
+                  //var req = await passengerRequest();
+
                   await Navigator.of(context).pushNamed('/passengerTesting');
                 },
                 child: const Text('Passenger Query'),
@@ -179,6 +244,8 @@ class HomeRoute extends StatelessWidget {
             ElevatedButton(
                 child: const Text('View Passenger Status'),
                 onPressed: () {
+                  //var req = await passengerRequest();
+
                   Navigator.pushNamed(context, '/passengerTesting');
                 }),
             const SizedBox(height: 8),
