@@ -13,12 +13,15 @@ import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/rampservices/rampservices_profile.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import 'login.dart';
+
 Future<void> main() async {
   //var req = await passengerRequest();
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
-      '/': (context) => const HomeRoute(),
+      '/': (context) => LoginRoute(),
+      '/home': (context) => const HomeRoute(),
       '/examplePassenger': (context) => PassengerProfileApp(),
       '/baggage': (context) => BaggageRoute(),
       '/admin': (context) => AdminRoute(),
@@ -26,6 +29,7 @@ Future<void> main() async {
       '/dbTesting': (context) => DatabaseRoute(),
       '/scanning': (context) => ScanRoute(),
       '/camera': (context) => UniversalScanApp(),
+      '/portal': (context) => PortalRoute()
       //'/passengerTesting': (context) => PassengerDisplayRoute(),
       //'/passengerTesting': (context) => PassengerDisplayRoute(
       //      data: req,
@@ -218,25 +222,26 @@ class HomeRoute extends StatelessWidget {
                 Navigator.pushNamed(context, '/examplePassenger');
               },
             ),
-            const SizedBox(height: 8),
             ElevatedButton(
                 child: const Text('Baggage Information'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/baggage');
                 }),
-            const SizedBox(height: 8),
+            ElevatedButton(
+                child: const Text('Login Route'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/login');
+                }),
             ElevatedButton(
                 child: const Text('Admin Panel'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/admin');
                 }),
-            const SizedBox(height: 8),
             ElevatedButton(
                 child: const Text('Progress Bar Demo'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/bars');
                 }),
-            const SizedBox(height: 8),
             ElevatedButton(
                 child: const Text('Database Testing'),
                 onPressed: () {
@@ -247,7 +252,6 @@ class HomeRoute extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, '/camera');
                 }),
-            const SizedBox(height: 8),
             ElevatedButton(
                 child: const Text('View Passenger Status'),
                 onPressed: () async {
@@ -256,9 +260,10 @@ class HomeRoute extends StatelessWidget {
                   await Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PassengerDisplayRoute(data: req)));
                 }),
-            const SizedBox(height: 8),
-          ],
-        )));
+          ].withSpaceBetween(height: 8),
+        )
+      )
+    );
   }
 }
 
@@ -321,7 +326,9 @@ class ProgressBarRoute extends StatelessWidget {
               child: Image.asset('assets/icons8-airport-64.png'),
             )
           ].withSpaceBetween(height: 8),
-        )));
+        )
+      )
+    );
   }
 }
 
@@ -413,6 +420,7 @@ class PassengerProfile extends StatelessWidget {
                                     .toIso8601String(),
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.bold)),*/
+<<<<<<< Updated upstream
                               ]),
                           SizedBox(height: 80),
                           Text('Special Requests:',
@@ -458,6 +466,20 @@ class QRImage extends StatelessWidget {
               100,
             ),
           ),
+=======
+                          ]),
+                      SizedBox(height: 80),
+                      Text('Special Requests:',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
+                      Text('    ${passenger.requestsString}',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold)),
+                    ]
+                )
+            )
+          ],
+>>>>>>> Stashed changes
         ),
       ),
     );
