@@ -47,8 +47,9 @@ class _NewPassengerState extends State<NewPassenger> {
         // _flightDestinationDate, // Use the value from the DateTimeFormField
         //citizenship: _citizenshipController.text,
         seat: _seatController.text,
-        passengerId: _passengerIdController.text,
-        row: int.parse(_rowController.text),
+        passengerId: '12345',
+        // row: int.parse(_rowController.text),
+        row: 5,
         boarded: _boardedController.text == 'true',
         event: _eventController.text,
         //requests: []); // You can add requests here if needed
@@ -116,15 +117,15 @@ class _NewPassengerState extends State<NewPassenger> {
                     return null;
                   },
                 ),
-                DateTimeFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Select Flight Source Date'),
-                    mode: DateTimeFieldPickerMode.date,
-                    onDateSelected: (DateTime value) {
-                      setState(() {
-                        _flightSourceDate = value;
-                      });
-                    }),
+                // DateTimeFormField(
+                //     decoration: const InputDecoration(
+                //         labelText: 'Select Flight Source Date'),
+                //     mode: DateTimeFieldPickerMode.date,
+                //     onDateSelected: (DateTime value) {
+                //       setState(() {
+                //         _flightSourceDate = value;
+                //       });
+                //     }),
                 TextFormField(
                   controller: _flightDestinationController,
                   decoration: const InputDecoration(
@@ -137,15 +138,15 @@ class _NewPassengerState extends State<NewPassenger> {
                     return null;
                   },
                 ),
-                DateTimeFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Select Flight Destination Date'),
-                    mode: DateTimeFieldPickerMode.date,
-                    onDateSelected: (DateTime value) {
-                      setState(() {
-                        _flightDestinationDate = value;
-                      });
-                    }),
+                // DateTimeFormField(
+                //     decoration: const InputDecoration(
+                //         labelText: 'Select Flight Destination Date'),
+                //     mode: DateTimeFieldPickerMode.date,
+                //     onDateSelected: (DateTime value) {
+                //       setState(() {
+                //         _flightDestinationDate = value;
+                //       });
+                //     }),
                 TextFormField(
                   controller: _citizenshipController,
                   decoration: const InputDecoration(
