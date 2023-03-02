@@ -27,6 +27,7 @@ class Passenger {
     required this.flightDestination,
     required this.accommodations,
     required this.event,
+    required this.status,
   });
 
   bool isAdult() {

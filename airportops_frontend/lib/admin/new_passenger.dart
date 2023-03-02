@@ -1,4 +1,5 @@
 import 'package:airportops_frontend/classes/passenger.dart';
+import 'package:airportops_frontend/enums.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,7 @@ class _NewPassengerState extends State<NewPassenger> {
   final TextEditingController _rowController = TextEditingController();
   final TextEditingController _boardedController = TextEditingController();
   final TextEditingController _eventController = TextEditingController();
+  final TextEditingController _statusController = TextEditingController();
 
   DateTime _birthday = DateTime.now();
   DateTime _flightSourceDate = DateTime.now();
@@ -33,24 +35,28 @@ class _NewPassengerState extends State<NewPassenger> {
     // validate form and create new passenger object
     if (_formKey.currentState!.validate()) {
       Passenger newPassenger = Passenger(
-          nameFirst: _firstNameController.text,
-          nameLast: _lastNameController.text,
-          //reservationNum: 0, // You can set this to a unique value
-          birthday: _birthday, // Use the value from the DateTimeFormField
-          flightSource: _flightSourceController.text,
-          //flightSourceDate:
-          //    _flightSourceDate, // Use the value from the DateTimeFormField
-          flightDestination: _flightDestinationController.text,
-          //flightDestinationDate:
-          // _flightDestinationDate, // Use the value from the DateTimeFormField
-          //citizenship: _citizenshipController.text,
-          seat: _seatController.text,
-          passengerId: _passengerIdController.text,
-          row: int.parse(_rowController.text),
-          boarded: _boardedController.text == 'true',
-          event: _eventController.text,
-          //requests: []); // You can add requests here if needed
-          accommodations: []); // TODO: Implement parsing accomodations
+        nameFirst: _firstNameController.text,
+        nameLast: _lastNameController.text,
+        //reservationNum: 0, // You can set this to a unique value
+        birthday: _birthday, // Use the value from the DateTimeFormField
+        flightSource: _flightSourceController.text,
+        //flightSourceDate:
+        //    _flightSourceDate, // Use the value from the DateTimeFormField
+        flightDestination: _flightDestinationController.text,
+        //flightDestinationDate:
+        // _flightDestinationDate, // Use the value from the DateTimeFormField
+        //citizenship: _citizenshipController.text,
+        seat: _seatController.text,
+        passengerId: _passengerIdController.text,
+        row: int.parse(_rowController.text),
+        boarded: _boardedController.text == 'true',
+        event: _eventController.text,
+        //requests: []); // You can add requests here if needed
+        accommodations: [],
+        status: _boardedController.text == 'true'
+            ? Status.boarded
+            : Status.unboarded,
+      ); // TODO: Implement parsing accomodations
 
       Navigator.pop(context, newPassenger);
     }

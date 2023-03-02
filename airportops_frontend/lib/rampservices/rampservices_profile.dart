@@ -27,6 +27,7 @@ class BaggageRoute extends StatelessWidget {
     boarded: false,
     accommodations: [],
     event: "Safety Rodeo",
+    status: Status.unboarded,
   );
 
   Passenger p2 = Passenger(
@@ -45,6 +46,7 @@ class BaggageRoute extends StatelessWidget {
     boarded: false,
     accommodations: [],
     event: "Safety Rodeo",
+    status: Status.unboarded,
   );
 
   Passenger p3 = Passenger(
@@ -63,6 +65,7 @@ class BaggageRoute extends StatelessWidget {
     boarded: false,
     accommodations: [],
     event: "Safety Rodeo",
+    status: Status.unboarded,
   );
 
   Passenger p4 = Passenger(
@@ -81,6 +84,7 @@ class BaggageRoute extends StatelessWidget {
     boarded: false,
     accommodations: [],
     event: "Safety Rodeo",
+    status: Status.unboarded,
   );
 
   late List<Passenger> l1 = [p1, p2, p3, p4];

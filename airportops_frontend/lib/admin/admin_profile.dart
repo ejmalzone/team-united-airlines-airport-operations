@@ -70,6 +70,7 @@ class AdminRouteState extends State<AdminRoute> {
     boarded: false,
     accommodations: [],
     event: "Safety Rodeo",
+    status: Status.unboarded,
   );
 
   Passenger p2 = Passenger(
@@ -88,6 +89,7 @@ class AdminRouteState extends State<AdminRoute> {
     boarded: false,
     accommodations: [],
     event: "Safety Rodeo",
+    status: Status.unboarded,
   );
 
   Passenger p3 = Passenger(
@@ -106,6 +108,7 @@ class AdminRouteState extends State<AdminRoute> {
     boarded: false,
     accommodations: [],
     event: "Safety Rodeo",
+    status: Status.unboarded,
   );
 
   late List<Passenger> l1 = [p1, p2, p3];
