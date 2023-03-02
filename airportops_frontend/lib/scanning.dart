@@ -23,8 +23,6 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
         ),
         body: Builder(builder: (context) {
           if (code != null) {
-            //return Material(
-            //child: Center(
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -51,13 +49,11 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                   ElevatedButton(
                     onPressed: () async {
                       //Requests.put('http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/', )
-                      print('Attempting request!');
                       var reply = await Requests.put(
                           'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
                           json: {"passengerId": this.code});
                       reply.raiseForStatus();
                       String body = reply.content();
-                      print(body);
                     },
                     child: Text('Query based on ${this.code}'),
                   ),
@@ -86,25 +82,61 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
         }),
       );
     }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('QR Scanning Page'),
       ),
       body: Builder(builder: (context) {
+        if (code != null) {
+          return Material(
+            child: Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    //Requests.put('http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/', )
+                    var reply = await Requests.put(
+                        'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
+                        json: {"passengerId": this.code});
+                    reply.raiseForStatus();
+                    String body = reply.content();
+                  },
+                  child: Text('Query based on ${this.code}'),
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
+                          context: context,
+                          onCode: (code) {
+                            setState(() {
+                              this.code = code;
+                            });
+                          });
+                    },
+                    child: Text(code ?? "Scan Boarding Pass")),
+              ],
+            )),
+          );
+        }
         return Material(
           child: Center(
-            child: ElevatedButton(
-                onPressed: () {
-                  _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
-                      context: context,
-                      onCode: (code) {
-                        setState(() {
-                          this.code = code;
-                        });
-                      });
-                },
-                child: Text(code ?? "Scan Boarding Pass")),
-          ),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                ElevatedButton(
+                    onPressed: () {
+                      _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
+                          context: context,
+                          onCode: (code) {
+                            setState(() {
+                              this.code = code;
+                            });
+                          });
+                    },
+                    child: Text(code ?? "Scan Boarding Pass")),
+              ])),
         );
       }),
     );

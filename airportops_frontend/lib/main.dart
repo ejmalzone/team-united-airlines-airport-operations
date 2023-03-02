@@ -11,6 +11,7 @@ import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/rampservices/rampservices_profile.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 Future<void> main() async {
   //var req = await passengerRequest();
@@ -333,92 +334,130 @@ class PassengerProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Card(
-                child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 5.0, horizontal: 16.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+    return GestureDetector(
+        child: Container(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Card(
+                    child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 16.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Column(children: <Widget>[
+                                Text(passenger.fullName,
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(fontSize: 24)),
+                                Text(
+                                  '${passenger.birthday.toString().split(' ')[0]}', // | ${passenger.citizenship}',
+                                  textAlign: TextAlign.justify,
+                                  style: const TextStyle(fontSize: 12),
+                                )
+                              ]),
+                              Text(passenger.status.name.titleCase(),
+                                  textAlign: TextAlign.right,
+                                  style: TextStyle(
+                                      fontSize: 36,
+                                      color: passenger.status.color))
+                            ]))),
+                Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Column(children: <Widget>[
-                            Text(passenger.fullName,
-                                textAlign: TextAlign.left,
-                                style: const TextStyle(fontSize: 24)),
-                            Text(
-                              '${passenger.birthday.toString().split(' ')[0]}', // | ${passenger.citizenship}',
-                              textAlign: TextAlign.justify,
-                              style: const TextStyle(fontSize: 12),
-                            )
-                          ]),
-                          Text(passenger.status.name.titleCase(),
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                  fontSize: 36, color: passenger.status.color))
-                        ]))),
-            Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Divider(color: Colors.black12),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          const Text('Reservation Number',
-                              style: TextStyle(fontSize: 14)),
-                          const Text('R-1234',
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold))
-                        ],
-                      ),
-                      SizedBox(height: 12),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(passenger.flightSource,
-                                style: TextStyle(fontSize: 12)),
-                            Text(passenger.flightDestination,
-                                style: TextStyle(fontSize: 12)),
-                          ]),
-                      SizedBox(height: 4),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            /*Text(
+                          Divider(color: Colors.black12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              const Text('Reservation Number',
+                                  style: TextStyle(fontSize: 14)),
+                              const Text('R-1234',
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold))
+                            ],
+                          ),
+                          SizedBox(height: 12),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(passenger.flightSource,
+                                    style: TextStyle(fontSize: 12)),
+                                Text(passenger.flightDestination,
+                                    style: TextStyle(fontSize: 12)),
+                              ]),
+                          SizedBox(height: 4),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                /*Text(
                                 passenger.flightSourceDate
                                     .toLocal()
                                     .toIso8601String(),
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.bold)),*/
-                            Expanded(child: Text('. ' * 1000, maxLines: 1)),
-                            /*Text(
+                                Expanded(child: Text('. ' * 1000, maxLines: 1)),
+                                /*Text(
                                 passenger.flightDestinationDate
                                     .toLocal()
                                     .toIso8601String(),
                                 style: TextStyle(
                                     fontSize: 13, fontWeight: FontWeight.bold)),*/
-                          ]),
-                      SizedBox(height: 80),
-                      Text('Special Requests:',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      Text('    ${passenger.requestsString}',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                    ]))
-          ],
+                              ]),
+                          SizedBox(height: 80),
+                          Text('Special Requests:',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                          Text('    ${passenger.requestsString}',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                        ]))
+              ],
+            ),
+          ),
+        ), //print('Tapped! ${passenger.passengerId}')
+        onTap: () async => await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => QRImage(passenger.passengerId),
+              ),
+            ));
+  }
+}
+
+class QRImage extends StatelessWidget {
+  const QRImage(this.passId, {super.key});
+  final String passId;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter + QR code'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: QrImage(
+          data: passId,
+          size: 280,
+          // You can include embeddedImageStyle Property if you
+          //wanna embed an image from your Asset folder
+          embeddedImageStyle: QrEmbeddedImageStyle(
+            size: const Size(
+              100,
+              100,
+            ),
+          ),
         ),
       ),
     );
