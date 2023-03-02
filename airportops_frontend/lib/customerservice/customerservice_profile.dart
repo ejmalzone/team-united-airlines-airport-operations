@@ -6,7 +6,7 @@ import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/classes/events.dart';
-import 'package:airportops_frontend/rampservices/event_details.dart';
+import 'package:airportops_frontend/customerservice/event_details.dart';
 
 class BaggageRoute extends StatelessWidget {
   BaggageRoute({Key? key}) : super(key: key);
@@ -93,7 +93,7 @@ class BaggageRoute extends StatelessWidget {
   late Event e1 = Event("Line Dancing", 0, 0, 0, l1, [], []);
   late Event e2 = Event("Cowboy Rodeo", 0, 15, 0, l2, [], []);
 
-  final Competitor c = Competitor("Satvik", "Ravipati", Position.Ramp);
+  final Competitor c = Competitor("Satvik", "Ravipati", Position.Csr);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   @override
