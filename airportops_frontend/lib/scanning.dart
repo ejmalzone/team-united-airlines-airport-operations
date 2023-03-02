@@ -57,7 +57,7 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                           json: {"passengerId": this.code});
                       reply.raiseForStatus();
                       String body = reply.content();
-                      //print(body);
+                      print(body);
                     },
                     child: Text('Query based on ${this.code}'),
                   ),

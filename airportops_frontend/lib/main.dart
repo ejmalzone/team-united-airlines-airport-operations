@@ -184,7 +184,10 @@ class DatabaseRoute extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   var req = await passengerRequest();
-                  print(req['data'][0]['boarded'] is bool);
+                  //print(req['data'][0]['boarded'] is bool);
+                  for (var person in req['data']) {
+                    print('ID: ${person['_id']}');
+                  }
                   //await Navigator.of(context).pushNamed('/passengerTesting');
                 },
                 child: const Text('Passenger Query'),
