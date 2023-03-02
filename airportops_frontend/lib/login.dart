@@ -143,7 +143,7 @@ class PortalRoute extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                makeButton(context, 'Customer Service', 'assets/icons8-airport-64.png'),
+                makeButton(context, 'Customer Service', 'assets/icons8-airport-64.png', '/customerservice'),
                 makeButton(context, 'Ramp Service', 'assets/icons8-luggage-64 (1).png', '/baggage'),
               ].withSpaceBetween(width: 36),
             ),

@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, avoid_print
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, avoid_print, use_build_context_synchronously
 
 import 'package:airportops_frontend/classes/competitor.dart';
+import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/widgets.dart';
@@ -18,104 +19,10 @@ class AdminRoute extends StatefulWidget {
 class AdminRouteState extends State<AdminRoute> {
   AdminRouteState({Key? key});
 
-  /*Passenger p1 = Passenger(
-      nameFirst: "John",
-      nameLast: "Fester",
-      reservationNum: 1234,
-      birthday: DateTime(2001, 9, 12),
-      flightSource: "DTW",
-      flightSourceDate: DateTime(2023, 5, 5),
-      flightDestination: "IAH",
-      flightDestinationDate: DateTime(2023, 5, 5),
-      citizenship: "USA",
-      seat: "123");
 
-  Passenger p2 = Passenger(
-      nameFirst: "Linda",
-      nameLast: "Holmes",
-      reservationNum: 1235,
-      birthday: DateTime(1998, 8, 3),
-      flightSource: "DTW",
-      flightSourceDate: DateTime(2023, 5, 5),
-      flightDestination: "IAH",
-      flightDestinationDate: DateTime(2023, 5, 5),
-      citizenship: "USA",
-      seat: "124");
 
-  Passenger p3 = Passenger(
-      nameFirst: "Ray",
-      nameLast: "Palmer",
-      reservationNum: 1236,
-      birthday: DateTime(1901, 7, 12),
-      flightSource: "DTW",
-      flightSourceDate: DateTime(2023, 5, 5),
-      flightDestination: "IAH",
-      flightDestinationDate: DateTime(2023, 5, 5),
-      citizenship: "USA",
-      seat: "125");
-      */
-  Passenger p1 = Passenger(
-    nameFirst: "John",
-    nameLast: "Fester",
-    //reservationNum: 1234,
-    birthday: DateTime(2001, 9, 12),
-    flightSource: "DTW",
-    //flightSourceDate: DateTime(2023, 5, 5),
-    flightDestination: "IAH",
-    //flightDestinationDate: DateTime(2023, 5, 5),
-    //citizenship: "USA",
-    seat: "A",
-    passengerId: "12345",
-    row: 5,
-    boarded: false,
-    accommodations: [],
-    event: "Safety Rodeo",
-    status: Status.unboarded,
-  );
+  Event e1 = Event("Line Dancing", 0, 0, 0, [], [], []);
 
-  Passenger p2 = Passenger(
-    nameFirst: "Linda",
-    nameLast: "Holmes",
-    //reservationNum: 1235,
-    birthday: DateTime(1998, 8, 3),
-    flightSource: "DTW",
-    //flightSourceDate: DateTime(2023, 5, 5),
-    flightDestination: "IAH",
-    //flightDestinationDate: DateTime(2023, 5, 5),
-    //citizenship: "USA",
-    seat: "B",
-    passengerId: "12345",
-    row: 5,
-    boarded: false,
-    accommodations: [],
-    event: "Safety Rodeo",
-    status: Status.unboarded,
-  );
-
-  Passenger p3 = Passenger(
-    nameFirst: "Ray",
-    nameLast: "Palmer",
-    //reservationNum: 1236,
-    birthday: DateTime(1901, 7, 12),
-    flightSource: "DTW",
-    //flightSourceDate: DateTime(2023, 5, 5),
-    flightDestination: "IAH",
-    //flightDestinationDate: DateTime(2023, 5, 5),
-    //citizenship: "USA",
-    seat: "C",
-    passengerId: "12345",
-    row: 5,
-    boarded: false,
-    accommodations: [],
-    event: "Safety Rodeo",
-    status: Status.unboarded,
-  );
-
-  late List<Passenger> l1 = [p1, p2, p3];
-  late List<Passenger> l2 = [p2, p3];
-
-  late Event e1 = Event("Line Dancing", 0, 0, 0, l1, [], []);
-  late Event e2 = Event("IDK", 0, 15, 0, l2, [], []);
 
   final Competitor c = Competitor("Stanley", "Duru", Position.Admin);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
@@ -222,9 +129,66 @@ class AdminRouteState extends State<AdminRoute> {
 }
 
 class EventBox extends StatelessWidget {
-  const EventBox({super.key, required this.event});
+  EventBox({super.key, required this.event});
 
   final Event event;
+
+  Passenger p1 = Passenger(
+    nameFirst: "John",
+    nameLast: "Fester",
+    //reservationNum: 1234,
+    birthday: DateTime(2001, 9, 12),
+    flightSource: "DTW",
+    //flightSourceDate: DateTime(2023, 5, 5),
+    flightDestination: "IAH",
+    //flightDestinationDate: DateTime(2023, 5, 5),
+    //citizenship: "USA",
+    seat: "A",
+    passengerId: "12345",
+    row: 5,
+    boarded: false,
+    accommodations: [],
+    event: "Safety Rodeo",
+    status: Status.unboarded,
+  );
+
+  Passenger p2 = Passenger(
+    nameFirst: "Linda",
+    nameLast: "Holmes",
+    //reservationNum: 1235,
+    birthday: DateTime(1998, 8, 3),
+    flightSource: "DTW",
+    //flightSourceDate: DateTime(2023, 5, 5),
+    flightDestination: "IAH",
+    //flightDestinationDate: DateTime(2023, 5, 5),
+    //citizenship: "USA",
+    seat: "B",
+    passengerId: "12345",
+    row: 5,
+    boarded: false,
+    accommodations: [],
+    event: "Safety Rodeo",
+    status: Status.unboarded,
+  );
+
+  Passenger p3 = Passenger(
+    nameFirst: "Ray",
+    nameLast: "Palmer",
+    //reservationNum: 1236,
+    birthday: DateTime(1901, 7, 12),
+    flightSource: "DTW",
+    //flightSourceDate: DateTime(2023, 5, 5),
+    flightDestination: "IAH",
+    //flightDestinationDate: DateTime(2023, 5, 5),
+    //citizenship: "USA",
+    seat: "C",
+    passengerId: "12345",
+    row: 5,
+    boarded: false,
+    accommodations: [],
+    event: "Safety Rodeo",
+    status: Status.unboarded,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -271,7 +235,32 @@ class EventBox extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                         child: IconButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            var req = await passengerRequest();
+                            List<Passenger> passengers = [p1,p2,p3];
+
+                            for (var passenger in req['data']) {
+                              passengers.add(Passenger(
+                                accommodations: passenger['accommodations'],
+                                passengerId: passenger['_id'],
+                                birthday: DateTime.now(),
+                                boarded: passenger['boarded'] == true,
+                                event: passenger['event'],
+                                flightDestination: passenger['destination'],
+                                flightSource: passenger['origin'],
+                                nameFirst: passenger['firstName'],
+                                nameLast: passenger['lastName'],
+                                row: passenger['row'],
+                                seat: passenger['seat'],
+                                status: passenger['boarded'] == true
+                                    ? Status.boarded
+                                    : Status.unboarded,
+                              ));
+                            }
+                            for (var person in passengers) {
+                              event.addPassenger(person);
+                            }
+
                             print(event.passengers);
                             Navigator.push(
                                 context,

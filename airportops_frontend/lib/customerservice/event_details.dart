@@ -4,6 +4,7 @@ import 'package:airportops_frontend/admin/new_passenger.dart';
 import 'package:airportops_frontend/main.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/customerservice/customerservice_profile.dart';
+import 'package:airportops_frontend/scanning.dart';
 import 'package:flutter/material.dart';
 import '../classes/events.dart';
 import '../widgets.dart';
@@ -64,17 +65,6 @@ class EventRouteState extends State<EventRoute> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextButton(
-                            child: Text(
-                              'View Competitors >',
-                              style: TextStyle(
-                                fontFamily: 'Open Sans',
-                                color: Color(0xFF00239E),
-                              ),
-                            ),
-                            onPressed: () {
-                              print('Pressed');
-                            })
                       ],
                     ),
                   ],
@@ -194,9 +184,9 @@ class EventRouteState extends State<EventRoute> {
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 201, 201, 201),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                child: ListView(
+                  // mainAxisSize: MainAxisSize.max,
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
                   children:
                       List.generate(widget.event.passengers.length, (index) {
                     return PCard(p: widget.event.passengers[index]);
@@ -209,24 +199,18 @@ class EventRouteState extends State<EventRoute> {
               child: Center(
                   child: ElevatedButton(
                 onPressed: () async {
-                  print("pressed add passengers");
-
-                  final newPassenger = await Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NewPassenger()));
-
-                  setState(() {
-                    widget.event.addPassenger(newPassenger);
-                  });
-                  for (int i = 0; i < widget.event.passengers.length; i++) {
-                    print(widget.event.passengers[i].fullName);
-                  }
+                  print("SCAN");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UniversalScanApp()));
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF00239E),
+                  backgroundColor: Colors.green,
                 ),
                 child: Text(
-                  "Add Passenger",
+                  "SCAN",
                   style: TextStyle(
                     fontFamily: 'Open Sans',
                   ),

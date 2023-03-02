@@ -3,6 +3,7 @@
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/enums.dart';
+import 'package:airportops_frontend/main.dart';
 import 'package:flutter/material.dart';
 
 /* Creates Profile box
@@ -113,7 +114,7 @@ class ProfileBox extends StatelessWidget {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                             child: Image.asset(
-                              'assets/united-airlines-logo-emblem-png-5.png',
+                              competitior.position.icon,
                               width: 114.2,
                               height: 93.4,
                               fit: BoxFit.cover,
@@ -132,15 +133,27 @@ class ProfileBox extends StatelessWidget {
 /* Creates passenger card
 param: passenger
 */
-class PCard extends StatelessWidget {
-  const PCard({super.key, required this.p});
-
+class PCard extends StatefulWidget {
   final Passenger p;
+  PCard({super.key, required this.p});
+
+  @override
+  State<PCard> createState() => PCardState();
+}
+
+class PCardState extends State<PCard> {
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => Scaffold(appBar: AppBar(
+              title: Text("${widget.p.fullName}'s Profile"),
+              backgroundColor: Colors.black,
+              centerTitle: true,
+            ),
+              body: PassengerProfile(title: "${widget.p.fullName} 's Profile", passenger: widget.p))));
         print('tapped card');
       },
       child: Padding(
@@ -164,7 +177,7 @@ class PCard extends StatelessWidget {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 8, 0, 0),
                       child: Text(
-                        p.fullName,
+                        widget.p.fullName,
                         style: TextStyle(
                           fontFamily: 'Open Sans',
                           fontSize: 20,
@@ -176,7 +189,7 @@ class PCard extends StatelessWidget {
                       padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
                       child: Text(
                         //'R-${p.reservationNum}|
-                        '${p.flightSource} to ${p.flightDestination}',
+                        '${widget.p.passengerId} | ${widget.p.flightSource} to ${widget.p.flightDestination}',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontFamily: 'Open Sans',
@@ -199,7 +212,7 @@ class PCard extends StatelessWidget {
                         width: 70,
                         height: 34.7,
                         decoration: BoxDecoration(
-                          color: Color(0xFF850000),
+                          color:widget.p.status.color,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(23),
                             bottomRight: Radius.circular(20),
@@ -210,7 +223,7 @@ class PCard extends StatelessWidget {
                         child: Align(
                           alignment: AlignmentDirectional(0, 0),
                           child: Text(
-                            p.status.name,
+                            widget.p.status.name,
                             style: TextStyle(
                                 fontFamily: 'Open Sans',
                                 color: Colors.white,

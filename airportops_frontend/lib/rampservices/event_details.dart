@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables
 
 import 'package:airportops_frontend/classes/passenger.dart';
+import 'package:airportops_frontend/scanning.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/classes/events.dart';
 
@@ -56,17 +57,6 @@ class EventRoute extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextButton(
-                            child: Text(
-                              'View Competitors >',
-                              style: TextStyle(
-                                fontFamily: 'Open Sans',
-                                color: Color(0xFF00239E),
-                              ),
-                            ),
-                            onPressed: () {
-                              print('Pressed');
-                            })
                       ],
                     ),
                   ],
@@ -154,9 +144,9 @@ class EventRoute extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 201, 201, 201),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                child: ListView(
+                  // mainAxisSize: MainAxisSize.max,
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: List.generate(event.passengers.length, (index) {
                     return PCard(p: event.passengers[index]);
                   }),
@@ -169,10 +159,14 @@ class EventRoute extends StatelessWidget {
                   child: ElevatedButton(
                 onPressed: () async {
                   print("SCAN");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UniversalScanApp()));
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF00239E),
+                  backgroundColor: Colors.green,
                 ),
                 child: Text(
                   "SCAN",

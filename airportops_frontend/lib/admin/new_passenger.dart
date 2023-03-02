@@ -65,7 +65,7 @@ class _NewPassengerState extends State<NewPassenger> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("New Passenger Page")),
+        appBar: AppBar(title: const Text("New Passenger Page"), backgroundColor: Colors.black,),
         body: Form(
             key: _formKey,
             child: Column(
@@ -173,7 +173,7 @@ class _NewPassengerState extends State<NewPassenger> {
                 Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         submitForm();
                       },
                       child: const Text('Submit'),
