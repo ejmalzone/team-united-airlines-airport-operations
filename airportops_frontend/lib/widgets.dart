@@ -230,3 +230,10 @@ class PCard extends StatelessWidget {
     );
   }
 }
+
+class LoginInput extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TextField(decoration: InputDecoration(fillColor: Colors.grey, filled: true));
+  }
+}
