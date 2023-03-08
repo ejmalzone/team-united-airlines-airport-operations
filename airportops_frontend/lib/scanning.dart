@@ -2,8 +2,74 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:requests/requests.dart';
+
+class HoneywellScanApp extends StatefulWidget {
+  @override
+  _HoneywellScanAppState createState() => _HoneywellScanAppState();
+}
+
+class _HoneywellScanAppState extends State<HoneywellScanApp> {
+  final FocusNode _focusNode = FocusNode();
+  String? _message;
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  KeyEventResult _handleKeyEvent(FocusNode node, RawKeyEvent event) {
+    setState(() {
+      if (event.physicalKey == PhysicalKeyboardKey.keyA) {
+        _message = 'Pressed the key next to CAPS LOCK!';
+      } else {
+        if (kReleaseMode) {
+          _message =
+              'Not the key next to CAPS LOCK: Pressed 0x${event.physicalKey.usbHidUsage.toRadixString(16)}';
+        } else {
+          // As the name implies, the debugName will only print useful
+          // information in debug mode.
+          _message =
+              'Not the key next to CAPS LOCK: Pressed ${event.physicalKey.debugName}';
+        }
+      }
+    });
+    return event.physicalKey == PhysicalKeyboardKey.keyA
+        ? KeyEventResult.handled
+        : KeyEventResult.ignored;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Honeywell Scanner Testing'),
+      ),
+      body: Container(
+          alignment: Alignment.center,
+          child: Focus(
+            focusNode: _focusNode,
+            onKey: _handleKeyEvent,
+            child: AnimatedBuilder(
+                animation: _focusNode,
+                builder: (BuildContext context, Widget? child) {
+                  if (!_focusNode.hasFocus) {
+                    return GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).requestFocus(_focusNode);
+                      },
+                      child: const Text('Click to focus'),
+                    );
+                  }
+                  return Text(_message ?? 'Press a key');
+                }),
+          )),
+    );
+  }
+}
 
 class UniversalScanApp extends StatefulWidget {
   @override
