@@ -31,7 +31,8 @@ Future<void> main() async {
       '/scanning': (context) => ScanRoute(),
       '/camera': (context) => UniversalScanApp(),
       '/portal': (context) => PortalRoute(),
-      '/customerservice' :(context) => CSRRoute()
+      '/customerservice': (context) => CSRRoute(),
+      '/honeywell': (context) => HoneywellScanApp(),
       //'/passengerTesting': (context) => PassengerDisplayRoute(),
       //'/passengerTesting': (context) => PassengerDisplayRoute(
       //      data: req,
@@ -262,10 +263,14 @@ class HomeRoute extends StatelessWidget {
                   await Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PassengerDisplayRoute(data: req)));
                 }),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/honeywell');
+              },
+              child: const Text('Honeywell Testing'),
+            )
           ].withSpaceBetween(height: 8),
-        )
-      )
-    );
+        )));
   }
 }
 
@@ -328,9 +333,7 @@ class ProgressBarRoute extends StatelessWidget {
               child: Image.asset('assets/icons8-airport-64.png'),
             )
           ].withSpaceBetween(height: 8),
-        )
-      )
-    );
+        )));
   }
 }
 
@@ -436,12 +439,11 @@ class PassengerProfile extends StatelessWidget {
           ),
         ), //print('Tapped! ${passenger.passengerId}')
         onTap: () async => await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => QRImage(passenger.passengerId),
-          ),
-        )
-    );
+              context,
+              MaterialPageRoute(
+                builder: (context) => QRImage(passenger.passengerId),
+              ),
+            ));
   }
 }
 
@@ -452,13 +454,13 @@ class QRImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Passenger QR Code'),
-        backgroundColor: Colors.black,
-        centerTitle: true,
-      ),
-      body: Center(
-        child: QrImage(
+        appBar: AppBar(
+          title: const Text('Passenger QR Code'),
+          backgroundColor: Colors.black,
+          centerTitle: true,
+        ),
+        body: Center(
+            child: QrImage(
           data: passId,
           size: 280,
           // You can include embeddedImageStyle Property if you
@@ -469,8 +471,6 @@ class QRImage extends StatelessWidget {
               100,
             ),
           ),
-        )
-      )
-    );
+        )));
   }
 }
