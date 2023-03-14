@@ -19,10 +19,7 @@ class AdminRoute extends StatefulWidget {
 class AdminRouteState extends State<AdminRoute> {
   AdminRouteState({Key? key});
 
-
-
   Event e1 = Event("Line Dancing", 0, 0, 0, [], [], []);
-
 
   final Competitor c = Competitor("Stanley", "Duru", Position.Admin);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
@@ -133,7 +130,7 @@ class EventBox extends StatelessWidget {
 
   final Event event;
 
-  Passenger p1 = Passenger(
+  /*Passenger p1 = Passenger(
     nameFirst: "John",
     nameLast: "Fester",
     //reservationNum: 1234,
@@ -188,7 +185,7 @@ class EventBox extends StatelessWidget {
     accommodations: [],
     event: "Safety Rodeo",
     status: Status.unboarded,
-  );
+  );*/
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +234,8 @@ class EventBox extends StatelessWidget {
                         child: IconButton(
                           onPressed: () async {
                             var req = await passengerRequest();
-                            List<Passenger> passengers = [p1,p2,p3];
+                            //List<Passenger> passengers = [p1,p2,p3];
+                            List<Passenger> passengers = [];
 
                             for (var passenger in req['data']) {
                               passengers.add(Passenger(

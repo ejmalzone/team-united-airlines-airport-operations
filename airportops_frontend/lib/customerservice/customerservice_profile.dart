@@ -14,7 +14,7 @@ import 'package:jiffy/jiffy.dart';
 class CSRRoute extends StatelessWidget {
   CSRRoute({Key? key}) : super(key: key);
 
- Passenger p1 = Passenger(
+  /*Passenger p1 = Passenger(
     nameFirst: "John",
     nameLast: "Fester",
     //reservationNum: 1234,
@@ -88,7 +88,7 @@ class CSRRoute extends StatelessWidget {
     accommodations: [],
     event: "Safety Rodeo",
     status: Status.unboarded,
-  );
+  );*/
 
   Event e1 = Event("Line Dancing", 0, 0, 0, [], [], []);
 
@@ -104,8 +104,6 @@ class CSRRoute extends StatelessWidget {
     void submit() {
       Navigator.of(context).pop();
     }
-
-
 
     return Scaffold(
       appBar: AppBar(
@@ -178,48 +176,47 @@ class CSRRoute extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           TextButton(
-                            child: Text(
-                              'View itinerary >',
-                              style: TextStyle(
-                                fontFamily: 'Open Sans',
-                                color: Color(0xFF00239E),
+                              child: Text(
+                                'View itinerary >',
+                                style: TextStyle(
+                                  fontFamily: 'Open Sans',
+                                  color: Color(0xFF00239E),
+                                ),
                               ),
-                            ),
-                            onPressed: () async {
-                              var req = await passengerRequest();
-                              List<Passenger> passengers = [p1,p2,p3];
+                              onPressed: () async {
+                                var req = await passengerRequest();
+                                //List<Passenger> passengers = [p1,p2,p3];
+                                List<Passenger> passengers = [];
+                                for (var passenger in req['data']) {
+                                  passengers.add(Passenger(
+                                    accommodations: passenger['accommodations'],
+                                    passengerId: passenger['_id'],
+                                    birthday: DateTime.now(),
+                                    boarded: passenger['boarded'] == true,
+                                    event: passenger['event'],
+                                    flightDestination: passenger['destination'],
+                                    flightSource: passenger['origin'],
+                                    nameFirst: passenger['firstName'],
+                                    nameLast: passenger['lastName'],
+                                    row: passenger['row'],
+                                    seat: passenger['seat'],
+                                    status: passenger['boarded'] == true
+                                        ? Status.boarded
+                                        : Status.unboarded,
+                                  ));
+                                }
+                                for (var person in passengers) {
+                                  e1.addPassenger(person);
+                                }
 
-                              for (var passenger in req['data']) {
-                                passengers.add(Passenger(
-                                  accommodations: passenger['accommodations'],
-                                  passengerId: passenger['_id'],
-                                  birthday: DateTime.now(),
-                                  boarded: passenger['boarded'] == true,
-                                  event: passenger['event'],
-                                  flightDestination: passenger['destination'],
-                                  flightSource: passenger['origin'],
-                                  nameFirst: passenger['firstName'],
-                                  nameLast: passenger['lastName'],
-                                  row: passenger['row'],
-                                  seat: passenger['seat'],
-                                  status: passenger['boarded'] == true
-                                      ? Status.boarded
-                                      : Status.unboarded,
-                                ));
-                              }
-                              for (var person in passengers) {
-                                e1.addPassenger(person);
-                              }
-
-                              print(e1.passengers);
+                                print(e1.passengers);
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          EventRoute(event: e1)));
-                              print('Pressed');
-                            }
-                          ),
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EventRoute(event: e1)));
+                                print('Pressed');
+                              }),
                           Align(
                             alignment: AlignmentDirectional(0, 0),
                             child: Padding(
