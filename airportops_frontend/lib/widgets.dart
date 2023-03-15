@@ -250,3 +250,55 @@ class LoginInput extends StatelessWidget {
     return TextField(decoration: InputDecoration(fillColor: Colors.grey, filled: true));
   }
 }
+
+
+class CountrySelector extends StatefulWidget {
+  final List<String> countries;
+  final Function(String) onSelect;
+  final TextEditingController controller;
+  final String label;
+
+  CountrySelector(
+      {required this.countries,
+      required this.onSelect,
+      required this.controller,
+      required this.label});
+
+  @override
+  _CountrySelectorState createState() => _CountrySelectorState();
+}
+
+class _CountrySelectorState extends State<CountrySelector> {
+  String _selectedCountry = "Select a Country";
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField(
+      value: _selectedCountry,
+      decoration: InputDecoration(
+        labelText: widget.label,
+        border: OutlineInputBorder(),
+      ),
+      items: [
+        DropdownMenuItem(
+          child: Text("Select a Country"),
+          value: "Select a Country",
+        ),
+        ...widget.countries.map(
+          (country) => DropdownMenuItem(
+            child: Text(country),
+            value: country,
+          ),
+        ),
+      ],
+      onChanged: (value) {
+        setState(() {
+          _selectedCountry = value.toString();
+          List<String> split = _selectedCountry.split(" - ");
+          widget.controller.text = split[1];
+          widget.onSelect(_selectedCountry);
+        });
+      },
+    );
+  }
+}

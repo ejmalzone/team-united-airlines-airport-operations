@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, prefer_const_literals_to_create_immutables, must_be_immutable
 
+import 'package:airportops_frontend/admin/competitor_page.dart';
 import 'package:airportops_frontend/admin/new_passenger.dart';
 import 'package:airportops_frontend/main.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
@@ -72,6 +73,8 @@ class EventRouteState extends State<EventRoute> {
                               ),
                             ),
                             onPressed: () {
+                              Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => CompetitorsPage(event: widget.event,)));
                               print('Pressed');
                             })
                       ],

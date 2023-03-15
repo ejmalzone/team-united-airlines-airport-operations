@@ -16,8 +16,7 @@ class Event {
   List<Competitor> competitors = [];
 
   Event(this.name, this.numBoarded, this.numNoShow, this.numWrong,
-      this.passengers, this.bags, this.competitors) {
-  }
+      this.passengers, this.bags, this.competitors) {}
 
   String get Date {
     String result = Jiffy(DateTime.now()).format('MMM do yyyy');
@@ -26,5 +25,9 @@ class Event {
 
   void addPassenger(Passenger p) {
     passengers.add(p);
+  }
+
+  void addCompetitor(Competitor c) {
+    competitors.add(c);
   }
 }

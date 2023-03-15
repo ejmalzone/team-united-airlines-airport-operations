@@ -2,22 +2,11 @@
 
 import 'package:flutter/material.dart';
 
-enum Position {
-  Ramp,
-  Csr,
-  Admin
-}
-enum Accommodations {
-  wheelchair,
-  stroller
-}
+enum Position { Ramp, Csr, Admin }
 
-enum Status {
-  boarded,
-  noShow,
-  wrongFlight,
-  unboarded
-}
+enum Accommodations { wheelchair, stroller }
+
+enum Status { boarded, noShow, wrongFlight, unboarded }
 
 extension StatusExtension on Status {
   static const colors = {
@@ -32,11 +21,12 @@ extension StatusExtension on Status {
 
 extension ImageExtension on Position {
   static const icons = {
-    Position.Admin:'assets/united-airlines-logo-emblem-png-5.png' ,
-    Position.Ramp:'assets/icons8-luggage-64 (1).png',
-    Position.Csr:'assets/icons8-airport-64.png',
-
+    Position.Admin: 'assets/united-airlines-logo-emblem-png-5.png',
+    Position.Ramp: 'assets/icons8-luggage-64 (1).png',
+    Position.Csr: 'assets/icons8-airport-64.png',
   };
 
-  String get icon => icons[this] ?? 'assets/united-airlines-logo-emblem-png-5.png';
+  String get icon =>
+      icons[this] ?? 'assets/united-airlines-logo-emblem-png-5.png';
 }
+
