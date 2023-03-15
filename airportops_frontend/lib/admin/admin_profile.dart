@@ -26,7 +26,8 @@ class AdminRouteState extends State<AdminRoute> {
 
   String newEventName = '';
 
-  List<Event> events = [];
+  late List<Event> events = [e1];
+
   late TextEditingController controller;
 
   @override
@@ -83,17 +84,18 @@ class AdminRouteState extends State<AdminRoute> {
                 ),
               ),
             ),
-            EventBox(event: e1),
-            SizedBox(
-                child: Column(
-              children: List.generate(events.length, (index) {
-                return EventBox(
-                  event: events[index],
-                );
-              }),
-            )),
+            Flexible(
+              child: SizedBox(
+                  child: Column(
+                children: List.generate(events.length, (index) {
+                  return EventBox(
+                    event: events[index],
+                  );
+                }),
+              )),
+            ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 20),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
@@ -187,6 +189,12 @@ class EventBox extends StatelessWidget {
     status: Status.unboarded,
   );*/
 
+  List<Competitor> employees = [
+    Competitor("Grant", "Mcleod", Position.Csr),
+    Competitor("Nadia", "Summers", Position.Csr),
+    Competitor("Alice", "Nixon", Position.Ramp),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -257,9 +265,17 @@ class EventBox extends StatelessWidget {
                             }
                             for (var person in passengers) {
                               event.addPassenger(person);
+                              if (person.boarded == true) {
+                                event.numBoarded += 1;
+                              }
+                            }
+
+                            for (var emp in employees) {
+                              event.addCompetitor(emp);
                             }
 
                             print(event.passengers);
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
