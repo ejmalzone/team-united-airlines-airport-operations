@@ -6,14 +6,15 @@ enum Position { Ramp, Csr, Admin }
 
 enum Accommodations { wheelchair, stroller }
 
-enum Status { boarded, noShow, wrongFlight, unboarded }
+enum Status { boarded, noShow, wrongFlight, unboarded, completed }
 
 extension StatusExtension on Status {
   static const colors = {
     Status.boarded: Colors.green,
     Status.noShow: Colors.red,
     Status.wrongFlight: Colors.yellow,
-    Status.unboarded: Colors.black
+    Status.unboarded: Colors.black,
+    Status.completed: Colors.green
   };
 
   Color get color => colors[this] ?? Colors.black;
@@ -29,4 +30,3 @@ extension ImageExtension on Position {
   String get icon =>
       icons[this] ?? 'assets/united-airlines-logo-emblem-png-5.png';
 }
-
