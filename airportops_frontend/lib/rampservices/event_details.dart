@@ -250,7 +250,7 @@ class PCard extends StatelessWidget {
                         width: 70,
                         height: 34.7,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 0, 73, 133),
+                          //color: Colors.black,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(23),
                             bottomRight: Radius.circular(20),
@@ -260,14 +260,14 @@ class PCard extends StatelessWidget {
                         ),
                         child: Align(
                           alignment: AlignmentDirectional(0, 0),
-                          // child: Text(
-                          //   p.status.name,
-                          //   style: TextStyle(
-                          //       fontFamily: 'Open Sans',
-                          //       color: Colors.white,
-                          //       fontWeight: FontWeight.w500,
-                          //       fontSize: 10),
-                          // ),
+                          child: Text(
+                            p.status.name,
+                            style: TextStyle(
+                                fontFamily: 'Open Sans',
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10),
+                          ),
                         ),
                       ),
                     ),
