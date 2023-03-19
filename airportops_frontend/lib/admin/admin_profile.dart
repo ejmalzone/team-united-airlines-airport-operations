@@ -19,14 +19,17 @@ class AdminRoute extends StatefulWidget {
 class AdminRouteState extends State<AdminRoute> {
   AdminRouteState({Key? key});
 
+  Future<Map<String, dynamic>> eventmap = eventRequest();
+  late List<Event> events;
+  
+
+
   Event e1 = Event("Line Dancing", 0, 0, 0, [], [], []);
 
   final Competitor c = Competitor("Stanley", "Duru", Position.Admin);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   String newEventName = '';
-
-  late List<Event> events = [e1];
 
   late TextEditingController controller;
 
@@ -59,7 +62,9 @@ class AdminRouteState extends State<AdminRoute> {
               ),
               actions: [TextButton(onPressed: submit, child: Text('Submit'))],
             ));
+    // for( var e in eventmap.){
 
+    // }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -105,12 +110,13 @@ class AdminRouteState extends State<AdminRoute> {
                   final eventName = await openDialog();
                   if (eventName == null || eventName.isEmpty) return;
                   setState(() {
+                    var e = eventPost(eventName);
                     newEventName = eventName;
+                    print(e);
                   });
                   Event newEvent = Event(newEventName, 0, 0, 0, [], [], []);
                   events.add(newEvent);
-                  print(newEventName);
-                  print(events);
+                  print(eventRequest());
                 },
                 child: Text(
                   "Generate New Event",
