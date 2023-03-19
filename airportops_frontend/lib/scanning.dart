@@ -98,10 +98,27 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
+                    print("This.code: ${this.code}");
+                    var person = await Requests.get(
+                      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
+                      json: {"_id": this.code},
+                    );
+
+                    List<dynamic> allData = person.json()['data'];
+                    for (var personData in allData) {
+                      //print("Person: ${personData}");
+                      if (personData['_id'] == this.code &&
+                          personData['accommodations'] != []) {
+                        print("REQUESTS PRESENT");
+                      }
+                    }
+
+                    person.raiseForStatus();
+
                     var reply = await Requests.put(
                         'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
                         json: {"passengerId": this.code});
-                    reply.raiseForStatus();
+                    //reply.raiseForStatus();
                     String body = reply.content();
                   },
                   child: Text('Query based on ${this.code}'),
