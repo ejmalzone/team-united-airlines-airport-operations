@@ -21,11 +21,14 @@ class _HoneywellScanAppState extends State<HoneywellScanApp> {
   @override
   Widget build(BuildContext context) {
     honeywellScanner = HoneywellScanner(
-      onScannerDecodeCallback: (scannedData) {
+      onScannerDecodeCallback: (scannedData) async {
         setState(() {
           lastScan = scannedData?.code;
         });
-        showDialog<String>(
+        await Requests.put(
+            'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
+            json: {"passengerId": scannedData?.code});
+        /*showDialog<String>(
             context: context,
             builder: (BuildContext context) => AlertDialog(
                   title: const Text('Scan Results'),
@@ -47,7 +50,7 @@ class _HoneywellScanAppState extends State<HoneywellScanApp> {
                       },
                     )
                   ],
-                ));
+                ));*/
       },
       onScannerErrorCallback: (error) {},
     );
