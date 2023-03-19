@@ -7,6 +7,9 @@ import 'package:honeywell_scanner/honeywell_scanner.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:requests/requests.dart';
 
+/*
+  Honeywell Scanner Code
+*/
 class HoneywellScanApp extends StatefulWidget {
   @override
   _HoneywellScanAppState createState() => _HoneywellScanAppState();
@@ -28,29 +31,6 @@ class _HoneywellScanAppState extends State<HoneywellScanApp> {
         await Requests.put(
             'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
             json: {"passengerId": scannedData?.code});
-        /*showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-                  title: const Text('Scan Results'),
-                  content:
-                      const Text('Do you want to check in the scanned bag?'),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text('Cancel'),
-                      onPressed: () => Navigator.pop(context, 'Cancel'),
-                    ),
-                    TextButton(
-                      child: Text('Check In id no. ${scannedData?.code}'),
-                      onPressed: () async {
-                        if (scannedData != null) {}
-                        await Requests.put(
-                            'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
-                            json: {"passengerId": scannedData?.code});
-                        Navigator.of(context).pop('OK');
-                      },
-                    )
-                  ],
-                ));*/
       },
       onScannerErrorCallback: (error) {},
     );
@@ -91,6 +71,9 @@ class _HoneywellScanAppState extends State<HoneywellScanApp> {
   }
 }
 
+/* 
+  Mobile/Web Scanning
+*/
 class UniversalScanApp extends StatefulWidget {
   @override
   _UniversalScanAppState createState() => _UniversalScanAppState();
@@ -102,76 +85,9 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('QR Scanning Page'),
-        ),
-        body: Builder(builder: (context) {
-          if (code != null) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
-                            context: context,
-                            onCode: (code) {
-                              setState(() {
-                                this.code = code?.substring(15);
-                              });
-                            });
-                      },
-                      child: Text((() {
-                        if (code == null) {
-                          return 'Scan Tag';
-                        }
-                        return 'Scan Another Tag';
-                      }())),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      //Requests.put('http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/', )
-                      var reply = await Requests.put(
-                          'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
-                          json: {"passengerId": this.code});
-                      reply.raiseForStatus();
-                      String body = reply.content();
-                    },
-                    child: Text('Query based on ${this.code}'),
-                  ),
-                ],
-              ),
-              //),
-            );
-            //);
-          }
-
-          return Material(
-            child: Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
-                        context: context,
-                        onCode: (code) {
-                          setState(() {
-                            this.code = code?.substring(15);
-                          });
-                        });
-                  },
-                  child: Text(code ?? "Scan Boarding Pass")),
-            ),
-          );
-        }),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('QR Scanning Page'),
+        title: const Text('Passenger Boarding'),
       ),
       body: Builder(builder: (context) {
         if (code != null) {
@@ -182,7 +98,6 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    //Requests.put('http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/', )
                     var reply = await Requests.put(
                         'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
                         json: {"passengerId": this.code});
@@ -196,9 +111,17 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                       _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
                           context: context,
                           onCode: (code) {
-                            setState(() {
-                              this.code = code;
-                            });
+                            if (kIsWeb) {
+                              setState(() {
+                                // Web scanning prepends "Scan Result:" onto
+                                // result, need substring to remove
+                                this.code = code?.substring(15);
+                              });
+                            } else {
+                              setState(() {
+                                this.code = code;
+                              });
+                            }
                           });
                     },
                     child: Text(code ?? "Scan Boarding Pass")),
@@ -216,9 +139,17 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                       _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
                           context: context,
                           onCode: (code) {
-                            setState(() {
-                              this.code = code;
-                            });
+                            if (kIsWeb) {
+                              setState(() {
+                                // Web scanning prepends "Scan Result:" onto
+                                // result, need substring to remove
+                                this.code = code?.substring(15);
+                              });
+                            } else {
+                              setState(() {
+                                this.code = code;
+                              });
+                            }
                           });
                     },
                     child: Text(code ?? "Scan Boarding Pass")),
