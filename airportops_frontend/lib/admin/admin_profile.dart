@@ -10,7 +10,7 @@ import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/admin/event_details.dart';
 
 class AdminRoute extends StatefulWidget {
-  Future<Map<String, dynamic>> eventmap;
+  Map<String, dynamic> eventmap;
   AdminRoute({Key? key, required this.eventmap}) : super(key: key);
 
   @override

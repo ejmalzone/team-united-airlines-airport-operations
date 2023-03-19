@@ -4,6 +4,7 @@ import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:airportops_frontend/admin/admin_profile.dart';
 
 class LoginRoute extends StatelessWidget {
   const LoginRoute({super.key});
@@ -103,15 +104,20 @@ class PortalRoute extends StatelessWidget {
     return ElevatedButton(
         style: buttonStyle,
         onPressed: () async {
-          if (endRoute != null) {
-            Navigator.pushNamed(context, endRoute);
-          }
           if (endRoute == '/admin') {
             Map<String, dynamic> eventMap = await eventRequest();
             if (eventMap['status'] == 'success') {
               await Navigator.of(context)
-                  .pushNamed('/admin', arguments: eventMap);
+                  .push(MaterialPageRoute(builder: ((context) {
+                return AdminRoute(
+                  eventmap: eventMap,
+                );
+              })));
             }
+          }
+
+          if (endRoute != null) {
+            Navigator.pushNamed(context, endRoute);
           }
         },
         child: Column(
