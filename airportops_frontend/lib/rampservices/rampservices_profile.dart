@@ -201,7 +201,7 @@ class BaggageRoute extends StatelessWidget {
                                     row: passenger['row'],
                                     seat: passenger['seat'],
                                     status: passenger['boarded'] == true
-                                        ? Status.completed
+                                        ? Status.boarded
                                         : Status.wrongFlight,
                                   ));
                                 }
