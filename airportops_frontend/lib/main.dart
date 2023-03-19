@@ -25,7 +25,7 @@ Future<void> main() async {
       '/home': (context) => const HomeRoute(),
       '/examplePassenger': (context) => PassengerProfileApp(),
       '/baggage': (context) => BaggageRoute(),
-      '/admin': (context) => AdminRoute(),
+      // '/admin': (context) => AdminRoute(),
       '/bars': (context) => ProgressBarRoute(),
       '/dbTesting': (context) => DatabaseRoute(),
       '/scanning': (context) => ScanRoute(),

@@ -10,7 +10,8 @@ import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/admin/event_details.dart';
 
 class AdminRoute extends StatefulWidget {
-  AdminRoute({super.key});
+  Future<Map<String, dynamic>> eventmap;
+  AdminRoute({Key? key, required this.eventmap}) : super(key: key);
 
   @override
   State<AdminRoute> createState() => AdminRouteState();
@@ -19,12 +20,8 @@ class AdminRoute extends StatefulWidget {
 class AdminRouteState extends State<AdminRoute> {
   AdminRouteState({Key? key});
 
-  Future<Map<String, dynamic>> eventmap = eventRequest();
-  late List<Event> events;
-  
-
-
   Event e1 = Event("Line Dancing", 0, 0, 0, [], [], []);
+  late List<Event> events = [e1];
 
   final Competitor c = Competitor("Stanley", "Duru", Position.Admin);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
@@ -62,9 +59,6 @@ class AdminRouteState extends State<AdminRoute> {
               ),
               actions: [TextButton(onPressed: submit, child: Text('Submit'))],
             ));
-    // for( var e in eventmap.){
-
-    // }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,

@@ -1,3 +1,5 @@
+import 'package:airportops_frontend/admin/event_details.dart';
+import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
@@ -100,9 +102,16 @@ class PortalRoute extends StatelessWidget {
 
     return ElevatedButton(
         style: buttonStyle,
-        onPressed: () {
+        onPressed: () async {
           if (endRoute != null) {
             Navigator.pushNamed(context, endRoute);
+          }
+          if (endRoute == '/admin') {
+            Map<String, dynamic> eventMap = await eventRequest();
+            if (eventMap['status'] == 'success') {
+              await Navigator.of(context)
+                  .pushNamed('/admin', arguments: eventMap);
+            }
           }
         },
         child: Column(
