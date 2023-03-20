@@ -98,7 +98,6 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    print("This.code: ${this.code}");
                     var person = await Requests.get(
                       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
                       json: {"_id": this.code},
@@ -106,10 +105,27 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
 
                     List<dynamic> allData = person.json()['data'];
                     for (var personData in allData) {
-                      //print("Person: ${personData}");
                       if (personData['_id'] == this.code &&
                           personData['accommodations'] != []) {
-                        print("REQUESTS PRESENT");
+                        showDialog<dynamic>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Accommodations present:'),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(children: <Widget>[
+                                      for (var req
+                                          in personData['accommodations'])
+                                        Text(req)
+                                    ]),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text('Acknowledge'),
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'ack'),
+                                    ),
+                                  ],
+                                ));
                       }
                     }
 
@@ -119,7 +135,7 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                         'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
                         json: {"passengerId": this.code});
                     //reply.raiseForStatus();
-                    String body = reply.content();
+                    //String body = reply.content();
                   },
                   child: Text('Query based on ${this.code}'),
                 ),
