@@ -5,6 +5,7 @@ import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/main.dart';
+import 'package:airportops_frontend/widgets/passenger_profile.dart';
 import 'package:flutter/material.dart';
 
 /* Creates Profile box

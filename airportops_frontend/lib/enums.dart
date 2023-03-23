@@ -13,7 +13,7 @@ extension StatusExtension on Status {
     Status.boarded: Colors.green,
     Status.noShow: Colors.red,
     Status.wrongFlight: Colors.yellow,
-    Status.unboarded: Colors.black,
+    Status.unboarded: Colors.black54,
     Status.completed: Colors.green
   };
 
