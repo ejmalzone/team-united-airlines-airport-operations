@@ -1,11 +1,9 @@
-import 'dart:ffi';
-
 class Baggage {
   final String nameFirst;
   final String nameLast;
   final String originiatingAirport;
   final String destinationAirport;
-  final Float weight;
+  final double weight;
   final String event;
   final bool checked;
 
