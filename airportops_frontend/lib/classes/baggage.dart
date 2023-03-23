@@ -3,7 +3,7 @@ class Baggage {
   final String nameLast;
   final String originatingAirport;
   final String destinationAirport;
-  final double weight;
+  final int weight;
   final String event;
   final bool checked;
 
