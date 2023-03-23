@@ -110,9 +110,8 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                     for (var personData in allData) {
                       if (personData['_id'] == this.code &&
                           personData['accommodations'] != []){*/
-                    print('PERSON: ${person.json()}');
-                    if (person.json()['data'][0]['accommodations'] != []) {
-                      print("ACCOMMODATIONS PRESENT!");
+                    if (person.json()['data'][0]['accommodations'].length !=
+                        0) {
                       showDialog<dynamic>(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
