@@ -19,7 +19,6 @@ Future<Map<String, dynamic>> currPassengerRequest() async {
   reply.raiseForStatus();
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
-  print(data);
   return data;
 }
 
@@ -30,7 +29,6 @@ Future<Map<String, dynamic>> eventPost(String name) async {
   String body = reply.content();
 // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
-  print(data);
   return (data);
 }
 
@@ -40,7 +38,6 @@ Future<Map<String, dynamic>> eventRequest() async {
   String body = reply.content();
 // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
-  print(data);
   return (data);
 }
 
@@ -71,7 +68,6 @@ Future<Map<String, dynamic>> passengerRequest(String event) async {
   String body = reply.content();
   // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
-  print(data);
   return data;
 }
 
@@ -82,6 +78,36 @@ Future<Map<String, dynamic>> bagsRequest(String event) async {
   String body = reply.content();
   // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
-  print(data);
   return data;
+}
+
+/// Set the event and return true or false if it was successful.
+/// [name] The name of the event
+Future<bool> setEvent(String name) async {
+  var reply = await Requests.post(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/event/',
+      json: {"setEvent": "true", "name": name});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  return data["status"] == "success" ? true : false;
+}
+
+Future<Map<String, dynamic>> createPassenger({
+  required String first,
+  required String last,
+  required DateTime DOB,
+  required int row,
+  required String seat,
+  required String originAirport,
+  required String destinationAirport,
+  List<String>? accommodations,
+  required String event}) async {
+    var reply = await Requests.post(
+    'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
+    json: {"firstName": first, "lastName": last, "DOB": DOB, "row": row,
+    "seat": seat, "origin": originAirport, "destination": destinationAirport,
+    "accommodations": accommodations, "event": event});
+    String body = reply.content();
+    Map<String, dynamic> data = jsonDecode(body);
+    return data;
 }
