@@ -6,6 +6,7 @@ import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/progress_bar.dart';
+import 'package:airportops_frontend/widgets/passenger_profile.dart';
 import 'package:camera/camera.dart';
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
@@ -296,7 +297,7 @@ class PassengerProfileApp extends StatelessWidget {
     event: 'Safety Rodeo',
     passengerId: "3849673547ef8989",
     row: 5,
-    status: Status.unboarded,
+    status: Status.boarded,
   );
 
   @override
@@ -337,116 +338,6 @@ class ProgressBarRoute extends StatelessWidget {
             )
           ].withSpaceBetween(height: 8),
         )));
-  }
-}
-
-class PassengerProfile extends StatelessWidget {
-  const PassengerProfile(
-      {super.key, required this.title, required this.passenger});
-
-  final String title;
-  final Passenger passenger;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-        child: Container(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Card(
-                    child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 16.0),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Column(children: <Widget>[
-                                Text(passenger.fullName,
-                                    textAlign: TextAlign.left,
-                                    style: const TextStyle(fontSize: 24)),
-                                Text(
-                                  '${passenger.birthday.toString().split(' ')[0]}', // | ${passenger.citizenship}',
-                                  textAlign: TextAlign.justify,
-                                  style: const TextStyle(fontSize: 12),
-                                )
-                              ]),
-                              Text(passenger.status.name.titleCase(),
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                      fontSize: 36,
-                                      color: passenger.status.color))
-                            ]))),
-                Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Divider(color: Colors.black12),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              const Text('Reservation Number',
-                                  style: TextStyle(fontSize: 14)),
-                              const Text('R-1234',
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold))
-                            ],
-                          ),
-                          SizedBox(height: 12),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(passenger.flightSource,
-                                    style: TextStyle(fontSize: 12)),
-                                Text(passenger.flightDestination,
-                                    style: TextStyle(fontSize: 12)),
-                              ]),
-                          SizedBox(height: 4),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                /*Text(
-                                passenger.flightSourceDate
-                                    .toLocal()
-                                    .toIso8601String(),
-                                style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.bold)),*/
-                                Expanded(child: Text('. ' * 1000, maxLines: 1)),
-                                /*Text(
-                                passenger.flightDestinationDate
-                                    .toLocal()
-                                    .toIso8601String(),
-                                style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.bold)),*/
-                              ]),
-                          SizedBox(height: 80),
-                          Text('Special Requests:',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          Text('    ${passenger.requestsString}',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                        ]))
-              ],
-            ),
-          ),
-        ), //print('Tapped! ${passenger.passengerId}')
-        onTap: () async => await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => QRImage(passenger.passengerId),
-              ),
-            ));
   }
 }
 
