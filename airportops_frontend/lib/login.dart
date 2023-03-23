@@ -88,8 +88,20 @@ class LoginRoute extends StatelessWidget {
                                             Navigator.pushNamed(
                                                 context, '/portal');
                                           } else {
-                                            usernameController.text =
-                                                "Login failed!";
+                                            showDialog<dynamic>(
+                                              context: context,
+                                              builder: (BuildContext context) => AlertDialog(
+                                                title: const Text("Login failed!"),
+                                                content: const Text("Check username or password."),
+                                                actions: <Widget> [
+                                                  TextButton(
+                                                    child: const Text('OK'),
+                                                    onPressed: () =>
+                                                      Navigator.pop(context, 'ack'),
+                                                  ),
+                                                ],
+                                              )
+                                            );
                                           }
                                         });
                                       },
