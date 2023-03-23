@@ -17,7 +17,7 @@ class LoginRoute extends StatelessWidget {
     const welcomeMessage = [
       Text('Welcome to the', style: welcomeStyle),
       Text('Airport Operations', style: welcomeStyle),
-      Text('TRAINING PORTAL', style: welcomeStyle)
+      Text('Training Portal', style: welcomeStyle)
     ];
 
     const loginStyle = TextStyle(
@@ -58,14 +58,18 @@ class LoginRoute extends StatelessWidget {
                                   children: [
                                     Text('Username', style: loginStyle)
                                   ]),
-                              LoginInput(textController: usernameController, obscure: false),
+                              LoginInput(
+                                  textController: usernameController,
+                                  obscure: false),
                               SizedBox(height: 12),
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text('Password', style: loginStyle)
                                   ]),
-                              LoginInput(textController: passwordController, obscure: true),
+                              LoginInput(
+                                  textController: passwordController,
+                                  obscure: true),
                               SizedBox(height: 22),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -73,12 +77,16 @@ class LoginRoute extends StatelessWidget {
                                   ElevatedButton(
                                       style: buttonStyle,
                                       onPressed: () async {
-                                        await loginRequest(usernameController.text, passwordController.text)
-                                        .then((response) {
+                                        await loginRequest(
+                                                usernameController.text,
+                                                passwordController.text)
+                                            .then((response) {
                                           if (response['status'] == "success") {
-                                            Navigator.pushNamed(context, '/portal');
+                                            Navigator.pushNamed(
+                                                context, '/portal');
                                           } else {
-                                            usernameController.text = "Login failed!";
+                                            usernameController.text =
+                                                "Login failed!";
                                           }
                                         });
                                       },

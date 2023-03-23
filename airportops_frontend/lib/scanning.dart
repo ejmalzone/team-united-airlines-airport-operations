@@ -98,36 +98,42 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    var person = await Requests.get(
+                    /*var person = await Requests.get(
                       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
                       json: {"_id": this.code},
-                    );
+                    );*/
+                    var person = await Requests.post(
+                        'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/passenger/',
+                        json: {"_id": this.code});
 
-                    List<dynamic> allData = person.json()['data'];
+                    /*List<dynamic> allData = person.json()['data'];
                     for (var personData in allData) {
                       if (personData['_id'] == this.code &&
-                          personData['accommodations'] != []) {
-                        showDialog<dynamic>(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                                  title: const Text('Accommodations present:'),
-                                  content: SingleChildScrollView(
-                                    child: ListBody(children: <Widget>[
-                                      for (var req
-                                          in personData['accommodations'])
-                                        Text(req)
-                                    ]),
+                          personData['accommodations'] != []){*/
+                    print('PERSON: ${person.json()}');
+                    if (person.json()['data'][0]['accommodations'] != []) {
+                      print("ACCOMMODATIONS PRESENT!");
+                      showDialog<dynamic>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Accommodations present:'),
+                                content: SingleChildScrollView(
+                                  child: ListBody(children: <Widget>[
+                                    for (var req in person.json()['data'][0]
+                                        ['accommodations'])
+                                      Text(req)
+                                  ]),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text('Acknowledge'),
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'ack'),
                                   ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Text('Acknowledge'),
-                                      onPressed: () =>
-                                          Navigator.pop(context, 'ack'),
-                                    ),
-                                  ],
-                                ));
-                      }
+                                ],
+                              ));
                     }
+                    // }
 
                     person.raiseForStatus();
 
