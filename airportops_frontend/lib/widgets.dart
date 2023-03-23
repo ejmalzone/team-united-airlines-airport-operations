@@ -143,18 +143,22 @@ class PCard extends StatefulWidget {
 }
 
 class PCardState extends State<PCard> {
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => Scaffold(appBar: AppBar(
-              title: Text("${widget.p.fullName}'s Profile"),
-              backgroundColor: Colors.black,
-              centerTitle: true,
-            ),
-              body: PassengerProfile(title: "${widget.p.fullName} 's Profile", passenger: widget.p))));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Scaffold(
+                    appBar: AppBar(
+                      title: Text("${widget.p.fullName}'s Profile"),
+                      backgroundColor: Colors.black,
+                      centerTitle: true,
+                    ),
+                    body: PassengerProfile(
+                        title: "${widget.p.fullName} 's Profile",
+                        passenger: widget.p))));
         print('tapped card');
       },
       child: Padding(
@@ -213,7 +217,7 @@ class PCardState extends State<PCard> {
                         width: 70,
                         height: 34.7,
                         decoration: BoxDecoration(
-                          color:widget.p.status.color,
+                          color: widget.p.status.color,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(23),
                             bottomRight: Radius.circular(20),
@@ -248,24 +252,29 @@ class PCardState extends State<PCard> {
 class LoginInput extends StatefulWidget {
   final TextEditingController textController;
   final bool obscure;
-  const LoginInput({Key? key, required this.textController, required this.obscure}) : super(key: key);
+  const LoginInput(
+      {Key? key, required this.textController, required this.obscure})
+      : super(key: key);
 
   @override
   State<LoginInput> createState() => _LoginState();
 }
 
 class _LoginState extends State<LoginInput> {
-  @override dispose() {
+  @override
+  dispose() {
     widget.textController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextField(decoration: InputDecoration(fillColor: Colors.grey, filled: true), controller: widget.textController, obscureText: widget.obscure);
+    return TextField(
+        decoration: InputDecoration(fillColor: Colors.grey, filled: true),
+        controller: widget.textController,
+        obscureText: widget.obscure);
   }
 }
-
 
 class CountrySelector extends StatefulWidget {
   final List<String> countries;
@@ -327,7 +336,6 @@ class BCard extends StatefulWidget {
 }
 
 class BCardState extends State<BCard> {
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -374,7 +382,7 @@ class BCardState extends State<BCard> {
                       padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
                       child: Text(
                         //'R-${p.reservationNum}|
-                        'Weight: ${widget.b.weight.toString()}lbs | ${widget.b.originiatingAirport} to ${widget.b.destinationAirport}',
+                        'Weight: ${widget.b.weight.toString()}lbs | ${widget.b.originatingAirport} to ${widget.b.destinationAirport}',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontFamily: 'Open Sans',
@@ -397,7 +405,7 @@ class BCardState extends State<BCard> {
                         width: 70,
                         height: 34.7,
                         decoration: BoxDecoration(
-                          color:Colors.blue,
+                          color: Colors.blue,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(23),
                             bottomRight: Radius.circular(20),

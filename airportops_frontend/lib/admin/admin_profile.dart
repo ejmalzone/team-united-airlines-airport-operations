@@ -188,50 +188,52 @@ class EventBox extends StatelessWidget {
                         child: IconButton(
                           onPressed: () async {
                             event.Reset();
-                            var pReq = await passengerRequest(event.name);
-                            var bReq = await bagsRequest('default');
-                            Baggage bag1 = Baggage('Test', 'Bag', 'DTW', 'IAH',
-                                41, event.name, true);
-                            Baggage bag2 = Baggage('Test2', 'Bag', 'DTW', 'IAH',
-                                38, event.name, true);
-                            Baggage bag3 = Baggage('Test3', 'Bag', 'DTW', 'IAH',
-                                50, event.name, true);
-                            List<Baggage> bags = [bag1, bag2, bag3];
-                            if (pReq['status'] == 'success') {
-                              for (var passenger in pReq['data']) {
-                                event.addPassenger(Passenger(
-                                  accommodations: passenger['accommodations'],
-                                  passengerId: passenger['_id'],
-                                  birthday: DateTime.now(),
-                                  boarded: passenger['boarded'] == true,
-                                  event: passenger['event'],
-                                  flightDestination: passenger['destination'],
-                                  flightSource: passenger['origin'],
-                                  nameFirst: passenger['firstName'],
-                                  nameLast: passenger['lastName'],
-                                  row: passenger['row'],
-                                  seat: passenger['seat'],
-                                  status: passenger['boarded'] == true
-                                      ? Status.boarded
-                                      : Status.unboarded,
-                                ));
-                              }
-
-                              for (var bag in bags) {
-                                event.addBag(bag);
-                              }
-
-                              for (var person in event.passengers) {
-                                if (person.boarded == true) {
-                                  event.numBoarded += 1;
+                            await passengerRequest(event.name).then((pReq) {
+                              if (pReq['status'] == 'success') {
+                                for (var passenger in pReq['data']) {
+                                  event.addPassenger(Passenger(
+                                    accommodations: passenger['accommodations'],
+                                    passengerId: passenger['_id'],
+                                    birthday: DateTime.now(),
+                                    boarded: passenger['boarded'] == true,
+                                    event: passenger['event'],
+                                    flightDestination: passenger['destination'],
+                                    flightSource: passenger['origin'],
+                                    nameFirst: passenger['firstName'],
+                                    nameLast: passenger['lastName'],
+                                    row: passenger['row'],
+                                    seat: passenger['seat'],
+                                    status: passenger['boarded'] == true
+                                        ? Status.boarded
+                                        : Status.unboarded,
+                                  ));
                                 }
 
-                                if (person.boarded == false) {
-                                  event.numNoShow += 1;
+                                for (var person in event.passengers) {
+                                  if (person.boarded == true) {
+                                    event.numBoarded += 1;
+                                  }
+
+                                  if (person.boarded == false) {
+                                    event.numNoShow += 1;
+                                  }
                                 }
                               }
-                            }
-
+                            });
+                            await bagsRequest(event.name).then((bReq) {
+                              if (bReq["status"] == "success") {
+                                for (var bag in bReq["data"]) {
+                                  event.addBag(Baggage(
+                                      nameFirst: bag["passengerFirst"],
+                                      nameLast: bag["passengerLast"],
+                                      originatingAirport: bag["origin"],
+                                      destinationAirport: bag["destination"],
+                                      weight: bag["weight"],
+                                      event: bag["event"],
+                                      checked: bag["checked"]));
+                                }
+                              }
+                            });
                             // for (var emp in employees) {
                             //   event.addCompetitor(emp);
                             // }
