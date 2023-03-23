@@ -184,7 +184,7 @@ class BaggageRoute extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () async {
-                                var req = await passengerRequest();
+                                var req = await currPassengerRequest();
                                 List<Passenger> passengers = [p1, p2, p3];
 
                                 for (var passenger in req['data']) {

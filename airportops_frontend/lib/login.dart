@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/admin/event_details.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/extensions.dart';
@@ -137,6 +140,15 @@ class PortalRoute extends StatelessWidget {
           if (endRoute != null) {
             Navigator.pushNamed(context, endRoute);
           }
+
+          // if (endRoute == '/admin') {
+          //   Navigator.pushNamed(context, '/admin');
+          //   Map<String, dynamic> eventMap = await eventRequest();
+          //   if (eventMap['status'] == 'success') {
+          //     await Navigator.push(context,
+          //             MaterialPageRoute(builder: (context) => AdminRoute(eventmap: eventMap)));
+          //   }
+          // }
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

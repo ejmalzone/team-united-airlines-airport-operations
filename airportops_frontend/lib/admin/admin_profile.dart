@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, avoid_print, use_build_context_synchronously
 
+import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/enums.dart';
@@ -20,8 +21,7 @@ class AdminRoute extends StatefulWidget {
 class AdminRouteState extends State<AdminRoute> {
   AdminRouteState({Key? key});
 
-  Event e1 = Event("Line Dancing", 0, 0, 0, [], [], []);
-  late List<Event> events = [e1];
+  late List<Event> events = [];
 
   final Competitor c = Competitor("Stanley", "Duru", Position.Admin);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
@@ -59,6 +59,11 @@ class AdminRouteState extends State<AdminRoute> {
               ),
               actions: [TextButton(onPressed: submit, child: Text('Submit'))],
             ));
+
+    for (var e in widget.eventmap['data']) {
+      Event cEvent = Event(e['name'], 0, 0, 0, [], [], []);
+      events.add(cEvent);
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -108,8 +113,6 @@ class AdminRouteState extends State<AdminRoute> {
                     newEventName = eventName;
                     print(e);
                   });
-                  Event newEvent = Event(newEventName, 0, 0, 0, [], [], []);
-                  events.add(newEvent);
                   print(eventRequest());
                 },
                 child: Text(
@@ -131,63 +134,6 @@ class EventBox extends StatelessWidget {
   EventBox({super.key, required this.event});
 
   final Event event;
-
-  /*Passenger p1 = Passenger(
-    nameFirst: "John",
-    nameLast: "Fester",
-    //reservationNum: 1234,
-    birthday: DateTime(2001, 9, 12),
-    flightSource: "DTW",
-    //flightSourceDate: DateTime(2023, 5, 5),
-    flightDestination: "IAH",
-    //flightDestinationDate: DateTime(2023, 5, 5),
-    //citizenship: "USA",
-    seat: "A",
-    passengerId: "12345",
-    row: 5,
-    boarded: false,
-    accommodations: [],
-    event: "Safety Rodeo",
-    status: Status.unboarded,
-  );
-
-  Passenger p2 = Passenger(
-    nameFirst: "Linda",
-    nameLast: "Holmes",
-    //reservationNum: 1235,
-    birthday: DateTime(1998, 8, 3),
-    flightSource: "DTW",
-    //flightSourceDate: DateTime(2023, 5, 5),
-    flightDestination: "IAH",
-    //flightDestinationDate: DateTime(2023, 5, 5),
-    //citizenship: "USA",
-    seat: "B",
-    passengerId: "12345",
-    row: 5,
-    boarded: false,
-    accommodations: [],
-    event: "Safety Rodeo",
-    status: Status.unboarded,
-  );
-
-  Passenger p3 = Passenger(
-    nameFirst: "Ray",
-    nameLast: "Palmer",
-    //reservationNum: 1236,
-    birthday: DateTime(1901, 7, 12),
-    flightSource: "DTW",
-    //flightSourceDate: DateTime(2023, 5, 5),
-    flightDestination: "IAH",
-    //flightDestinationDate: DateTime(2023, 5, 5),
-    //citizenship: "USA",
-    seat: "C",
-    passengerId: "12345",
-    row: 5,
-    boarded: false,
-    accommodations: [],
-    event: "Safety Rodeo",
-    status: Status.unboarded,
-  );*/
 
   List<Competitor> employees = [
     Competitor("Grant", "Mcleod", Position.Csr),
@@ -241,40 +187,56 @@ class EventBox extends StatelessWidget {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                         child: IconButton(
                           onPressed: () async {
-                            var req = await passengerRequest();
-                            //List<Passenger> passengers = [p1,p2,p3];
-                            List<Passenger> passengers = [];
+                            event.Reset();
+                            var pReq = await passengerRequest(event.name);
+                            var bReq = await bagsRequest('default');
+                            Baggage bag1 = Baggage('Test', 'Bag', 'DTW', 'IAH',
+                                41, event.name, true);
+                            Baggage bag2 = Baggage('Test2', 'Bag', 'DTW', 'IAH',
+                                38, event.name, true);
+                            Baggage bag3 = Baggage('Test3', 'Bag', 'DTW', 'IAH',
+                                50, event.name, true);
+                            List<Baggage> bags = [bag1, bag2, bag3];
+                            if (pReq['status'] == 'success') {
+                              for (var passenger in pReq['data']) {
+                                event.addPassenger(Passenger(
+                                  accommodations: passenger['accommodations'],
+                                  passengerId: passenger['_id'],
+                                  birthday: DateTime.now(),
+                                  boarded: passenger['boarded'] == true,
+                                  event: passenger['event'],
+                                  flightDestination: passenger['destination'],
+                                  flightSource: passenger['origin'],
+                                  nameFirst: passenger['firstName'],
+                                  nameLast: passenger['lastName'],
+                                  row: passenger['row'],
+                                  seat: passenger['seat'],
+                                  status: passenger['boarded'] == true
+                                      ? Status.boarded
+                                      : Status.unboarded,
+                                ));
+                              }
 
-                            for (var passenger in req['data']) {
-                              passengers.add(Passenger(
-                                accommodations: passenger['accommodations'],
-                                passengerId: passenger['_id'],
-                                birthday: DateTime.now(),
-                                boarded: passenger['boarded'] == true,
-                                event: passenger['event'],
-                                flightDestination: passenger['destination'],
-                                flightSource: passenger['origin'],
-                                nameFirst: passenger['firstName'],
-                                nameLast: passenger['lastName'],
-                                row: passenger['row'],
-                                seat: passenger['seat'],
-                                status: passenger['boarded'] == true
-                                    ? Status.boarded
-                                    : Status.unboarded,
-                              ));
-                            }
-                            for (var person in passengers) {
-                              event.addPassenger(person);
-                              if (person.boarded == true) {
-                                event.numBoarded += 1;
+                              for (var bag in bags) {
+                                event.addBag(bag);
+                              }
+
+                              for (var person in event.passengers) {
+                                if (person.boarded == true) {
+                                  event.numBoarded += 1;
+                                }
+
+                                if (person.boarded == false) {
+                                  event.numNoShow += 1;
+                                }
                               }
                             }
 
-                            for (var emp in employees) {
-                              event.addCompetitor(emp);
-                            }
+                            // for (var emp in employees) {
+                            //   event.addCompetitor(emp);
+                            // }
 
-                            print(event.passengers);
+                            // print(event.passengers);
 
                             Navigator.push(
                                 context,
