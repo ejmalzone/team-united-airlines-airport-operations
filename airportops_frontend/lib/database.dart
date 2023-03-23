@@ -13,7 +13,7 @@ Future<Map<String, dynamic>> testRequest() async {
   return data;
 }
 
-Future<Map<String, dynamic>> passengerRequest() async {
+Future<Map<String, dynamic>> currPassengerRequest() async {
   var reply = await Requests.post(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/passenger/');
   reply.raiseForStatus();
@@ -60,4 +60,26 @@ Future<Map<String, dynamic>> loginRequest(
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   return (data);
+}
+
+Future<Map<String, dynamic>> passengerRequest(String event) async {
+  var reply = await Requests.post(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/passenger/', 
+      json: {"event": event});
+  String body = reply.content();
+  // decoding with convert
+  Map<String, dynamic> data = jsonDecode(body);
+  print(data);
+  return data;
+}
+
+Future<Map<String,dynamic>> bagsRequest(String event) async{
+  var reply = await Requests.post(
+    'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/bag/', 
+    json: {"event": event});
+  String body = reply.content();
+  // decoding with convert
+  Map<String, dynamic> data = jsonDecode(body);
+  print(data);
+  return data;
 }

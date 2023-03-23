@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/customerservice/customerservice_profile.dart';
 import 'package:airportops_frontend/enums.dart';
@@ -18,6 +20,7 @@ import 'login.dart';
 
 Future<void> main() async {
   //var req = await passengerRequest();
+  Map<String, dynamic> eventMap = await eventRequest();
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
@@ -191,7 +194,7 @@ class DatabaseRoute extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  var req = await passengerRequest();
+                  var req = await currPassengerRequest();
                   //print(req['data'][0]['boarded'] is bool);
                   //for (var person in req['data']) {
                   //  print('ID: ${person['_id']}');
@@ -258,7 +261,7 @@ class HomeRoute extends StatelessWidget {
             ElevatedButton(
                 child: const Text('View Passenger Status'),
                 onPressed: () async {
-                  var req = await passengerRequest();
+                  var req = await currPassengerRequest();
                   //Navigator.pushNamed(context, '/passengerTesting');
                   await Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => PassengerDisplayRoute(data: req)));

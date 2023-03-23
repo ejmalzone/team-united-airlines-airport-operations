@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_const_literals_to_create_immutables
 
+import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/enums.dart';
@@ -313,6 +314,106 @@ class _CountrySelectorState extends State<CountrySelector> {
           widget.onSelect(_selectedCountry);
         });
       },
+    );
+  }
+}
+
+class BCard extends StatefulWidget {
+  final Baggage b;
+  BCard({super.key, required this.b});
+
+  @override
+  State<BCard> createState() => BCardState();
+}
+
+class BCardState extends State<BCard> {
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => Scaffold(appBar: AppBar(
+        //       title: Text("${widget.p.fullName}'s Profile"),
+        //       backgroundColor: Colors.black,
+        //       centerTitle: true,
+        //     ),
+        //       body: PassengerProfile(title: "${widget.p.fullName} 's Profile", passenger: widget.p))));
+        print('tapped card');
+      },
+      child: Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(30, 10, 30, 0),
+        child: Card(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          color: Color.fromARGB(255, 238, 238, 238),
+          elevation: 5,
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 8, 0, 0),
+                      child: Text(
+                        "${widget.b.fullName}'s bag",
+                        style: TextStyle(
+                          fontFamily: 'Open Sans',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
+                      child: Text(
+                        //'R-${p.reservationNum}|
+                        'Weight: ${widget.b.weight.toString()}lbs | ${widget.b.originiatingAirport} to ${widget.b.destinationAirport}',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontFamily: 'Open Sans',
+                          fontSize: 10,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    )
+                  ],
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 0),
+                      child: Container(
+                        width: 70,
+                        height: 34.7,
+                        decoration: BoxDecoration(
+                          color:Colors.blue,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(23),
+                            bottomRight: Radius.circular(20),
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

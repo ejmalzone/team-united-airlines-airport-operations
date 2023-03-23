@@ -2,6 +2,7 @@
 
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/scanning.dart';
+import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/classes/events.dart';
 
@@ -183,101 +184,101 @@ class EventRoute extends StatelessWidget {
   }
 }
 
-class PCard extends StatelessWidget {
-  const PCard({super.key, required this.p});
+// class PCard extends StatelessWidget {
+//   const PCard({super.key, required this.p});
 
-  final Passenger p;
+//   final Passenger p;
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        print('tapped card');
-      },
-      child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(25, 8, 25, 0),
-        child: Card(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          color: Color(0xFFD9D9D9),
-          elevation: 5,
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(11, 9, 0, 0),
-                      child: Text(
-                        p.fullName,
-                        style: TextStyle(
-                          fontFamily: 'Open Sans',
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
-                      child: Text(
-                        //'R-${p.reservationNum}|
-                        '${p.flightSource} to ${p.flightDestination}',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontFamily: 'Open Sans',
-                          fontSize: 10,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    )
-                  ],
-                ),
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 0),
-                      child: Container(
-                        width: 70,
-                        height: 34.7,
-                        decoration: BoxDecoration(
-                          //color: Colors.black,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(23),
-                            bottomRight: Radius.circular(20),
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        child: Align(
-                          alignment: AlignmentDirectional(0, 0),
-                          child: Text(
-                            p.status.name,
-                            style: TextStyle(
-                                fontFamily: 'Open Sans',
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () {
+//         print('tapped card');
+//       },
+//       child: Padding(
+//         padding: EdgeInsetsDirectional.fromSTEB(25, 8, 25, 0),
+//         child: Card(
+//           clipBehavior: Clip.antiAliasWithSaveLayer,
+//           color: Color(0xFFD9D9D9),
+//           elevation: 5,
+//           child: Padding(
+//             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+//             child: Row(
+//               mainAxisSize: MainAxisSize.max,
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Column(
+//                   mainAxisSize: MainAxisSize.max,
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     Padding(
+//                       padding: EdgeInsetsDirectional.fromSTEB(11, 9, 0, 0),
+//                       child: Text(
+//                         p.fullName,
+//                         style: TextStyle(
+//                           fontFamily: 'Open Sans',
+//                           fontSize: 20,
+//                           fontWeight: FontWeight.w600,
+//                         ),
+//                       ),
+//                     ),
+//                     Padding(
+//                       padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
+//                       child: Text(
+//                         //'R-${p.reservationNum}|
+//                         '${p.flightSource} to ${p.flightDestination}',
+//                         textAlign: TextAlign.start,
+//                         style: TextStyle(
+//                           fontFamily: 'Open Sans',
+//                           fontSize: 10,
+//                           fontWeight: FontWeight.normal,
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(
+//                       height: 20,
+//                     )
+//                   ],
+//                 ),
+//                 Column(
+//                   mainAxisSize: MainAxisSize.max,
+//                   children: [
+//                     Padding(
+//                       padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 0),
+//                       child: Container(
+//                         width: 70,
+//                         height: 34.7,
+//                         decoration: BoxDecoration(
+//                           //color: Colors.black,
+//                           borderRadius: BorderRadius.only(
+//                             bottomLeft: Radius.circular(23),
+//                             bottomRight: Radius.circular(20),
+//                             topLeft: Radius.circular(20),
+//                             topRight: Radius.circular(20),
+//                           ),
+//                         ),
+//                         child: Align(
+//                           alignment: AlignmentDirectional(0, 0),
+//                           child: Text(
+//                             p.status.name,
+//                             style: TextStyle(
+//                                 fontFamily: 'Open Sans',
+//                                 color: Colors.white,
+//                                 fontWeight: FontWeight.w500,
+//                                 fontSize: 10),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

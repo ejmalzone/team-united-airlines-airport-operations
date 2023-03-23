@@ -30,4 +30,17 @@ class Event {
   void addCompetitor(Competitor c) {
     competitors.add(c);
   }
+
+  void addBag(Baggage b) {
+    bags.add(b);
+  }
+
+  void Reset() {
+    passengers.clear();
+    bags.clear();
+    competitors.clear();
+    numBoarded = 0;
+    numNoShow = 0;
+    numWrong = 0;
+  }
 }
