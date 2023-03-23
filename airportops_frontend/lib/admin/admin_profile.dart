@@ -228,7 +228,7 @@ class EventBox extends StatelessWidget {
                                       nameLast: bag["passengerLast"],
                                       originatingAirport: bag["origin"],
                                       destinationAirport: bag["destination"],
-                                      weight: bag["weight"],
+                                      weight: double.parse(bag["weight"]),
                                       event: bag["event"],
                                       checked: bag["checked"]));
                                 }
