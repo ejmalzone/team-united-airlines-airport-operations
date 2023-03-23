@@ -44,9 +44,11 @@ Future<Map<String, dynamic>> eventRequest() async {
   return (data);
 }
 
-Future<Map<String, dynamic>> signupRequest() async {
+Future<Map<String, dynamic>> signupRequest(
+    String username, String password) async {
   var reply = await Requests.post(
-      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/admin/signup');
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/admin/signup',
+      json: {"username": username, "password": password, "access": 2});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   return (data);
@@ -64,7 +66,7 @@ Future<Map<String, dynamic>> loginRequest(
 
 Future<Map<String, dynamic>> passengerRequest(String event) async {
   var reply = await Requests.post(
-      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/passenger/', 
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/passenger/',
       json: {"event": event});
   String body = reply.content();
   // decoding with convert
@@ -73,10 +75,10 @@ Future<Map<String, dynamic>> passengerRequest(String event) async {
   return data;
 }
 
-Future<Map<String,dynamic>> bagsRequest(String event) async{
+Future<Map<String, dynamic>> bagsRequest(String event) async {
   var reply = await Requests.post(
-    'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/bag/', 
-    json: {"event": event});
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/bag/',
+      json: {"event": event});
   String body = reply.content();
   // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
