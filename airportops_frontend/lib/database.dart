@@ -43,3 +43,19 @@ Future<Map<String, dynamic>> eventRequest() async {
   print(data);
   return (data);
 }
+
+Future<Map<String, dynamic>> signupRequest() async {
+  var reply = await Requests.post(
+    'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/admin/signup');
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  return (data);
+}
+
+Future<Map<String, dynamic>> loginRequest(String username, String password) async {
+  var reply = await Requests.post(
+    'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/admin/login', json: {"username": username, "password": password});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  return (data);
+}

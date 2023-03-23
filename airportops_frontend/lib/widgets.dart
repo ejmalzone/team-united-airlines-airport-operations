@@ -244,10 +244,24 @@ class PCardState extends State<PCard> {
   }
 }
 
-class LoginInput extends StatelessWidget {
+class LoginInput extends StatefulWidget {
+  final TextEditingController textController;
+  final bool obscure;
+  const LoginInput({Key? key, required this.textController, required this.obscure}) : super(key: key);
+
+  @override
+  State<LoginInput> createState() => _LoginState();
+}
+
+class _LoginState extends State<LoginInput> {
+  @override dispose() {
+    widget.textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return TextField(decoration: InputDecoration(fillColor: Colors.grey, filled: true));
+    return TextField(decoration: InputDecoration(fillColor: Colors.grey, filled: true), controller: widget.textController, obscureText: widget.obscure);
   }
 }
 

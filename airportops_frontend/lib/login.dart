@@ -28,6 +28,9 @@ class LoginRoute extends StatelessWidget {
         backgroundColor: Colors.blueAccent,
         textStyle: loginStyle);
 
+    TextEditingController usernameController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -55,22 +58,29 @@ class LoginRoute extends StatelessWidget {
                                   children: [
                                     Text('Username', style: loginStyle)
                                   ]),
-                              LoginInput(),
+                              LoginInput(textController: usernameController, obscure: false),
                               SizedBox(height: 12),
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text('Password', style: loginStyle)
                                   ]),
-                              LoginInput(),
+                              LoginInput(textController: passwordController, obscure: true),
                               SizedBox(height: 22),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   ElevatedButton(
                                       style: buttonStyle,
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, '/portal');
+                                      onPressed: () async {
+                                        await loginRequest(usernameController.text, passwordController.text)
+                                        .then((response) {
+                                          if (response['status'] == "success") {
+                                            Navigator.pushNamed(context, '/portal');
+                                          } else {
+                                            usernameController.text = "Login failed!";
+                                          }
+                                        });
                                       },
                                       child: const Text('Submit')),
                                   ElevatedButton(
