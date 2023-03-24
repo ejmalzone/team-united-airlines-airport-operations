@@ -5,6 +5,7 @@ import 'package:airportops_frontend/customerservice/customerservice_profile.dart
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
+import 'package:airportops_frontend/printing/pdfs.dart';
 import 'package:airportops_frontend/progress_bar.dart';
 import 'package:airportops_frontend/widgets/passenger_profile.dart';
 import 'package:camera/camera.dart';
@@ -234,6 +235,22 @@ class HomeRoute extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, '/baggage');
                 }),
+            ElevatedButton(
+              child: const Text('Test Save Bag PDF'),
+              onPressed: () {
+                final bag = Baggage(
+                    nameFirst: 'John',
+                    nameLast: 'Doe',
+                    originatingAirport: 'ATL',
+                    destinationAirport: 'JFK',
+                    weight: 40,
+                    event: 'Test Event',
+                    checked: false
+                );
+
+                PdfCreator.generateBagPdf(bag);
+              },
+            ),
             ElevatedButton(
                 child: const Text('Login Route'),
                 onPressed: () {
