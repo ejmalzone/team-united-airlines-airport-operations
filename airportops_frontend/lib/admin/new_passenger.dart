@@ -16,25 +16,23 @@ class NewPassenger extends StatefulWidget {
 class _NewPassengerState extends State<NewPassenger> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _flightSourceController = TextEditingController();
-  final TextEditingController _flightDestinationController =
-      TextEditingController();
-  final TextEditingController _citizenshipController = TextEditingController();
-  final TextEditingController _seatController = TextEditingController();
-  final TextEditingController _passengerIdController = TextEditingController();
-  final TextEditingController _rowController = TextEditingController();
-  final TextEditingController _boardedController = TextEditingController();
-  final TextEditingController _eventController = TextEditingController();
-  final TextEditingController _statusController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _flightSourceController = TextEditingController();
+  final _flightDestinationController = TextEditingController();
+  final _citizenshipController = TextEditingController();
+  final _seatController = TextEditingController();
+  final _passengerIdController = TextEditingController();
+  final _rowController = TextEditingController();
+  final _boardedController = TextEditingController();
+  final _eventController = TextEditingController();
+  final _statusController = TextEditingController();
 
   late String selectedCountry = "Select a Country";
 
   DateTime _birthday = DateTime.now();
   DateTime _flightSourceDate = DateTime.now();
   DateTime _flightDestinationDate = DateTime.now();
-
 
   var countries = {
     "DCA": "Washington",
@@ -161,8 +159,8 @@ class _NewPassengerState extends State<NewPassenger> {
   };
 
   late List<String> sortedCountries = countries.entries
-    .map((entry) => '${entry.value} - ${entry.key}')
-    .toList()
+      .map((entry) => '${entry.value} - ${entry.key}')
+      .toList()
     ..sort((a, b) => a.split(' ')[0].compareTo(b.split(' ')[0]));
 
   @override
