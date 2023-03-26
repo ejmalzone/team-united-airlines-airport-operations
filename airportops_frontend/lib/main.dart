@@ -19,6 +19,7 @@ import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/rampservices/rampservices_profile.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import 'classes/competitor.dart';
 import 'login.dart';
 
 Future<void> main() async {
