@@ -4,7 +4,7 @@ import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../../classes/events.dart';
-import '../competitor_page.dart';
+import 'competitor_page.dart';
 
 class AdminRamp extends StatefulWidget {
   Event event;
