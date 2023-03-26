@@ -5,7 +5,7 @@ import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 
-import '../classes/competitor.dart';
+import '../../classes/competitor.dart';
 
 class CompetitorsPage extends StatefulWidget {
   Event event;
@@ -20,40 +20,31 @@ class _CompetitorsPageState extends State<CompetitorsPage> {
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text("Event Competitors"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            TextField(
-              decoration: const InputDecoration(
-                  labelText: 'Search for Employees',
-                  suffixIcon: Icon(Icons.search)),
-            ),
-            Flexible(
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: ListView(
-                  // mainAxisSize: MainAxisSize.max,
-                  // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children:
-                      List.generate(widget.event.competitors.length, (index) {
-                    return EBox(competitior: widget.event.competitors[index], image: image);
-                  }),
-                ),
-              ),
-            ),
-
-          ]
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(children: [
+        TextField(
+          decoration: const InputDecoration(
+              labelText: 'Search for Employees',
+              suffixIcon: Icon(Icons.search)),
         ),
-      ),
+        Flexible(
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: ListView(
+              // mainAxisSize: MainAxisSize.max,
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: List.generate(widget.event.competitors.length, (index) {
+                return EBox(
+                    competitior: widget.event.competitors[index], image: image);
+              }),
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }
