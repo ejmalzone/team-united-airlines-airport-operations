@@ -51,6 +51,7 @@ dependencies:
   honeywell_scanner: ^4.0.0+14
   flutter_login: ^4.1.1
   flutter_launcher_icons: ^0.11.0
+  shared_preferences: ^2.0.20
 
 dev_dependencies:
   flutter_test:
