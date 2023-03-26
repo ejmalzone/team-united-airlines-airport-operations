@@ -61,6 +61,16 @@ Future<Map<String, dynamic>> loginRequest(
   return (data);
 }
 
+Future<Map<String, dynamic>> usernameValidation(
+    String username) async {
+  var reply = await Requests.post(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/admin/validate',
+      json: {"username": username});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  return (data);
+}
+
 Future<Map<String, dynamic>> passengerRequest(String event) async {
   var reply = await Requests.post(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/passenger/',
