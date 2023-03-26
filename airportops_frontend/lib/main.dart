@@ -26,22 +26,19 @@ Future<void> main() async {
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
-      '/': (context) => LoginRoute(),
+      //'/': (context) => LoginRoute(),
+      //'/portal': (context) => PortalRoute(),
+      '/': (context) => PortalRoute(),
+      '/portal': (context) => LoginRoute(),
       '/home': (context) => const HomeRoute(),
       '/examplePassenger': (context) => PassengerProfileApp(),
       '/baggage': (context) => BaggageRoute(),
-      //'/admin': (context) => AdminRoute(),
       '/bars': (context) => ProgressBarRoute(),
       '/dbTesting': (context) => DatabaseRoute(),
       '/scanning': (context) => ScanRoute(),
       '/camera': (context) => UniversalScanApp(),
-      '/portal': (context) => PortalRoute(),
       '/customerservice': (context) => CSRRoute(),
       '/honeywell': (context) => HoneywellScanApp(),
-      //'/passengerTesting': (context) => PassengerDisplayRoute(),
-      //'/passengerTesting': (context) => PassengerDisplayRoute(
-      //      data: req,
-      //    ),
     },
   ));
 }
@@ -245,8 +242,7 @@ class HomeRoute extends StatelessWidget {
                     destinationAirport: 'JFK',
                     weight: 40,
                     event: 'Test Event',
-                    checked: false
-                );
+                    checked: false);
 
                 PdfCreator.generateBagPdf(bag);
               },

@@ -83,25 +83,44 @@ class LoginRoute extends StatelessWidget {
                                         await loginRequest(
                                                 usernameController.text,
                                                 passwordController.text)
-                                            .then((response) {
+                                            .then((response) async {
                                           if (response['status'] == "success") {
-                                            Navigator.pushNamed(
-                                                context, '/portal');
+                                            // TODO:
+                                            //Navigator.pushNamed(
+                                            //    context, '/portal');
+
+                                            Map<String, dynamic> eventMap =
+                                                await eventRequest();
+                                            if (eventMap['status'] ==
+                                                'success') {
+                                              await Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: ((context) {
+                                                return AdminRoute(
+                                                    eventmap: eventMap);
+                                              })));
+                                            }
                                           } else {
                                             showDialog<dynamic>(
-                                              context: context,
-                                              builder: (BuildContext context) => AlertDialog(
-                                                title: const Text("Login failed!"),
-                                                content: const Text("Check username or password."),
-                                                actions: <Widget> [
-                                                  TextButton(
-                                                    child: const Text('OK'),
-                                                    onPressed: () =>
-                                                      Navigator.pop(context, 'ack'),
-                                                  ),
-                                                ],
-                                              )
-                                            );
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        AlertDialog(
+                                                          title: const Text(
+                                                              "Login failed!"),
+                                                          content: const Text(
+                                                              "Check username or password."),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              child: const Text(
+                                                                  'OK'),
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      context,
+                                                                      'ack'),
+                                                            ),
+                                                          ],
+                                                        ));
                                           }
                                         });
                                       },
@@ -140,11 +159,15 @@ class PortalRoute extends StatelessWidget {
           if (endRoute == '/admin') {
             Map<String, dynamic> eventMap = await eventRequest();
             if (eventMap['status'] == 'success') {
-              await Navigator.of(context)
+              /*await Navigator.of(context)
                   .push(MaterialPageRoute(builder: ((context) {
                 return AdminRoute(
                   eventmap: eventMap,
                 );
+              })));*/
+              await Navigator.of(context)
+                  .push(MaterialPageRoute(builder: ((context) {
+                return LoginRoute();
               })));
             }
           }
