@@ -5,6 +5,7 @@ import 'package:airportops_frontend/customerservice/customerservice_profile.dart
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
+import 'package:airportops_frontend/portal.dart';
 import 'package:airportops_frontend/printing/pdfs.dart';
 import 'package:airportops_frontend/progress_bar.dart';
 import 'package:airportops_frontend/widgets/passenger_profile.dart';
