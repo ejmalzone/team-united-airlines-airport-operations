@@ -1,3 +1,4 @@
+import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -35,10 +36,13 @@ class PortalRoute extends StatelessWidget {
                 return LoginRoute();
               })));
             }
-          }
-
-          if (endRoute != null) {
-            Navigator.pushNamed(context, endRoute);
+          } else if (endRoute != null) {
+            print("ENDROUTE: ${endRoute}");
+            //Navigator.pushNamed(context, endRoute);
+            await Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => CompetitorSelectPage(source: endRoute)),
+            );
           }
 
           // if (endRoute == '/admin') {
@@ -76,10 +80,14 @@ class PortalRoute extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      // makeButton(context, 'Customer Service',
+                      //     'assets/icons8-airport-64.png', '/customerservice'),
+                      // makeButton(context, 'Ramp Service',
+                      //     'assets/icons8-luggage-64 (1).png', '/baggage'),
                       makeButton(context, 'Customer Service',
-                          'assets/icons8-airport-64.png', '/customerservice'),
+                          'assets/icons8-airport-64.png', '/csrSelect'),
                       makeButton(context, 'Ramp Service',
-                          'assets/icons8-luggage-64 (1).png', '/baggage'),
+                          'assets/icons8-luggage-64 (1).png', '/baggageSelect'),
                     ].withSpaceBetween(width: 36),
                   ),
                   makeButton(
