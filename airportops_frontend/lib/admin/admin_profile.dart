@@ -230,7 +230,8 @@ class EventBox extends StatelessWidget {
                                       destinationAirport: bag["destination"],
                                       weight: bag["weight"],
                                       event: bag["event"],
-                                      checked: bag["checked"]));
+                                      checked: bag["checked"],
+                                      id: bag["_id"]));
                                 }
                               }
                             });

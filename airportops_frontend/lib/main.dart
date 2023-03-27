@@ -236,17 +236,34 @@ class HomeRoute extends StatelessWidget {
                 }),
             ElevatedButton(
               child: const Text('Test Save Bag PDF'),
-              onPressed: () {
-                final bag = Baggage(
+              onPressed: () async {
+                Map<String, dynamic> reqData = await eventRequest();
+                //print(reqData['data'][0]['_id']);
+                Map<String, dynamic> bagData =
+                    await bagsRequest(reqData['data'][0]['name']);
+                print("BAG: ${bagData['data'][0]}");
+                print(bagData['data'][0].runtimeType);
+                Map bagInstance = bagData['data'][0];
+                print('ID Test: ${bagInstance['_id']}');
+                final testBag = Baggage(
+                  checked: bagInstance['checked'],
+                  destinationAirport: bagInstance['destination'],
+                  event: bagInstance['event'],
+                  nameFirst: bagInstance['passengerFirst'],
+                  nameLast: bagInstance['passengerLast'],
+                  originatingAirport: bagInstance['origin'],
+                  weight: bagInstance['weight'],
+                  id: bagInstance['_id'],
+                );
+                /*final bag = Baggage(
                     nameFirst: 'John',
                     nameLast: 'Doe',
                     originatingAirport: 'ATL',
                     destinationAirport: 'JFK',
                     weight: 40,
                     event: 'Test Event',
-                    checked: false);
-
-                PdfCreator.generateBagPdf(bag);
+                    checked: false);*/
+                PdfCreator.generateBagPdf(testBag);
               },
             ),
             ElevatedButton(
