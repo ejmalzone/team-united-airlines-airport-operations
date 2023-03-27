@@ -174,25 +174,28 @@ class LoginRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterLogin(
-      title: '',
-      userType: LoginUserType.name,
-      logo: const AssetImage('assets/united-high-res.png'),
-      hideForgotPasswordButton: true,
-      userValidator: _userValidator,
-      onLogin: _authUser,
-      onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => AdminRoute(eventmap: _events)
-        ));
-      },
-      onRecoverPassword: _recoverPassword,
-      theme: LoginTheme(
-        primaryColor: const Color.fromARGB(255, 0, 94, 170),
-        accentColor: const Color.fromARGB(255, 78, 78, 78),
-        errorColor: Colors.black,
-      )
-    );
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Admin Login'),
+          backgroundColor: Colors.black,
+        ),
+        body: FlutterLogin(
+            title: '',
+            userType: LoginUserType.name,
+            logo: const AssetImage('assets/united-high-res.png'),
+            hideForgotPasswordButton: true,
+            userValidator: _userValidator,
+            onLogin: _authUser,
+            onSubmitAnimationCompleted: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => AdminRoute(eventmap: _events)));
+            },
+            onRecoverPassword: _recoverPassword,
+            theme: LoginTheme(
+              primaryColor: const Color.fromARGB(255, 0, 94, 170),
+              accentColor: const Color.fromARGB(255, 78, 78, 78),
+              errorColor: Colors.black,
+            )));
   }
 }
 //https://pub.dev/packages/flutter_login

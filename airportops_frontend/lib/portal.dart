@@ -36,13 +36,16 @@ class PortalRoute extends StatelessWidget {
                 return LoginRoute();
               })));
             }
-          } else if (endRoute != null) {
+          } else if (endRoute == '/csrSelect' || endRoute == '/baggageSelect') {
             print("ENDROUTE: ${endRoute}");
             //Navigator.pushNamed(context, endRoute);
             await Navigator.of(context).push(
               MaterialPageRoute(
-                  builder: (context) => CompetitorSelectPage(source: endRoute)),
+                  builder: (context) =>
+                      CompetitorSelectPage(source: endRoute!)),
             );
+          } else {
+            await Navigator.of(context).pushNamed(endRoute.toString());
           }
 
           // if (endRoute == '/admin') {
@@ -65,33 +68,49 @@ class PortalRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text('Portal Selection'),
-          titleTextStyle: const TextStyle(
-              fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
-          backgroundColor: Colors.black,
-          toolbarHeight: 105,
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Portal Selection'),
+        titleTextStyle: const TextStyle(
+            fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+        backgroundColor: Colors.black,
+        toolbarHeight: 105,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // makeButton(context, 'Customer Service',
+                //     'assets/icons8-airport-64.png', '/customerservice'),
+                // makeButton(context, 'Ramp Service',
+                //     'assets/icons8-luggage-64 (1).png', '/baggage'),
+                makeButton(context, 'Customer Service',
+                    'assets/icons8-airport-64.png', '/csrSelect'),
+                makeButton(context, 'Ramp Service',
+                    'assets/icons8-luggage-64 (1).png', '/baggageSelect'),
+              ].withSpaceBetween(width: 36),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                makeButton(
+                    context, 'Admin', 'assets/united-square-64.png', '/admin'),
+                makeButton(
+                    //TEMPORARY DEBUG BUTTON
+                    context,
+                    'Debug',
+                    'assets/united-square-64.png',
+                    '/home'),
+              ].withSpaceBetween(
+                width: 36,
+              ),
+            ),
+          ].withSpaceBetween(height: 36),
         ),
-        body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // makeButton(context, 'Customer Service',
-                      //     'assets/icons8-airport-64.png', '/customerservice'),
-                      // makeButton(context, 'Ramp Service',
-                      //     'assets/icons8-luggage-64 (1).png', '/baggage'),
-                      makeButton(context, 'Customer Service',
-                          'assets/icons8-airport-64.png', '/csrSelect'),
-                      makeButton(context, 'Ramp Service',
-                          'assets/icons8-luggage-64 (1).png', '/baggageSelect'),
-                    ].withSpaceBetween(width: 36),
-                  ),
-                  makeButton(
-                      context, 'Admin', 'assets/united-square-64.png', '/admin')
-                ].withSpaceBetween(height: 36))));
+      ),
+    );
   }
 }
