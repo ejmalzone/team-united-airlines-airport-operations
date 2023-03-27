@@ -6,15 +6,18 @@ class Baggage {
   final int weight;
   final String event;
   final bool checked;
+  final String id;
 
-  Baggage(
-      {required this.nameFirst,
-      required this.nameLast,
-      required this.originatingAirport,
-      required this.destinationAirport,
-      required this.weight,
-      required this.event,
-      required this.checked});
+  Baggage({
+    required this.nameFirst,
+    required this.nameLast,
+    required this.originatingAirport,
+    required this.destinationAirport,
+    required this.weight,
+    required this.event,
+    required this.checked,
+    required this.id,
+  });
 
   String get fullName {
     return '$nameFirst, $nameLast';
