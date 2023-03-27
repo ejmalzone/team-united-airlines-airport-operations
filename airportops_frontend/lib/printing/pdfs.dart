@@ -3,11 +3,13 @@ import 'dart:io' as io;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-//import 'dart:html' as html; TODO: Figure out how to make android compile with this being imported still?
+import 'dart:html'
+    as html; //TODO: Figure out how to make android compile with this being imported still?
 import 'package:airportops_frontend/classes/baggage.dart';
 
 import '../classes/passenger.dart';
@@ -43,30 +45,27 @@ class PdfCreator {
     const code = "123456789";
 
     pdf.addPage(pw.Page(
-        // I think this is the right size paper...
-        pageFormat: PdfPageFormat.roll80,
+        margin: const pw.EdgeInsets.all(0.1 * PdfPageFormat.inch),
+        pageFormat: const PdfPageFormat(
+            2 * PdfPageFormat.inch, 18 * PdfPageFormat.inch,
+            marginAll: .2 * PdfPageFormat.inch),
         build: (pw.Context context) {
           return pw.Center(
-              child: pw.Column(children: [
+              child: pw.Column(children: <pw.Widget>[
             pw.BarcodeWidget(
                 data: code,
                 barcode: pw.Barcode.qrCode(),
                 width: 200,
                 height: 200),
-            pw.SizedBox(height: 20),
+            pw.SizedBox(height: 5),
             pw.Image(_unitedLogo),
-            pw.SizedBox(height: 20),
+            pw.SizedBox(height: 10),
             pw.BarcodeWidget(
-                data: code,
-                barcode: pw.Barcode.qrCode(),
-                width: 200,
-                height: 200),
-            pw.SizedBox(height: 20),
-            pw.BarcodeWidget(
-                data: code,
-                barcode: pw.Barcode.qrCode(),
-                width: 200,
-                height: 200),
+              data: code,
+              barcode: pw.Barcode.qrCode(),
+              width: 200,
+              height: 200,
+            ),
             pw.SizedBox(height: 10),
             pw.Text(DateTime.now().toIso8601String())
           ])); // Center
@@ -77,11 +76,11 @@ class PdfCreator {
 
     if (kIsWeb) {
       final content = base64Encode(pdfInBytes);
-      /*final anchor = html.AnchorElement(
+      final anchor = html.AnchorElement(
           href:
               "data:application/octet-stream;charset=utf-16le;base64,$content")
         ..setAttribute("download", name)
-        ..click();*/
+        ..click();
     } else {
       final file = io.File('${await _localPath}/$name');
       await file.writeAsBytes(pdfInBytes);
