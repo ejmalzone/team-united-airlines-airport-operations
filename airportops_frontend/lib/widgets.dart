@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_const_literals_to_create_immutables
 
+import 'package:airportops_frontend/bagprofile.dart';
 import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
@@ -341,13 +342,19 @@ class BCardState extends State<BCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => Scaffold(appBar: AppBar(
-        //       title: Text("${widget.p.fullName}'s Profile"),
-        //       backgroundColor: Colors.black,
-        //       centerTitle: true,
-        //     ),
-        //       body: PassengerProfile(title: "${widget.p.fullName} 's Profile", passenger: widget.p))));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Scaffold(
+                    appBar: AppBar(
+                      title: Text("${widget.b.fullName}'s bag"),
+                      backgroundColor: Colors.black,
+                      centerTitle: true,
+                    ),
+                    body: BagProfile(bag: widget.b)
+                )
+              )
+          );
         print('tapped card');
       },
       child: Padding(
