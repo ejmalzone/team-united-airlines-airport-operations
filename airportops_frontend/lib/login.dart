@@ -187,7 +187,7 @@ class LoginRoute extends StatelessWidget {
           backgroundColor: Colors.black,
         ),
         body: FlutterLogin(
-            title: '',
+            title: 'Admin',
             userType: LoginUserType.name,
             logo: const AssetImage('assets/united-high-res.png'),
             hideForgotPasswordButton: true,
@@ -198,6 +198,10 @@ class LoginRoute extends StatelessWidget {
                   builder: (context) => AdminRoute(eventmap: _events)));
             },
             onRecoverPassword: _recoverPassword,
+            messages: LoginMessages(
+              userHint: "Username",
+              passwordHint: "Password"
+            ),
             theme: LoginTheme(
               primaryColor: const Color.fromARGB(255, 0, 94, 170),
               accentColor: const Color.fromARGB(255, 78, 78, 78),
