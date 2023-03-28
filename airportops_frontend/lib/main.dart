@@ -188,8 +188,26 @@ class DatabaseRoute extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   //print('Testing: ');
-                  var req = await testRequest();
-                  //print(req['data']);
+                  Passenger testr = Passenger(
+                    nameFirst: "Ethan",
+                    nameLast: "Malzone",
+                    //reservationNum: 1234,
+                    birthday: DateTime(2001, 1, 4),
+                    flightSource: "DTW",
+                    //flightSourceDate: DateTime(2023, 2, 2),
+                    flightDestination: "IAH",
+                    //flightDestinationDate: DateTime(2023, 2, 3),
+                    //citizenship: "United States",
+                    seat: "A",
+                    accommodations: [],
+                    boarded: false,
+                    event: 'Safety Rodeo',
+                    passengerId: "3849673547ef8989",
+                    row: 5,
+                    status: Status.boarded,
+                  );
+                  var req = await createPassenger(first: testr.nameFirst, last: testr.nameLast, DOB: testr.birthday.toIso8601String(), row: testr.row, seat: testr.seat, originAirport: testr.flightSource, destinationAirport: testr.flightDestination, event: 'default');
+                  print(req['data']);
                 },
                 child: const Text('Event Query'),
               ),

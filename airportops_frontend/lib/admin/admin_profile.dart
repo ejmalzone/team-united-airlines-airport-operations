@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, avoid_print, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, avoid_print, use_build_context_synchronously, curly_braces_in_flow_control_structures
 
 import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
@@ -192,7 +192,7 @@ class EventBox extends StatelessWidget {
                               if (pReq['status'] == 'success') {
                                 for (var passenger in pReq['data']) {
                                   event.addPassenger(Passenger(
-                                    accommodations: passenger['accommodations'],
+                                    accommodations: passenger['accommodations'] ?? [],
                                     passengerId: passenger['_id'],
                                     birthday: DateTime.now(),
                                     boarded: passenger['boarded'] == true,

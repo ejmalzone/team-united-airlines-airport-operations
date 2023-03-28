@@ -10,6 +10,7 @@ Future<Map<String, dynamic>> testRequest() async {
   reply.raiseForStatus();
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return data;
 }
 
@@ -19,6 +20,7 @@ Future<Map<String, dynamic>> currPassengerRequest() async {
   reply.raiseForStatus();
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return data;
 }
 
@@ -29,6 +31,7 @@ Future<Map<String, dynamic>> eventPost(String name) async {
   String body = reply.content();
 // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return (data);
 }
 
@@ -38,6 +41,7 @@ Future<Map<String, dynamic>> eventRequest() async {
   String body = reply.content();
 // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return (data);
 }
 
@@ -48,6 +52,7 @@ Future<Map<String, dynamic>> signupRequest(
       json: {"username": username, "password": password, "access": 2});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return (data);
 }
 
@@ -58,16 +63,17 @@ Future<Map<String, dynamic>> loginRequest(
       json: {"username": username, "password": password});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return (data);
 }
 
-Future<Map<String, dynamic>> usernameValidation(
-    String username) async {
+Future<Map<String, dynamic>> usernameValidation(String username) async {
   var reply = await Requests.post(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/admin/validate',
       json: {"username": username});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return (data);
 }
 
@@ -78,6 +84,7 @@ Future<Map<String, dynamic>> passengerRequest(String event) async {
   String body = reply.content();
   // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return data;
 }
 
@@ -88,6 +95,7 @@ Future<Map<String, dynamic>> bagsRequest(String event) async {
   String body = reply.content();
   // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return data;
 }
 
@@ -102,22 +110,31 @@ Future<bool> setEvent(String name) async {
   return data["status"] == "success" ? true : false;
 }
 
-Future<Map<String, dynamic>> createPassenger({
-  required String first,
-  required String last,
-  required DateTime DOB,
-  required int row,
-  required String seat,
-  required String originAirport,
-  required String destinationAirport,
-  List<String>? accommodations,
-  required String event}) async {
-    var reply = await Requests.post(
-    'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
-    json: {"firstName": first, "lastName": last, "DOB": DOB, "row": row,
-    "seat": seat, "origin": originAirport, "destination": destinationAirport,
-    "accommodations": accommodations, "event": event});
-    String body = reply.content();
-    Map<String, dynamic> data = jsonDecode(body);
-    return data;
+Future<Map<String, dynamic>> createPassenger(
+    {required String first,
+    required String last,
+    required String DOB,
+    required int row,
+    required String seat,
+    required String originAirport,
+    required String destinationAirport,
+    List<String>? accommodations,
+    required String event}) async {
+  var reply = await Requests.post(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
+      json: {
+        "firstName": first,
+        "lastName": last,
+        "DOB": DOB,
+        "row": row,
+        "seat": seat,
+        "origin": originAirport,
+        "destination": destinationAirport,
+        "accommodations": accommodations,
+        "event": event
+      });
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  print(data);
+  return data;
 }

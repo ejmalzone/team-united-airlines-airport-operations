@@ -1,10 +1,11 @@
 import 'package:airportops_frontend/admin/new_passenger.dart';
+import 'package:airportops_frontend/classes/passenger.dart';
+import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../../classes/events.dart';
 import 'competitor_page.dart';
-
 
 class AdminPassengers extends StatefulWidget {
   Event event;
@@ -57,19 +58,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    TextButton(
-                        child: Text(
-                          'View Competitors >',
-                          style: TextStyle(
-                            fontFamily: 'Open Sans',
-                            color: Color(0xFF00239E),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => CompetitorsPage(event: widget.event,)));
-                          print('Pressed');
-                        })
+                    
                   ],
                 ),
               ],
@@ -192,8 +181,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
             child: ListView(
               // mainAxisSize: MainAxisSize.max,
               // crossAxisAlignment: CrossAxisAlignment.stretch,
-              children:
-                  List.generate(widget.event.passengers.length, (index) {
+              children: List.generate(widget.event.passengers.length, (index) {
                 return PCard(p: widget.event.passengers[index]);
               }),
             ),
@@ -207,11 +195,20 @@ class _AdminPassengersState extends State<AdminPassengers> {
               print("pressed add passengers");
               print(widget.event.passengers);
 
-              var newPassenger = await Navigator.push(context,
+              Passenger newPassenger = await Navigator.push(context,
                   MaterialPageRoute(builder: (context) => NewPassenger()));
 
               setState(() {
                 widget.event.addPassenger(newPassenger);
+                var newPass = createPassenger(
+                    first: newPassenger.nameFirst,
+                    last: newPassenger.nameLast,
+                    DOB: newPassenger.birthday.toIso8601String(),
+                    row: newPassenger.row,
+                    seat: newPassenger.seat,
+                    originAirport: newPassenger.flightSource,
+                    destinationAirport: newPassenger.flightDestination,
+                    event: widget.event.name);
               });
               for (int i = 0; i < widget.event.passengers.length; i++) {
                 print(widget.event.passengers[i].fullName);
