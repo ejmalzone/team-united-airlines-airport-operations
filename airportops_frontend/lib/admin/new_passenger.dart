@@ -164,7 +164,7 @@ class _NewPassengerState extends State<NewPassenger> {
     ..sort((a, b) => a.split(' ')[0].compareTo(b.split(' ')[0]));
 
   @override
-  void submitForm() {
+  void submitForm() async {
     // validate form and create new passenger object
     if (_formKey.currentState!.validate()) {
       Passenger newPassenger = Passenger(
@@ -301,34 +301,6 @@ class _NewPassengerState extends State<NewPassenger> {
                   controller: _flightSourceController,
                 ),
 
-                // DropdownButtonFormField(
-                //   value: _value,
-                //   decoration: const InputDecoration(
-                //     labelText: 'Flight Source',
-                //     border: OutlineInputBorder(),
-                //   ),
-                //   items: List.generate(countries.length, (index) {
-                //     return DropdownMenuItem(
-                //       child: Text(
-                //           "${sort_countries.values.elementAt(index)}-${sort_countries.keys.elementAt(index)}"),
-                //       value: "${index + 1}",
-                //     );
-                //   }),
-                //   onChanged: (v) {},
-                // ),
-                // TextFormField(
-                //   controller: _flightSourceController,
-                //   decoration: const InputDecoration(
-                //     labelText: 'Flight Source',
-                //     border: OutlineInputBorder(),
-                //   ),
-                //   validator: (String? value) {
-                //     if (value == null || value.isEmpty) {
-                //       return 'Please enter some text.';
-                //     }
-                //     return null;
-                //   },
-                // ),
                 const SizedBox(height: 16),
                 CountrySelector(
                   label: "Flight Destination",
