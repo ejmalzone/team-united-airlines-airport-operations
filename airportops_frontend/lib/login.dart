@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'portal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+final String ADMIN_KEY = "ADMIN_KEY";
 
 // class LoginRoute extends StatelessWidget {
 //   const LoginRoute({super.key});
@@ -154,6 +157,10 @@ class LoginRoute extends StatelessWidget {
         Map<String, dynamic> eventMap = await eventRequest();
         if (eventMap['status'] == 'success') {
           _events = eventMap;
+          await SharedPreferences.getInstance()
+          .then((final prefs) => {
+            prefs.setString(ADMIN_KEY, data.name)
+          });
           return null;
         }
         return "Something went wrong! Please try again.";

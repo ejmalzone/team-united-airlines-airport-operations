@@ -9,8 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'dart:html'
-    as html; //TODO: Figure out how to make android compile with this being imported still?
+import 'package:universal_html/html.dart'
+    as html;
 import 'package:airportops_frontend/classes/baggage.dart';
 
 import '../classes/passenger.dart';
