@@ -48,14 +48,27 @@ class PdfCreator {
     pdf.addPage(pw.Page(
         margin: const pw.EdgeInsets.all(0.1 * PdfPageFormat.inch),
         pageFormat: const PdfPageFormat(
-            2 * PdfPageFormat.inch, 9 * PdfPageFormat.inch,
+            2 * PdfPageFormat.inch, 18 * PdfPageFormat.inch,
             marginAll: .2 * PdfPageFormat.inch),
         build: (pw.Context context) {
           return pw.Center(
               child: pw.Column(children: <pw.Widget>[
-            pw.SizedBox(height: 5),
+            pw.BarcodeWidget(
+              data: bag.id,
+              barcode: pw.Barcode.code128(),
+              width: 100,
+              height: 50,
+              drawText: false,
+            ),
+            pw.BarcodeWidget(
+              data: bag.id,
+              barcode: pw.Barcode.qrCode(),
+              width: 150,
+              height: 150,
+            ),
+            //pw.SizedBox(height: 5),
             pw.Image(_unitedLogo),
-            pw.SizedBox(height: 10),
+            //pw.SizedBox(height: 10),
             pw.BarcodeWidget(
               data: bag.id,
               barcode: pw.Barcode.qrCode(),
@@ -69,7 +82,7 @@ class PdfCreator {
               height: 50,
               drawText: false,
             ),
-            pw.SizedBox(height: 10),
+            //pw.SizedBox(height: 10),
             //pw.Text(DateTime.now().toIso8601String()),
             pw.Text(
                 "${DateTime.now().day.toString()} ${DateFormat('MMM').format(DateTime(0, DateTime.now().month))} ${DateTime.now().year.toString()}"),
@@ -77,6 +90,68 @@ class PdfCreator {
             pw.Text(bag.id),
             pw.Text(bag.destinationAirport),
             pw.Text("UA474 1340"), //Flight number?
+            pw.BarcodeWidget(
+              data: bag.id,
+              barcode: pw.Barcode.code128(),
+              width: 100,
+              height: 50,
+              drawText: false,
+            ),
+            pw.Text(
+                "${bag.nameLast}/${bag.nameFirst}       ${bag.destinationAirport}"),
+            pw.BarcodeWidget(
+              data: bag.id,
+              barcode: pw.Barcode.code128(),
+              width: 100,
+              height: 50,
+              drawText: false,
+            ),
+            pw.BarcodeWidget(
+              data: bag.id,
+              barcode: pw.Barcode.qrCode(),
+              width: 150,
+              height: 150,
+            ),
+            //pw.SizedBox(height: 5),
+            pw.Image(_unitedLogo),
+            //pw.SizedBox(height: 10),
+            pw.BarcodeWidget(
+              data: bag.id,
+              barcode: pw.Barcode.qrCode(),
+              width: 200,
+              height: 200,
+            ),
+            pw.BarcodeWidget(
+              data: bag.id,
+              barcode: pw.Barcode.code128(),
+              width: 100,
+              height: 50,
+              drawText: false,
+            ),
+            //pw.SizedBox(height: 10),
+            //pw.Text(DateTime.now().toIso8601String()),
+            pw.Text(
+                "${DateTime.now().day.toString()} ${DateFormat('MMM').format(DateTime(0, DateTime.now().month))} ${DateTime.now().year.toString()}"),
+            //pw.Text("4016 649626"), // bag ID number?
+            pw.Text(bag.id),
+            pw.Text(bag.destinationAirport),
+            pw.Text("UA474 1340"), //Flight number?
+            pw.BarcodeWidget(
+              data: bag.id,
+              barcode: pw.Barcode.code128(),
+              width: 100,
+              height: 50,
+              drawText: false,
+            ),
+            pw.Text(
+                "${bag.nameLast}/${bag.nameFirst}       ${bag.destinationAirport}"),
+            pw.BarcodeWidget(
+              data: bag.id,
+              barcode: pw.Barcode.code128(),
+              width: 100,
+              height: 50,
+              drawText: false,
+            ),
           ])); // Center
         })); // Page
 

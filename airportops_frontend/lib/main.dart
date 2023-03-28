@@ -218,6 +218,7 @@ class HomeRoute extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Home Page'),
+          backgroundColor: Colors.black,
         ),
         body: Center(
             child: Column(
