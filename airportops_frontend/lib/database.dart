@@ -138,3 +138,36 @@ Future<Map<String, dynamic>> createPassenger(
   print(data);
   return data;
 }
+
+Future<Map<String, dynamic>> signupCompetitor(
+  {required String? firstName, 
+  required String? lastName, 
+  required String? stationCode, 
+  required String? username, 
+  required int position,
+  required int? pin}) async {
+  var reply = await Requests.post(
+    "http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/competitor/",
+  json: {
+    "firstName": firstName, 
+    "lastName": lastName,
+    "stationCode": stationCode,
+    "username": username,
+    "position": position,
+    "pin": pin
+    });
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  print(data);
+  return data;
+}
+
+Future<Map<String, dynamic>> loginCompetitor(String username, int pin) async {
+  var reply = await Requests.post(
+    "http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/competitor/auth",
+  json: {"username": username, "pin": pin});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  print(data);
+  return data;
+}

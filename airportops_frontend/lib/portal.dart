@@ -46,13 +46,18 @@ class PortalRoute extends StatelessWidget {
               return LoginRoute();
             })));
             }
-          } else if (endRoute == '/csrSelect' || endRoute == '/baggageSelect') {
-            print("ENDROUTE: ${endRoute}");
+          } else if (endRoute == '/csrSelect') {
             //Navigator.pushNamed(context, endRoute);
             await Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (context) =>
-                      CompetitorSelectPage(source: endRoute!)),
+                      CustomerServiceLogin()),
+            );
+          } else if (endRoute == '/baggageSelect'){
+              await Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) =>
+                      CustomerServiceLogin()),
             );
           } else {
             await Navigator.of(context).pushNamed(endRoute.toString());
