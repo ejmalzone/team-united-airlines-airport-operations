@@ -174,7 +174,7 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                ElevatedButton(
+                /*ElevatedButton(
                     onPressed: () {
                       _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
                           context: context,
@@ -193,6 +193,29 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                           });
                     },
                     child: Text(code ?? "Scan Boarding Pass")),
+                    Material(color: Color.fromARGB(255, 0, 47, 149), ),*/
+                const Text('To scan a boarding pass, click the icon below'),
+                IconButton(
+                  icon: const Icon(Icons.camera_enhance),
+                  iconSize: 50,
+                  onPressed: () {
+                    _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
+                        context: context,
+                        onCode: (code) {
+                          if (kIsWeb) {
+                            setState(() {
+                              // Web scanning prepends "Scan Result:" onto
+                              // result, need substring to remove
+                              this.code = code?.substring(15);
+                            });
+                          } else {
+                            setState(() {
+                              this.code = code;
+                            });
+                          }
+                        });
+                  },
+                )
               ])),
         );
       }),
