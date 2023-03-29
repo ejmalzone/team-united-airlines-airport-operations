@@ -341,7 +341,7 @@ class RampServicesLogin extends StatelessWidget {
           await loginCompetitor(data.name, int.parse(data.password), 1);
       if (loginData["status"] == "success") {
         await SharedPreferences.getInstance().then((final prefs) =>
-            {prefs.setString(CUSTOMER_SERVICE_KEY, data.name)});
+            {prefs.setString(RAMP_SERVICES_KEY, data.name)});
         return null;
       }
       return "Login Failed!";
@@ -360,7 +360,7 @@ class RampServicesLogin extends StatelessWidget {
           pin: int.parse(data.password!));
       if (signupResponse["status"] == "success") {
         await SharedPreferences.getInstance().then((final prefs) =>
-            {prefs.setString(CUSTOMER_SERVICE_KEY, data.name!)});
+            {prefs.setString(RAMP_SERVICES_KEY, data.name!)});
         return null;
       }
       return "Username is already taken!";
