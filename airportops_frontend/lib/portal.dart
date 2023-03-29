@@ -134,7 +134,7 @@ class PortalRoute extends StatelessWidget {
         title: const Text('Portal Selection'),
         titleTextStyle: const TextStyle(
             fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
-        backgroundColor: Colors.black,
+        backgroundColor: Color.fromARGB(255, 0, 47, 149),
         toolbarHeight: 105,
       ),
       body: Center(
