@@ -1,5 +1,6 @@
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/main.dart';
+import 'package:airportops_frontend/scanning.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -226,12 +227,11 @@ class CustomerServiceLogin extends StatelessWidget {
 
   Future<String?> _authUser(LoginData data) async {
     return Future.delayed(loginTime).then((_) async {
-      var loginData = await loginCompetitor(data.name, int.parse(data.password), 0);
+      var loginData =
+          await loginCompetitor(data.name, int.parse(data.password), 0);
       if (loginData["status"] == "success") {
-        await SharedPreferences.getInstance()
-        .then((final prefs) => {
-          prefs.setString(CUSTOMER_SERVICE_KEY, data.name)
-        });
+        await SharedPreferences.getInstance().then((final prefs) =>
+            {prefs.setString(CUSTOMER_SERVICE_KEY, data.name)});
         return null;
       }
       return "Login failed!";
@@ -242,16 +242,15 @@ class CustomerServiceLogin extends StatelessWidget {
     return Future.delayed(loginTime).then((_) async {
       var additionalData = data.additionalSignupData;
       var signupResponse = await signupCompetitor(
-        firstName: additionalData!["first"], 
-        lastName: additionalData["last"], 
-        stationCode: additionalData["station"], 
-        username: data.name, position: 0,
-        pin: int.parse(data.password!));
+          firstName: additionalData!["first"],
+          lastName: additionalData["last"],
+          stationCode: additionalData["station"],
+          username: data.name,
+          position: 0,
+          pin: int.parse(data.password!));
       if (signupResponse["status"] == "success") {
-        await SharedPreferences.getInstance()
-        .then((final prefs) => {
-          prefs.setString(CUSTOMER_SERVICE_KEY, data.name!)
-        });
+        await SharedPreferences.getInstance().then((final prefs) =>
+            {prefs.setString(CUSTOMER_SERVICE_KEY, data.name!)});
         return null;
       }
       return "Username is already taken!";
@@ -294,23 +293,35 @@ class CustomerServiceLogin extends StatelessWidget {
             onLogin: _authUser,
             onSignup: _signupUser,
             messages: LoginMessages(
-              passwordHint: "3-Digit PIN",
-              confirmPasswordHint: "Re-Enter PIN",
-              userHint: "Unique Username",
-              additionalSignUpFormDescription: "Enter additional information for the judges",
-              loginButton: "Login",
-              signupButton: "Register",
-              confirmPasswordError: "PINs do not match.",
-              signUpSuccess: "Success!"
-            ),
+                passwordHint: "3-Digit PIN",
+                confirmPasswordHint: "Re-Enter PIN",
+                userHint: "Unique Username",
+                additionalSignUpFormDescription:
+                    "Enter additional information for the judges",
+                loginButton: "Login",
+                signupButton: "Register",
+                confirmPasswordError: "PINs do not match.",
+                signUpSuccess: "Success!"),
             onSubmitAnimationCompleted: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const ScanRoute()));
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => UniversalScanApp()));
             },
             additionalSignupFields: const [
-              UserFormField(keyName: "first", displayName: "First Name", icon: Icon(CustomIcons.font), userType: LoginUserType.name),
-              UserFormField(keyName: "last", displayName: "Last Name", icon: Icon(CustomIcons.bold), userType: LoginUserType.name),
-              UserFormField(keyName: "station", displayName: "Station Code", icon: Icon(CustomIcons.barcode), userType: LoginUserType.name)
+              UserFormField(
+                  keyName: "first",
+                  displayName: "First Name",
+                  icon: Icon(CustomIcons.font),
+                  userType: LoginUserType.name),
+              UserFormField(
+                  keyName: "last",
+                  displayName: "Last Name",
+                  icon: Icon(CustomIcons.bold),
+                  userType: LoginUserType.name),
+              UserFormField(
+                  keyName: "station",
+                  displayName: "Station Code",
+                  icon: Icon(CustomIcons.barcode),
+                  userType: LoginUserType.name)
             ],
             onRecoverPassword: _recoverPassword,
             theme: LoginTheme(
@@ -326,12 +337,11 @@ class RampServicesLogin extends StatelessWidget {
 
   Future<String?> _authUser(LoginData data) async {
     return Future.delayed(loginTime).then((_) async {
-      var loginData = await loginCompetitor(data.name, int.parse(data.password), 1);
+      var loginData =
+          await loginCompetitor(data.name, int.parse(data.password), 1);
       if (loginData["status"] == "success") {
-        await SharedPreferences.getInstance()
-        .then((final prefs) => {
-          prefs.setString(CUSTOMER_SERVICE_KEY, data.name)
-        });
+        await SharedPreferences.getInstance().then((final prefs) =>
+            {prefs.setString(CUSTOMER_SERVICE_KEY, data.name)});
         return null;
       }
       return "Login Failed!";
@@ -342,16 +352,15 @@ class RampServicesLogin extends StatelessWidget {
     return Future.delayed(loginTime).then((_) async {
       var additionalData = data.additionalSignupData;
       var signupResponse = await signupCompetitor(
-        firstName: additionalData!["first"], 
-        lastName: additionalData["last"], 
-        stationCode: additionalData["station"], 
-        username: data.name, position: 0,
-        pin: int.parse(data.password!));
+          firstName: additionalData!["first"],
+          lastName: additionalData["last"],
+          stationCode: additionalData["station"],
+          username: data.name,
+          position: 0,
+          pin: int.parse(data.password!));
       if (signupResponse["status"] == "success") {
-        await SharedPreferences.getInstance()
-        .then((final prefs) => {
-          prefs.setString(CUSTOMER_SERVICE_KEY, data.name!)
-        });
+        await SharedPreferences.getInstance().then((final prefs) =>
+            {prefs.setString(CUSTOMER_SERVICE_KEY, data.name!)});
         return null;
       }
       return "Username is already taken!";
@@ -394,23 +403,35 @@ class RampServicesLogin extends StatelessWidget {
             onLogin: _authUser,
             onSignup: _signupUser,
             messages: LoginMessages(
-              passwordHint: "3-Digit PIN",
-              confirmPasswordHint: "Re-Enter PIN",
-              userHint: "Unique Username",
-              additionalSignUpFormDescription: "Enter additional information for the judges",
-              loginButton: "Login",
-              signupButton: "Register",
-              confirmPasswordError: "PINs do not match.",
-              signUpSuccess: "Success!"
-            ),
+                passwordHint: "3-Digit PIN",
+                confirmPasswordHint: "Re-Enter PIN",
+                userHint: "Unique Username",
+                additionalSignUpFormDescription:
+                    "Enter additional information for the judges",
+                loginButton: "Login",
+                signupButton: "Register",
+                confirmPasswordError: "PINs do not match.",
+                signUpSuccess: "Success!"),
             onSubmitAnimationCompleted: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const ScanRoute()));
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => const ScanRoute()));
             },
             additionalSignupFields: const [
-              UserFormField(keyName: "first", displayName: "First Name", icon: Icon(CustomIcons.font), userType: LoginUserType.name),
-              UserFormField(keyName: "last", displayName: "Last Name", icon: Icon(CustomIcons.bold), userType: LoginUserType.name),
-              UserFormField(keyName: "station", displayName: "Station Code", icon: Icon(CustomIcons.barcode), userType: LoginUserType.name)
+              UserFormField(
+                  keyName: "first",
+                  displayName: "First Name",
+                  icon: Icon(CustomIcons.font),
+                  userType: LoginUserType.name),
+              UserFormField(
+                  keyName: "last",
+                  displayName: "Last Name",
+                  icon: Icon(CustomIcons.bold),
+                  userType: LoginUserType.name),
+              UserFormField(
+                  keyName: "station",
+                  displayName: "Station Code",
+                  icon: Icon(CustomIcons.barcode),
+                  userType: LoginUserType.name)
             ],
             onRecoverPassword: _recoverPassword,
             theme: LoginTheme(

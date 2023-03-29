@@ -2,6 +2,7 @@ import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/main.dart';
+import 'package:airportops_frontend/scanning.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,85 +26,83 @@ class PortalRoute extends StatelessWidget {
     return ElevatedButton(
         style: buttonStyle,
         onPressed: () async {
-          final SharedPreferences prefs =
-                await SharedPreferences.getInstance();
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
           if (endRoute == '/admin') {
             Map<String, dynamic> eventMap = await eventRequest();
             String? user = prefs.getString(ADMIN_KEY);
             if (user != null) {
-              await usernameValidation(user)
-              .then((data) async => {
-                if (data["status"] == "success")
-                  {
-                    await Navigator.of(context)
-                    .push(MaterialPageRoute(builder: ((context) {
-                      return AdminRoute(eventmap: eventMap);
-                    })))
-                  } else {
-                    prefs.remove(ADMIN_KEY),
-                    await Navigator.of(context)
-                    .push(MaterialPageRoute(builder: ((context) {
-                    return LoginRoute();
-                    })))
-                  }
-              });
+              await usernameValidation(user).then((data) async => {
+                    if (data["status"] == "success")
+                      {
+                        await Navigator.of(context)
+                            .push(MaterialPageRoute(builder: ((context) {
+                          return AdminRoute(eventmap: eventMap);
+                        })))
+                      }
+                    else
+                      {
+                        prefs.remove(ADMIN_KEY),
+                        await Navigator.of(context)
+                            .push(MaterialPageRoute(builder: ((context) {
+                          return LoginRoute();
+                        })))
+                      }
+                  });
             } else {
               await Navigator.of(context)
-              .push(MaterialPageRoute(builder: ((context) {
+                  .push(MaterialPageRoute(builder: ((context) {
                 return LoginRoute();
               })));
             }
           } else if (endRoute == '/csrSelect') {
             //Navigator.pushNamed(context, endRoute);
-              String? competitor = prefs.getString(CUSTOMER_SERVICE_KEY);
-              if (competitor != null) {
-                await validateCompetitor(competitor)
-                .then((data) async => {
-                  if (data["status"] == "success") {
-                    await Navigator.of(context)
-                      .push(MaterialPageRoute(builder: ((context) {
-                        return const ScanRoute();
-                      })))
-                  } else {
-                    prefs.remove(CUSTOMER_SERVICE_KEY),
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                      builder: (context) =>
-                      CustomerServiceLogin()),
-                    )
-                  }
-                });
-              } else {
+            String? competitor = prefs.getString(CUSTOMER_SERVICE_KEY);
+            if (competitor != null) {
+              await validateCompetitor(competitor).then((data) async => {
+                    if (data["status"] == "success")
+                      {
+                        await Navigator.of(context)
+                            .push(MaterialPageRoute(builder: ((context) {
+                          return UniversalScanApp();
+                        })))
+                      }
+                    else
+                      {
+                        prefs.remove(CUSTOMER_SERVICE_KEY),
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => CustomerServiceLogin()),
+                        )
+                      }
+                  });
+            } else {
               await Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) =>
-                        CustomerServiceLogin()),
+                MaterialPageRoute(builder: (context) => CustomerServiceLogin()),
               );
             }
-          } else if (endRoute == '/baggageSelect'){
-              String? competitor = prefs.getString(RAMP_SERVICES_KEY);
-              if (competitor != null) {
-                await validateCompetitor(competitor)
-                .then((data) async => {
-                  if (data["status"] == "success") {
-                    await Navigator.of(context)
-                      .push(MaterialPageRoute(builder: ((context) {
-                        return const ScanRoute();
-                      })))
-                  } else {
-                    prefs.remove(CUSTOMER_SERVICE_KEY),
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                      builder: (context) =>
-                      RampServicesLogin()),
-                    )
-                  }
-                });
-              } else {
+          } else if (endRoute == '/baggageSelect') {
+            String? competitor = prefs.getString(RAMP_SERVICES_KEY);
+            if (competitor != null) {
+              await validateCompetitor(competitor).then((data) async => {
+                    if (data["status"] == "success")
+                      {
+                        await Navigator.of(context)
+                            .push(MaterialPageRoute(builder: ((context) {
+                          return const ScanRoute();
+                        })))
+                      }
+                    else
+                      {
+                        prefs.remove(CUSTOMER_SERVICE_KEY),
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => RampServicesLogin()),
+                        )
+                      }
+                  });
+            } else {
               await Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) =>
-                        RampServicesLogin()),
+                MaterialPageRoute(builder: (context) => RampServicesLogin()),
               );
             }
           } else {

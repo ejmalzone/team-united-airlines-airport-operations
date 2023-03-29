@@ -52,7 +52,7 @@ Future<Map<String, dynamic>> signupRequest(
       json: {"username": username, "password": password, "access": 2});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
-  print(data);
+  print("DATA: ${data}");
   return (data);
 }
 
@@ -140,32 +140,33 @@ Future<Map<String, dynamic>> createPassenger(
 }
 
 Future<Map<String, dynamic>> signupCompetitor(
-  {required String? firstName, 
-  required String? lastName, 
-  required String? stationCode, 
-  required String? username, 
-  required int position,
-  required int? pin}) async {
+    {required String? firstName,
+    required String? lastName,
+    required String? stationCode,
+    required String? username,
+    required int position,
+    required int? pin}) async {
   var reply = await Requests.post(
-    "http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/competitor/",
-  json: {
-    "firstName": firstName, 
-    "lastName": lastName,
-    "stationCode": stationCode,
-    "username": username,
-    "position": position,
-    "pin": pin
-    });
+      "http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/competitor/",
+      json: {
+        "firstName": firstName,
+        "lastName": lastName,
+        "stationCode": stationCode,
+        "username": username,
+        "position": position,
+        "pin": pin
+      });
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   return data;
 }
 
-Future<Map<String, dynamic>> loginCompetitor(String username, int pin, int from) async {
+Future<Map<String, dynamic>> loginCompetitor(
+    String username, int pin, int from) async {
   print(from);
   var reply = await Requests.post(
-    "http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/competitor/auth",
-  json: {"username": username, "pin": pin, "from": from});
+      "http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/competitor/auth",
+      json: {"username": username, "pin": pin, "from": from});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   print(data);
@@ -174,8 +175,8 @@ Future<Map<String, dynamic>> loginCompetitor(String username, int pin, int from)
 
 Future<Map<String, dynamic>> validateCompetitor(String username) async {
   var reply = await Requests.post(
-    "http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/competitor",
-  json: {"username": username});
+      "http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/competitor",
+      json: {"username": username});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   return data;
