@@ -356,7 +356,7 @@ class RampServicesLogin extends StatelessWidget {
           lastName: additionalData["last"],
           stationCode: additionalData["station"],
           username: data.name,
-          position: 0,
+          position: 1,
           pin: int.parse(data.password!));
       if (signupResponse["status"] == "success") {
         await SharedPreferences.getInstance().then((final prefs) =>
