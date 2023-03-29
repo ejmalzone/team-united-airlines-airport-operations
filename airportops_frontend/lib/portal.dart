@@ -93,7 +93,7 @@ class PortalRoute extends StatelessWidget {
                       }
                     else
                       {
-                        prefs.remove(CUSTOMER_SERVICE_KEY),
+                        prefs.remove(RAMP_SERVICES_KEY),
                         await Navigator.of(context).push(
                           MaterialPageRoute(
                               builder: (context) => RampServicesLogin()),
