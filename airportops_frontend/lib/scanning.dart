@@ -38,6 +38,7 @@ class _HoneywellScanAppState extends State<HoneywellScanApp> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Honeywell Scanner Testing'),
+        backgroundColor: Colors.blue[900],
       ),
       drawer: Drawer(
         child: ListView(
@@ -88,6 +89,7 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Passenger Boarding'),
+        backgroundColor: Colors.blue[900],
       ),
       body: Builder(builder: (context) {
         if (code != null) {

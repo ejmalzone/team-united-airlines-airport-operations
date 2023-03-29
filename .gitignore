@@ -22,3 +22,6 @@ doc/api/
 airportops_frontend/windows/flutter/generated_plugin_registrant.cc
 airportops_frontend/windows/flutter/generated_plugin_registrant.h
 airportops_frontend/windows/flutter/generated_plugins.cmake
+airportops_frontend/windows/flutter/generated_plugin_registrant.cc
+airportops_frontend/windows/flutter/generated_plugin_registrant.h
+airportops_frontend/windows/flutter/generated_plugins.cmake

@@ -158,14 +158,30 @@ class ScanRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scanning Testing'),
+        title: const Text('Select Scanner'),
+        backgroundColor: Colors.blue[900],
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/camera');
-          },
-          child: const Text('Open Camera'),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => UniversalScanApp())));
+              },
+              child: const Text('Open Device Camera'),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => HoneywellScanApp())));
+                },
+                child: const Text('Honeywell Scanner')),
+          ],
         ),
       ),
     );
@@ -206,7 +222,15 @@ class DatabaseRoute extends StatelessWidget {
                     row: 5,
                     status: Status.boarded,
                   );
-                  var req = await createPassenger(first: testr.nameFirst, last: testr.nameLast, DOB: testr.birthday.toIso8601String(), row: testr.row, seat: testr.seat, originAirport: testr.flightSource, destinationAirport: testr.flightDestination, event: 'default');
+                  var req = await createPassenger(
+                      first: testr.nameFirst,
+                      last: testr.nameLast,
+                      DOB: testr.birthday.toIso8601String(),
+                      row: testr.row,
+                      seat: testr.seat,
+                      originAirport: testr.flightSource,
+                      destinationAirport: testr.flightDestination,
+                      event: 'default');
                   print(req['data']);
                 },
                 child: const Text('Event Query'),
