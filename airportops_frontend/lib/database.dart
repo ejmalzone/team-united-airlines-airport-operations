@@ -161,12 +161,14 @@ Future<Map<String, dynamic>> signupCompetitor(
   return data;
 }
 
-Future<Map<String, dynamic>> loginCompetitor(String username, int pin) async {
+Future<Map<String, dynamic>> loginCompetitor(String username, int pin, int from) async {
+  print(from);
   var reply = await Requests.post(
     "http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/competitor/auth",
-  json: {"username": username, "pin": pin});
+  json: {"username": username, "pin": pin, "from": from});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return data;
 }
 

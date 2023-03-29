@@ -204,8 +204,8 @@ class LoginRoute extends StatelessWidget {
             ),
             theme: LoginTheme(
               primaryColor: const Color.fromARGB(255, 0, 94, 170),
-              accentColor: const Color.fromARGB(255, 78, 78, 78),
-              errorColor: Colors.black,
+              errorColor: const Color.fromARGB(255, 78, 78, 78),
+              accentColor: Colors.black,
             )));
   }
 }
