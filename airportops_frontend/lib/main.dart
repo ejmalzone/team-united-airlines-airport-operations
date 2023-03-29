@@ -166,10 +166,8 @@ class ScanRoute extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: ((context) => UniversalScanApp())));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => RSEScanApp())));
               },
               child: const Text('Open Device Camera'),
             ),

@@ -100,18 +100,9 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    /*var person = await Requests.get(
-                      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
-                      json: {"_id": this.code},
-                    );*/
                     var person = await Requests.post(
                         'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/passenger/',
                         json: {"_id": this.code});
-
-                    /*List<dynamic> allData = person.json()['data'];
-                    for (var personData in allData) {
-                      if (personData['_id'] == this.code &&
-                          personData['accommodations'] != []){*/
                     if (person.json()['data'][0]['accommodations'].length !=
                         0) {
                       showDialog<dynamic>(
@@ -141,8 +132,6 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                     var reply = await Requests.put(
                         'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
                         json: {"passengerId": this.code});
-                    //reply.raiseForStatus();
-                    //String body = reply.content();
                   },
                   child: Text('Query based on ${this.code}'),
                 ),
@@ -213,6 +202,49 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                               this.code = code;
                             });
                           }
+                        });
+                  },
+                )
+              ])),
+        );
+      }),
+    );
+  }
+}
+
+class RSEScanApp extends StatefulWidget {
+  @override
+  _RSEScanAppState createState() => _RSEScanAppState();
+}
+
+class _RSEScanAppState extends State<RSEScanApp> {
+  final _qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
+  String? code;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Baggage Check-in'),
+        backgroundColor: const Color.fromARGB(255, 0, 47, 149),
+      ),
+      body: Builder(builder: (context) {
+        return Material(
+          child: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                const Text('To scan a baggage tag, click the icon below'),
+                IconButton(
+                  icon: const Icon(Icons.camera_enhance),
+                  iconSize: 50,
+                  onPressed: () {
+                    _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
+                        context: context,
+                        onCode: (code) {
+                          setState(() {
+                            this.code = code;
+                          });
                         });
                   },
                 )
