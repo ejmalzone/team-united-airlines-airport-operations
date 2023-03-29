@@ -1,6 +1,7 @@
 import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/extensions.dart';
+import 'package:airportops_frontend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,10 +25,10 @@ class PortalRoute extends StatelessWidget {
     return ElevatedButton(
         style: buttonStyle,
         onPressed: () async {
+          final SharedPreferences prefs =
+                await SharedPreferences.getInstance();
           if (endRoute == '/admin') {
             Map<String, dynamic> eventMap = await eventRequest();
-            final SharedPreferences prefs =
-                await SharedPreferences.getInstance();
             String? user = prefs.getString(ADMIN_KEY);
             if (user != null) {
               await usernameValidation(user)
@@ -38,27 +39,73 @@ class PortalRoute extends StatelessWidget {
                     .push(MaterialPageRoute(builder: ((context) {
                       return AdminRoute(eventmap: eventMap);
                     })))
+                  } else {
+                    prefs.remove(ADMIN_KEY),
+                    await Navigator.of(context)
+                    .push(MaterialPageRoute(builder: ((context) {
+                    return LoginRoute();
+                    })))
                   }
               });
             } else {
               await Navigator.of(context)
-                .push(MaterialPageRoute(builder: ((context) {
-              return LoginRoute();
-            })));
+              .push(MaterialPageRoute(builder: ((context) {
+                return LoginRoute();
+              })));
             }
           } else if (endRoute == '/csrSelect') {
             //Navigator.pushNamed(context, endRoute);
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) =>
+              String? competitor = prefs.getString(CUSTOMER_SERVICE_KEY);
+              if (competitor != null) {
+                await validateCompetitor(competitor)
+                .then((data) async => {
+                  if (data["status"] == "success") {
+                    await Navigator.of(context)
+                      .push(MaterialPageRoute(builder: ((context) {
+                        return const ScanRoute();
+                      })))
+                  } else {
+                    prefs.remove(CUSTOMER_SERVICE_KEY),
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                      builder: (context) =>
                       CustomerServiceLogin()),
-            );
-          } else if (endRoute == '/baggageSelect'){
+                    )
+                  }
+                });
+              } else {
               await Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) =>
+                MaterialPageRoute(
+                    builder: (context) =>
+                        CustomerServiceLogin()),
+              );
+            }
+          } else if (endRoute == '/baggageSelect'){
+              String? competitor = prefs.getString(RAMP_SERVICES_KEY);
+              if (competitor != null) {
+                await validateCompetitor(competitor)
+                .then((data) async => {
+                  if (data["status"] == "success") {
+                    await Navigator.of(context)
+                      .push(MaterialPageRoute(builder: ((context) {
+                        return const ScanRoute();
+                      })))
+                  } else {
+                    prefs.remove(CUSTOMER_SERVICE_KEY),
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                      builder: (context) =>
                       CustomerServiceLogin()),
-            );
+                    )
+                  }
+                });
+              } else {
+              await Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) =>
+                        CustomerServiceLogin()),
+              );
+            }
           } else {
             await Navigator.of(context).pushNamed(endRoute.toString());
           }
