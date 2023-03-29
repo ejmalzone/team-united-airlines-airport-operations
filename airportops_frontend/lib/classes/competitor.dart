@@ -226,7 +226,7 @@ class CustomerServiceLogin extends StatelessWidget {
 
   Future<String?> _authUser(LoginData data) async {
     return Future.delayed(loginTime).then((_) async {
-      var loginData = await loginCompetitor(data.name, int.parse(data.password));
+      var loginData = await loginCompetitor(data.name, int.parse(data.password), 0);
       if (loginData["status"] == "success") {
         await SharedPreferences.getInstance()
         .then((final prefs) => {
@@ -234,107 +234,7 @@ class CustomerServiceLogin extends StatelessWidget {
         });
         return null;
       }
-      return "Username not found!";
-    });
-  }
-
-  Future<String?> _signupUser(SignupData data) async {
-    return Future.delayed(loginTime).then((_) async {
-      var additionalData = data.additionalSignupData;
-      var signupResponse = await signupCompetitor(
-        firstName: additionalData!["first"], 
-        lastName: additionalData["last"], 
-        stationCode: additionalData["station"], 
-        username: data.name, position: 0,
-        pin: int.parse(data.password!));
-      if (signupResponse["status"] == "success") {
-        await SharedPreferences.getInstance()
-        .then((final prefs) => {
-          prefs.setString(CUSTOMER_SERVICE_KEY, data.name!)
-        });
-        return null;
-      }
-      return "Username is already taken!";
-    });
-  }
-
-  Future<String?> _recoverPassword(String name) {
-    return Future.delayed(loginTime).then((_) {
-      return "User not exists";
-    });
-  }
-
-  String? _userValidator(String? name) {
-    return null;
-  }
-
-  String? _passValidator(String? pass) {
-    if (pass!.length != 3) {
-      return "PIN must be 3 digits!";
-    } else if (int.tryParse(pass) == null) {
-      return "PIN provided is not a number!";
-    }
-    return null;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Ramp Services Login'),
-          backgroundColor: Colors.black,
-        ),
-        body: FlutterLogin(
-            title: 'Ramp Services',
-            userType: LoginUserType.name,
-            logo: const AssetImage('assets/united-high-res.png'),
-            hideForgotPasswordButton: true,
-            userValidator: _userValidator,
-            passwordValidator: _passValidator,
-            onLogin: _authUser,
-            onSignup: _signupUser,
-            messages: LoginMessages(
-              passwordHint: "3-Digit PIN",
-              confirmPasswordHint: "Re-Enter PIN",
-              userHint: "Unique Username",
-              additionalSignUpFormDescription: "Enter additional information for the judges",
-              loginButton: "Login",
-              signupButton: "Register",
-              confirmPasswordError: "PINs do not match.",
-              signUpSuccess: "Success!"
-            ),
-            onSubmitAnimationCompleted: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const ScanRoute()));
-            },
-            additionalSignupFields: const [
-              UserFormField(keyName: "first", displayName: "First Name", icon: Icon(CustomIcons.font), userType: LoginUserType.name),
-              UserFormField(keyName: "last", displayName: "Last Name", icon: Icon(CustomIcons.bold), userType: LoginUserType.name),
-              UserFormField(keyName: "station", displayName: "Station Code", icon: Icon(CustomIcons.barcode), userType: LoginUserType.name)
-            ],
-            onRecoverPassword: _recoverPassword,
-            theme: LoginTheme(
-              primaryColor: const Color.fromARGB(255, 0, 94, 170),
-              accentColor: Colors.black,
-              errorColor: const Color.fromARGB(255, 78, 78, 78),
-            )));
-  }
-}
-
-class RampServicesLogin extends StatelessWidget {
-  Duration get loginTime => Duration(milliseconds: 1500);
-
-  Future<String?> _authUser(LoginData data) async {
-    return Future.delayed(loginTime).then((_) async {
-      var loginData = await loginCompetitor(data.name, int.parse(data.password));
-      if (loginData["status"] == "success") {
-        await SharedPreferences.getInstance()
-        .then((final prefs) => {
-          prefs.setString(CUSTOMER_SERVICE_KEY, data.name)
-        });
-        return null;
-      }
-      return "Username not found!";
+      return "Login failed!";
     });
   }
 
@@ -386,6 +286,106 @@ class RampServicesLogin extends StatelessWidget {
         ),
         body: FlutterLogin(
             title: 'Customer Service',
+            userType: LoginUserType.name,
+            logo: const AssetImage('assets/united-high-res.png'),
+            hideForgotPasswordButton: true,
+            userValidator: _userValidator,
+            passwordValidator: _passValidator,
+            onLogin: _authUser,
+            onSignup: _signupUser,
+            messages: LoginMessages(
+              passwordHint: "3-Digit PIN",
+              confirmPasswordHint: "Re-Enter PIN",
+              userHint: "Unique Username",
+              additionalSignUpFormDescription: "Enter additional information for the judges",
+              loginButton: "Login",
+              signupButton: "Register",
+              confirmPasswordError: "PINs do not match.",
+              signUpSuccess: "Success!"
+            ),
+            onSubmitAnimationCompleted: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const ScanRoute()));
+            },
+            additionalSignupFields: const [
+              UserFormField(keyName: "first", displayName: "First Name", icon: Icon(CustomIcons.font), userType: LoginUserType.name),
+              UserFormField(keyName: "last", displayName: "Last Name", icon: Icon(CustomIcons.bold), userType: LoginUserType.name),
+              UserFormField(keyName: "station", displayName: "Station Code", icon: Icon(CustomIcons.barcode), userType: LoginUserType.name)
+            ],
+            onRecoverPassword: _recoverPassword,
+            theme: LoginTheme(
+              primaryColor: const Color.fromARGB(255, 0, 94, 170),
+              accentColor: Colors.black,
+              errorColor: const Color.fromARGB(255, 78, 78, 78),
+            )));
+  }
+}
+
+class RampServicesLogin extends StatelessWidget {
+  Duration get loginTime => Duration(milliseconds: 1500);
+
+  Future<String?> _authUser(LoginData data) async {
+    return Future.delayed(loginTime).then((_) async {
+      var loginData = await loginCompetitor(data.name, int.parse(data.password), 1);
+      if (loginData["status"] == "success") {
+        await SharedPreferences.getInstance()
+        .then((final prefs) => {
+          prefs.setString(CUSTOMER_SERVICE_KEY, data.name)
+        });
+        return null;
+      }
+      return "Login Failed!";
+    });
+  }
+
+  Future<String?> _signupUser(SignupData data) async {
+    return Future.delayed(loginTime).then((_) async {
+      var additionalData = data.additionalSignupData;
+      var signupResponse = await signupCompetitor(
+        firstName: additionalData!["first"], 
+        lastName: additionalData["last"], 
+        stationCode: additionalData["station"], 
+        username: data.name, position: 0,
+        pin: int.parse(data.password!));
+      if (signupResponse["status"] == "success") {
+        await SharedPreferences.getInstance()
+        .then((final prefs) => {
+          prefs.setString(CUSTOMER_SERVICE_KEY, data.name!)
+        });
+        return null;
+      }
+      return "Username is already taken!";
+    });
+  }
+
+  Future<String?> _recoverPassword(String name) {
+    return Future.delayed(loginTime).then((_) {
+      return "User not exists";
+    });
+  }
+
+  String? _userValidator(String? name) {
+    return null;
+  }
+
+  String? _passValidator(String? pass) {
+    if (pass!.length != 3) {
+      return "PIN must be 3 digits!";
+    } else if (int.tryParse(pass) == null) {
+      return "PIN provided is not a number!";
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Ramp Services Login'),
+          backgroundColor: Colors.black,
+        ),
+        body: FlutterLogin(
+            title: 'Ramp Services',
             userType: LoginUserType.name,
             logo: const AssetImage('assets/united-high-res.png'),
             hideForgotPasswordButton: true,
