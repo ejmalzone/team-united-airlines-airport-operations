@@ -158,7 +158,6 @@ Future<Map<String, dynamic>> signupCompetitor(
     });
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
-  print(data);
   return data;
 }
 
@@ -168,6 +167,14 @@ Future<Map<String, dynamic>> loginCompetitor(String username, int pin) async {
   json: {"username": username, "pin": pin});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
-  print(data);
+  return data;
+}
+
+Future<Map<String, dynamic>> validateCompetitor(String username) async {
+  var reply = await Requests.post(
+    "http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/competitor",
+  json: {"username": username});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
   return data;
 }
