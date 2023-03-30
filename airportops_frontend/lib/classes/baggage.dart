@@ -28,6 +28,19 @@ class Baggage {
   }
 
   String get baggageBar {
-    return '$originatingAirport';
+    return originatingAirport;
+  }
+
+  static Baggage fromJson(Map instance) {
+    return Baggage(
+      checked: instance['checked'],
+      destinationAirport: instance['destination'],
+      event: instance['event'],
+      nameFirst: instance['passengerFirst'],
+      nameLast: instance['passengerLast'],
+      originatingAirport: instance['origin'],
+      weight: instance['weight'],
+      id: instance['_id'],
+    );
   }
 }

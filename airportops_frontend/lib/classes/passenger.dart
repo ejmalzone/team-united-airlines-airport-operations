@@ -45,4 +45,21 @@ class Passenger {
       return accommodations.join(', ');
     }
   }
+
+  static Passenger fromJson(Map instance) {
+    return Passenger(
+      accommodations: instance['accommodations'],
+      passengerId: instance['_id'],
+      birthday: DateTime.now(),
+      boarded: instance['boarded'] == true,
+      event: instance['event'],
+      flightDestination: instance['destination'],
+      flightSource: instance['origin'],
+      nameFirst: instance['firstName'],
+      nameLast: instance['lastName'],
+      row: instance['row'],
+      seat: instance['seat'],
+      status: instance['boarded'] ? Status.boarded : Status.unboarded,
+    );
+  }
 }
