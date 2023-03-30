@@ -86,7 +86,7 @@ class PdfCreator {
                   pw.Text('${passenger.nameFirst.toUpperCase()} / ${passenger.nameLast.toUpperCase()}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 12))
                 ]),
                 pw.SizedBox(height: 5),
-                pw.Text('------------------------------------------------------------------------------------------------------------------------'),
+                pw.Text('----------------------------------------------------------------------------------------------------------'),
                 pw.SizedBox(height: 5),
                 pw.Row(children: [
                   pw.Column(children: [
@@ -130,7 +130,7 @@ class PdfCreator {
                   )
                 ]),
                 pw.SizedBox(height: 5),
-                pw.Text('------------------------------------------------------------------------------------------------------------------------'),
+                pw.Text('----------------------------------------------------------------------------------------------------------'),
                 pw.SizedBox(height: 5),
                 // pw.Divider(height: 0.1 * PdfPageFormat.inch, thickness: 2, indent: 5, endIndent: 60),
                 pw.Row(children: [
