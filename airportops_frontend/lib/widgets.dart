@@ -215,7 +215,7 @@ class ProfileBox extends StatelessWidget {
                               ),
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(position,
+                                child: Text('@${competitior.username}',
                                     style: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 15,
