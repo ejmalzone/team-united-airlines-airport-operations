@@ -46,9 +46,9 @@ class Passenger {
     }
   }
 
-  static Passenger fromJson(Map instance) {
+  static Passenger fromJson(Map<String, dynamic> instance) {
     return Passenger(
-      accommodations: instance['accommodations'],
+      accommodations: instance['accommodations'] ?? <String>[],
       passengerId: instance['_id'],
       birthday: DateTime.now(),
       boarded: instance['boarded'] == true,
