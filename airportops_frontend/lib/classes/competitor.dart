@@ -1,7 +1,9 @@
 import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
+import 'package:airportops_frontend/customerservice/customerservice_profile.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/main.dart';
+import 'package:airportops_frontend/rampservices/rampservices_profile.dart';
 import 'package:airportops_frontend/scanning.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/database.dart';
@@ -318,7 +320,7 @@ class CustomerServiceLogin extends StatelessWidget {
                 signUpSuccess: "Success!"),
             onSubmitAnimationCompleted: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => UniversalScanApp()));
+                  MaterialPageRoute(builder: (context) => CSRRoute()));
             },
             additionalSignupFields: const [
               UserFormField(
@@ -428,7 +430,7 @@ class RampServicesLogin extends StatelessWidget {
                 signUpSuccess: "Success!"),
             onSubmitAnimationCompleted: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const ScanRoute()));
+                  MaterialPageRoute(builder: (context) => BaggageRoute()));
             },
             additionalSignupFields: const [
               UserFormField(

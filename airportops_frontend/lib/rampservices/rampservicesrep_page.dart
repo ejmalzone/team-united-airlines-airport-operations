@@ -14,7 +14,15 @@ import 'package:jiffy/jiffy.dart';
 class CSRRoute extends StatelessWidget {
   CSRRoute({Key? key}) : super(key: key);
 
-  final Admin c = Admin("CSR", "Employee", Position.Csr);
+  final Competitor c = Competitor(
+      firstname: 'firstname',
+      lastname: 'lastname',
+      stationCode: 'stationCode',
+      username: 'username',
+      event: 'event',
+      bagsScanned: [],
+      passengersScanned: [],
+      position: Position.Ramp);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   @override
@@ -32,7 +40,7 @@ class CSRRoute extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // ProfileBox(competitior: c, image: image),
+            ProfileBox(competitior: c, image: image),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 0),
               child: ElevatedButton(
@@ -49,6 +57,28 @@ class CSRRoute extends StatelessWidget {
                 },
                 child: Text(
                   "SCAN",
+                  style: TextStyle(
+                    fontFamily: 'Open Sans',
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.green,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HoneywellScanApp()));
+                  print("link to honeywell scanner");
+                },
+                child: Text(
+                  "HONEYWELL SCAN",
                   style: TextStyle(
                     fontFamily: 'Open Sans',
                   ),

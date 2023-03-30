@@ -14,7 +14,15 @@ import 'package:jiffy/jiffy.dart';
 class CSRRoute extends StatelessWidget {
   CSRRoute({Key? key}) : super(key: key);
 
-  final Admin c = Admin("CSR", "Employee", Position.Csr);
+  final Competitor c = Competitor(
+      firstname: 'firstname',
+      lastname: 'lastname',
+      stationCode: 'stationCode',
+      username: 'username',
+      event: 'event',
+      bagsScanned: [],
+      passengersScanned: [],
+      position: Position.Csr);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   @override
@@ -32,7 +40,7 @@ class CSRRoute extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // ProfileBox(competitior: c, image: image),
+            ProfileBox(competitior: c, image: image),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 0),
               child: ElevatedButton(
@@ -48,7 +56,7 @@ class CSRRoute extends StatelessWidget {
                   print("LINK TO SCAN BUTTON");
                 },
                 child: Text(
-                  "SCAN",
+                  "UNIVERSAL SCANNER",
                   style: TextStyle(
                     fontFamily: 'Open Sans',
                   ),

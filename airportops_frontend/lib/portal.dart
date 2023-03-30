@@ -1,7 +1,9 @@
 import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
+import 'package:airportops_frontend/customerservice/customerservicerep_page.dart';
 import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/main.dart';
+import 'package:airportops_frontend/rampservices/rampservices_profile.dart';
 import 'package:airportops_frontend/scanning.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,7 +65,7 @@ class PortalRoute extends StatelessWidget {
                       {
                         await Navigator.of(context)
                             .push(MaterialPageRoute(builder: ((context) {
-                          return UniversalScanApp();
+                          return CSRRoute();
                         })))
                       }
                     else
@@ -88,7 +90,7 @@ class PortalRoute extends StatelessWidget {
                       {
                         await Navigator.of(context)
                             .push(MaterialPageRoute(builder: ((context) {
-                          return const ScanRoute();
+                          return BaggageRoute();
                         })))
                       }
                     else
