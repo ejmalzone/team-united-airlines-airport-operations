@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/widgets.dart';
@@ -22,7 +24,7 @@ class CompProfileState extends State<CompProfile> {
       children: [
         ProfileBox(competitior: widget.c, image: image),
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+          padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
           child: Container(
             width: 100,
             height: 100,
@@ -93,6 +95,35 @@ class CompProfileState extends State<CompProfile> {
             ),
           ),
         ),
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(30, 10, 0,0),
+          child: SizedBox(
+            height: 40,
+            child: Text(
+              'Scanning History',
+              style: TextStyle(
+                fontFamily: 'Open Sans',
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            )
+          ),
+        ),
+        Flexible(
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 201, 201, 201),
+            ),
+            child: ListView(
+              // mainAxisSize: MainAxisSize.max,
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: List.generate(widget.c.passengersScanned.length, (index) {
+                return PCard(p: widget.c.passengersScanned[index]);
+              }),
+            ),
+          ),
+        )
       ],
     );
   }
