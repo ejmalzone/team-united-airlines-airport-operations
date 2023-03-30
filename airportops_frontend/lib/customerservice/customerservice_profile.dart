@@ -96,7 +96,7 @@ class CSRRoute extends StatelessWidget {
 
   late Event e2 = Event("Cowboy Rodeo", 0, 15, 0, [], [], []);
 
-  final Competitor c = Competitor("CSR", "Employee", Position.Csr);
+  final Admin c = Admin("CSR", "Employee", Position.Csr);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   @override
@@ -114,7 +114,7 @@ class CSRRoute extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ProfileBox(competitior: c, image: image),
+            // ProfileBox(competitior: c, image: image),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(30, 30, 50, 0),
               child: Container(
