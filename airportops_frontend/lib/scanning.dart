@@ -40,28 +40,6 @@ class _HoneywellScanAppState extends State<HoneywellScanApp> {
         title: const Text('Honeywell Scanner Testing'),
         backgroundColor: Colors.blue[900],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: Text('Test device support: $supported'),
-              onTap: () async {
-                bool supp = await honeywellScanner.isSupported();
-                setState(() {
-                  supported = supp;
-                });
-              },
-            ),
-          ],
-        ),
-      ),
       body: Container(
           alignment: Alignment.center,
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
