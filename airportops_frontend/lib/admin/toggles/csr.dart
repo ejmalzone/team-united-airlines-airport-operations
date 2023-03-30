@@ -120,7 +120,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
                       ),
                     ),
                     Text(
-                      'NO SHOW',
+                      'UNBOARDED',
                       style: TextStyle(
                         fontFamily: 'Open Sans',
                         fontWeight: FontWeight.w300,
