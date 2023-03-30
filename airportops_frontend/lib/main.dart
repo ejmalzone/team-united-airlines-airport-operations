@@ -66,8 +66,7 @@ class PassengerDisplayRoute extends StatelessWidget {
         nameLast: passenger['lastName'],
         row: passenger['row'],
         seat: passenger['seat'],
-        status:
-            passenger['boarded'] == true ? Status.boarded : Status.unboarded,
+        status: passenger['boarded'] == true ? Status.boarded : Status.unboarded,
       ));
     }
 
@@ -261,6 +260,22 @@ class HomeRoute extends StatelessWidget {
                 }
 
                 PdfCreator.generateBoardingPassPages(passengers);
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Test Save Baggage Tags to PDF'),
+              onPressed: () async {
+                Map<String, dynamic> reqData = await eventRequest();
+                Map<String, dynamic> bagData = await bagsRequest(reqData['data'][0]['name']);
+                final bagInstances = bagData['data'];
+
+                List<Baggage> bags = [];
+
+                for (var bagInstance in bagInstances) {
+                  bags.add(Baggage.fromJson(bagInstance));
+                }
+
+                PdfCreator.generateBaggageTagPages(bags);
               },
             ),
             ElevatedButton(

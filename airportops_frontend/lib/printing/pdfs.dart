@@ -39,7 +39,7 @@ class PdfCreator {
     }
 
     final Uint8List pdfInBytes = await pdf.save();
-    final name = 'boarding_pass_${_id++}.pdf';
+    final name = 'boarding_pass_$_id.pdf';
 
     await savePdf(pdfInBytes, name);
   }
@@ -80,7 +80,7 @@ class PdfCreator {
                 pw.Row(children: [
                   pw.Image(unitedLogo, width: 200, height: 50),
                   pw.SizedBox(width: 190),
-                  pw.Text(_id.toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 24))
+                  pw.Text((_id++).toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 24))
                 ]),
                 pw.Row(children: [
                   pw.Text('${passenger.nameFirst.toUpperCase()} / ${passenger.nameLast.toUpperCase()}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 12))

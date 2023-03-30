@@ -99,6 +99,8 @@ Future<Map<String, dynamic>> bagsRequest(String event) async {
   return data;
 }
 
+
+
 /// Set the event and return true or false if it was successful.
 /// [name] The name of the event
 Future<bool> setEvent(String name) async {
