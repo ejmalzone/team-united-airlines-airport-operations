@@ -1,3 +1,5 @@
+import 'package:airportops_frontend/classes/baggage.dart';
+import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/main.dart';
 import 'package:airportops_frontend/scanning.dart';
@@ -10,34 +12,46 @@ import 'package:airportops_frontend/custom_icons_icons.dart';
 final String CUSTOMER_SERVICE_KEY = "CUSTOMER_SERVICE";
 final String RAMP_SERVICES_KEY = "RAMP_SERVICES";
 
-class Competitor {
+class Admin {
   final String firstname;
   final String lastname;
   final Position position;
 
-  Competitor(this.firstname, this.lastname, this.position);
+  Admin(this.firstname, this.lastname, this.position);
 }
 
-class CompetitorProfile {
+class Competitor {
   final String firstname;
   final String lastname;
   final String stationCode;
   final String username;
   final String event;
-  final String bagsScanned;
-  final String passengersScanned;
+  final List<Baggage> bagsScanned;
+  final List<Passenger> passengersScanned;
   final Position position;
 
-  CompetitorProfile(
-    this.firstname,
-    this.lastname,
-    this.stationCode,
-    this.username,
-    this.event,
-    this.bagsScanned,
-    this.passengersScanned,
-    this.position,
-  );
+  Competitor({
+    required this.firstname,
+    required this.lastname,
+    required this.stationCode,
+    required this.username,
+    required this.event,
+    required this.bagsScanned,
+    required this.passengersScanned,
+    required this.position,
+  });
+
+  String get fullname {
+    return '$firstname $lastname';
+  }
+
+  void addpass(Passenger p) {
+    passengersScanned.add(p);
+  }
+
+  void addbag(Baggage b) {
+    bagsScanned.add(b);
+  }
 }
 
 // class NewCompetitorPage extends StatefulWidget {
@@ -340,8 +354,8 @@ class RampServicesLogin extends StatelessWidget {
       var loginData =
           await loginCompetitor(data.name, int.parse(data.password), 1);
       if (loginData["status"] == "success") {
-        await SharedPreferences.getInstance().then((final prefs) =>
-            {prefs.setString(RAMP_SERVICES_KEY, data.name)});
+        await SharedPreferences.getInstance().then(
+            (final prefs) => {prefs.setString(RAMP_SERVICES_KEY, data.name)});
         return null;
       }
       return "Login Failed!";
@@ -359,8 +373,8 @@ class RampServicesLogin extends StatelessWidget {
           position: 1,
           pin: int.parse(data.password!));
       if (signupResponse["status"] == "success") {
-        await SharedPreferences.getInstance().then((final prefs) =>
-            {prefs.setString(RAMP_SERVICES_KEY, data.name!)});
+        await SharedPreferences.getInstance().then(
+            (final prefs) => {prefs.setString(RAMP_SERVICES_KEY, data.name!)});
         return null;
       }
       return "Username is already taken!";

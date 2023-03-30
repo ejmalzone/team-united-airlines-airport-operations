@@ -96,7 +96,7 @@ class BaggageRoute extends StatelessWidget {
 
   late Event e2 = Event("Cowboy Rodeo", 0, 15, 0, [], [], []);
 
-  final Competitor c = Competitor("Ramp", "Services", Position.Ramp);
+  final Admin c = Admin("Ramp", "Services", Position.Ramp);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   @override
@@ -114,7 +114,7 @@ class BaggageRoute extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ProfileBox(competitior: c, image: image),
+            // ProfileBox(competitior: c, image: image),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(30, 30, 50, 0),
               child: Container(

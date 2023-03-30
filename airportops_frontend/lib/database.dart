@@ -182,3 +182,13 @@ Future<Map<String, dynamic>> validateCompetitor(String username) async {
   Map<String, dynamic> data = jsonDecode(body);
   return data;
 }
+
+Future<Map<String, dynamic>> competitorRequest(String event) async {
+  var reply = await Requests.post(
+      "http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/competitor",
+      json: {"event": event});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  print(data);
+  return data;
+}

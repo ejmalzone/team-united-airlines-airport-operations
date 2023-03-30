@@ -14,7 +14,7 @@ import 'package:jiffy/jiffy.dart';
 class CSRRoute extends StatelessWidget {
   CSRRoute({Key? key}) : super(key: key);
 
-  final Competitor c = Competitor("CSR", "Employee", Position.Csr);
+  final Admin c = Admin("CSR", "Employee", Position.Csr);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   @override
@@ -32,7 +32,7 @@ class CSRRoute extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ProfileBox(competitior: c, image: image),
+            // ProfileBox(competitior: c, image: image),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 0),
               child: ElevatedButton(

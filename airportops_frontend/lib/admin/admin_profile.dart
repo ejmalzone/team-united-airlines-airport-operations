@@ -23,7 +23,7 @@ class AdminRouteState extends State<AdminRoute> {
 
   late List<Event> events = [];
 
-  final Competitor c = Competitor("Stanley", "Duru", Position.Admin);
+  final Admin c = Admin("Stanley", "Duru", Position.Admin);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   String newEventName = '';
@@ -73,7 +73,7 @@ class AdminRouteState extends State<AdminRoute> {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ProfileBox(competitior: c, image: image),
+            AdminProfileBox(admin: c, image: image),
             Align(
               alignment: AlignmentDirectional(-1, -1),
               child: Padding(
@@ -135,10 +135,10 @@ class EventBox extends StatelessWidget {
 
   final Event event;
 
-  List<Competitor> employees = [
-    Competitor("Grant", "Mcleod", Position.Csr),
-    Competitor("Nadia", "Summers", Position.Csr),
-    Competitor("Alice", "Nixon", Position.Ramp),
+  List<Admin> employees = [
+    Admin("Grant", "Mcleod", Position.Csr),
+    Admin("Nadia", "Summers", Position.Csr),
+    Admin("Alice", "Nixon", Position.Ramp),
   ];
 
   @override
@@ -192,7 +192,8 @@ class EventBox extends StatelessWidget {
                               if (pReq['status'] == 'success') {
                                 for (var passenger in pReq['data']) {
                                   event.addPassenger(Passenger(
-                                    accommodations: passenger['accommodations'] ?? [],
+                                    accommodations:
+                                        passenger['accommodations'] ?? [],
                                     passengerId: passenger['_id'],
                                     birthday: DateTime.now(),
                                     boarded: passenger['boarded'] == true,
@@ -232,6 +233,22 @@ class EventBox extends StatelessWidget {
                                       event: bag["event"],
                                       checked: bag["checked"],
                                       id: bag["_id"]));
+                                }
+                              }
+                            });
+
+                            await competitorRequest(event.name).then((cReq) {
+                              if (cReq['status'] == 'success') {
+                                for (var comp in cReq['data']) {
+                                  event.addCompetitor(Competitor(
+                                      firstname: comp['firstName'],
+                                      lastname: comp['lastName'],
+                                      stationCode: comp['stationCode'],
+                                      username: comp['username'],
+                                      event: event.name,
+                                      bagsScanned: [],
+                                      passengersScanned: [],
+                                      position: Position.Csr));
                                 }
                               }
                             });

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_const_literals_to_create_immutables
 
-import 'package:airportops_frontend/bagprofile.dart';
+import 'package:airportops_frontend/admin/profiles/bagprofile.dart';
 import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
@@ -11,13 +11,130 @@ import 'package:flutter/material.dart';
 
 /* Creates Profile box
   params: competitor, icon image */
+  class AdminProfileBox extends StatelessWidget {
+  AdminProfileBox({super.key, required this.admin, required this.image});
+
+  final Admin admin;
+  final String image;
+
+  late String image_route = 'assets/$image';
+  late String position = admin.position.name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+        alignment: Alignment.topCenter,
+        child: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(30, 20, 30, 0),
+          child: Container(
+            width: double.infinity,
+            height: 92,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x33000000),
+                  offset: Offset(0, 2),
+                )
+              ],
+              shape: BoxShape.rectangle,
+            ),
+            alignment: AlignmentDirectional(0, 0),
+            child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF00239E),
+                    ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 10, 0, 0),
+                          child: Container(
+                            width: 74,
+                            height: 61,
+                            child: Container(
+                              width: 120,
+                              height: 120,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image.asset(
+                                image_route,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 20, 0, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Hello, ${admin.firstname} ${admin.lastname}',
+                                  style: TextStyle(
+                                      fontFamily: 'Open Sans',
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(position,
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 59.6,
+                        height: 50.6,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 10, 5, 0),
+                          child: Image.asset(
+                            admin.position.icon,
+                            width: 114.2,
+                            height: 93.4,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ]),
+          ),
+        ));
+  }
+}
 class ProfileBox extends StatelessWidget {
   ProfileBox({super.key, required this.competitior, required this.image});
 
   final Competitor competitior;
   final String image;
 
-  late String image_route = 'assets/$image';
+  late String image_route = 'assets/${image}';
   late String position = competitior.position.name;
 
   @override
@@ -26,112 +143,104 @@ class ProfileBox extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(30, 20, 30, 0),
-          child: Expanded(
-            child: Container(
-              width: double.infinity,
-              height: 92,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 4,
-                    color: Color(0x33000000),
-                    offset: Offset(0, 2),
-                  )
-                ],
-                shape: BoxShape.rectangle,
-              ),
-              alignment: AlignmentDirectional(0, 0),
-              child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 5,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF00239E),
-                      ),
+          child: Container(
+            width: double.infinity,
+            height: 92,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x33000000),
+                  offset: Offset(0, 2),
+                )
+              ],
+              shape: BoxShape.rectangle,
+            ),
+            alignment: AlignmentDirectional(0, 0),
+            child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF987700),
                     ),
-                    Expanded(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(0, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                              child: Container(
-                                width: 74,
-                                height: 61,
-                                child: Container(
-                                  width: 120,
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.asset(
-                                    image_route,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 10, 0, 0),
+                          child: Container(
+                            width: 74,
+                            height: 61,
+                            child: Container(
+                              width: 120,
+                              height: 120,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
                               ),
-                            ),
-                          ),
-                          Container(
-                            width: 186.5,
-                            height: 82.9,
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Text(
-                                      'Hello, ${competitior.firstname} ${competitior.lastname}',
-                                      style: TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Text(position,
-                                        style: TextStyle(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.normal)),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 59.6,
-                            height: 50.6,
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                               child: Image.asset(
-                                competitior.position.icon,
-                                width: 114.2,
-                                height: 93.4,
+                                image_route,
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ]),
-            ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 20, 0, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '${competitior.firstname} ${competitior.lastname}',
+                                  style: TextStyle(
+                                      fontFamily: 'Open Sans',
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(position,
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.normal)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 59.6,
+                        height: 50.6,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 10, 5, 0),
+                          child: Image.asset(
+                            competitior.position.icon,
+                            width: 114.2,
+                            height: 93.4,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ]),
           ),
         ));
   }
@@ -355,10 +464,7 @@ class BCardState extends State<BCard> {
                       backgroundColor: Colors.black,
                       centerTitle: true,
                     ),
-                    body: BagProfile(bag: widget.b)
-                )
-              )
-          );
+                    body: BagProfile(bag: widget.b))));
         print('tapped card');
       },
       child: Padding(
