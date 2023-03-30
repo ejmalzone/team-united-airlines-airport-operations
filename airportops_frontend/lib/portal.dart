@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/customerservice/customerservicerep_page.dart';
@@ -60,7 +62,8 @@ class PortalRoute extends StatelessWidget {
             //Navigator.pushNamed(context, endRoute);
             String? competitor = prefs.getString(CUSTOMER_SERVICE_KEY);
             if (competitor != null) {
-              await validateCompetitor(competitor).then((data) async => {
+              Map<String, dynamic> compData = jsonDecode(competitor);
+              await validateCompetitor(compData["username"]).then((data) async => {
                     if (data["status"] == "success")
                       {
                         await Navigator.of(context)
@@ -85,7 +88,8 @@ class PortalRoute extends StatelessWidget {
           } else if (endRoute == '/baggageSelect') {
             String? competitor = prefs.getString(RAMP_SERVICES_KEY);
             if (competitor != null) {
-              await validateCompetitor(competitor).then((data) async => {
+              Map<String, dynamic> compData = jsonDecode(competitor);
+              await validateCompetitor(compData["username"]).then((data) async => {
                     if (data["status"] == "success")
                       {
                         await Navigator.of(context)
