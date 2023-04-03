@@ -85,7 +85,7 @@ class EventRouteState extends State<EventRoute> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          widget.event.numBoarded.toString(),
+                          widget.event.p_boarded.toString(),
                           style: TextStyle(
                             fontFamily: 'Open Sans',
                             color: Color(0xFF008525),
@@ -117,7 +117,7 @@ class EventRouteState extends State<EventRoute> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          widget.event.numNoShow.toString(),
+                          widget.event.p_unboarded.toString(),
                           style: TextStyle(
                             fontFamily: 'Open Sans',
                             color: Color(0xFF850000),
@@ -149,7 +149,7 @@ class EventRouteState extends State<EventRoute> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          widget.event.numWrong.toString(),
+                          widget.event.p_wrong.toString(),
                           style: TextStyle(
                             fontFamily: 'Open Sans',
                             color: Color(0xFFBCBF14),

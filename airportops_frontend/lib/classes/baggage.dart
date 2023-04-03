@@ -1,3 +1,5 @@
+import '../enums.dart';
+
 class Baggage {
   final String nameFirst;
   final String nameLast;
@@ -8,6 +10,8 @@ class Baggage {
   final bool checked;
   final String id;
 
+  Status status = Status.unboarded;
+
   Baggage({
     required this.nameFirst,
     required this.nameLast,
@@ -17,6 +21,7 @@ class Baggage {
     required this.event,
     required this.checked,
     required this.id,
+    required this.status
   });
 
   String get fullName {
@@ -41,6 +46,7 @@ class Baggage {
       originatingAirport: instance['origin'],
       weight: instance['weight'],
       id: instance['_id'],
+      status: instance['checked'] ? Status.unboarded : Status.boarded,
     );
   }
 }

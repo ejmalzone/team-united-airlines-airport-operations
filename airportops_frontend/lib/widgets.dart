@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 /* Creates Profile box
   params: competitor, icon image */
-  class AdminProfileBox extends StatelessWidget {
+class AdminProfileBox extends StatelessWidget {
   AdminProfileBox({super.key, required this.admin, required this.image});
 
   final Admin admin;
@@ -128,6 +128,7 @@ import 'package:flutter/material.dart';
         ));
   }
 }
+
 class ProfileBox extends StatelessWidget {
   ProfileBox({super.key, required this.competitior, required this.image});
 
@@ -451,6 +452,7 @@ class BCard extends StatefulWidget {
 }
 
 class BCardState extends State<BCard> {
+  Color r = Colors.black54;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -523,12 +525,23 @@ class BCardState extends State<BCard> {
                         width: 70,
                         height: 34.7,
                         decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: widget.b.status.color,
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(23),
                             bottomRight: Radius.circular(20),
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Text(
+                            widget.b.status.name,
+                            style: TextStyle(
+                                fontFamily: 'Open Sans',
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10),
                           ),
                         ),
                       ),
