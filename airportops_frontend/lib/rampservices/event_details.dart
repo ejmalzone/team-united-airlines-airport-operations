@@ -78,7 +78,7 @@ class EventRoute extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          event.numBoarded.toString(),
+                          event.p_boarded.toString(),
                           style: TextStyle(
                             fontFamily: 'Open Sans',
                             color: Color(0xFF008525),
@@ -110,7 +110,7 @@ class EventRoute extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          event.numWrong.toString(),
+                          event.p_wrong.toString(),
                           style: TextStyle(
                             fontFamily: 'Open Sans',
                             color: Color(0xFFBCBF14),
