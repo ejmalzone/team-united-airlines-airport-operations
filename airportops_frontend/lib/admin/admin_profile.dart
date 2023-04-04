@@ -275,23 +275,7 @@ class EventBox extends StatelessWidget {
                             await passengerRequest(event.name).then((pReq) {
                               if (pReq['status'] == 'success') {
                                 for (var passenger in pReq['data']) {
-                                  event.addPassenger(Passenger(
-                                    accommodations:
-                                        passenger['accommodations'] ?? [],
-                                    passengerId: passenger['_id'],
-                                    birthday: DateTime.now(),
-                                    boarded: passenger['boarded'] == true,
-                                    event: passenger['event'],
-                                    flightDestination: passenger['destination'],
-                                    flightSource: passenger['origin'],
-                                    nameFirst: passenger['firstName'],
-                                    nameLast: passenger['lastName'],
-                                    row: passenger['row'],
-                                    seat: passenger['seat'],
-                                    status: passenger['boarded'] == true
-                                        ? Status.boarded
-                                        : Status.unboarded,
-                                  ));
+                                  event.addPassenger(Passenger.fromJson(passenger));
                                 }
 
                                 for (var person in event.passengers) {
