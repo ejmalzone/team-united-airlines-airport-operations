@@ -141,6 +141,15 @@ Future<Map<String, dynamic>> createPassenger(
   return data;
 }
 
+Future<Map<String, dynamic>> deletePassenger({required String passengerId}) async {
+  var reply = await Requests.delete(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/bag/',
+      json: {"passengerId": passengerId});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  return data;
+}
+
 Future<Map<String, dynamic>> signupCompetitor(
     {required String? firstName,
     required String? lastName,
@@ -194,3 +203,38 @@ Future<Map<String, dynamic>> competitorRequest(String event) async {
   print(data);
   return data;
 }
+
+
+Future<Map<String, dynamic>> createBag(
+    {required String passengerFirst,
+    required String passengerLast,
+    required String origin,
+    required int destination,
+    required String weight,
+    required bool wrongDestination,
+    required String event}) async {
+  var reply = await Requests.post(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/bag/',
+      json: {
+        "passengerFirst": passengerFirst,
+        "passengerLast": passengerLast,
+        "origin": origin,
+        "destination": destination,
+        "weight": weight,
+        "wrongDestination": wrongDestination,
+        "event": event
+      });
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  return data;
+}
+
+Future<Map<String, dynamic>> deleteBag({required String bagId}) async {
+  var reply = await Requests.delete(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/bag/',
+      json: {"bagId": bagId});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  return data;
+}
+

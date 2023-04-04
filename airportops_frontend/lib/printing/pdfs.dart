@@ -122,7 +122,7 @@ class PdfCreator {
                       .matrix4,
                     child: pw.BarcodeWidget(
                       data: passenger.passengerId,
-                      barcode: pw.Barcode.pdf417(),
+                      barcode: pw.Barcode.code128(),
                       width: 150,
                       height: 50,
                       drawText: false,
