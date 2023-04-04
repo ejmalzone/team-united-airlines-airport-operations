@@ -54,20 +54,7 @@ class PassengerDisplayRoute extends StatelessWidget {
     List<Passenger> passengers = [];
     List<PassengerProfile> profiles = [];
     for (var passenger in data['data']) {
-      passengers.add(Passenger(
-        accommodations: passenger['accommodations'],
-        passengerId: passenger['_id'],
-        birthday: DateTime.now(),
-        boarded: passenger['boarded'] == true,
-        event: passenger['event'],
-        flightDestination: passenger['destination'],
-        flightSource: passenger['origin'],
-        nameFirst: passenger['firstName'],
-        nameLast: passenger['lastName'],
-        row: passenger['row'],
-        seat: passenger['seat'],
-        status: passenger['boarded'] == true ? Status.boarded : Status.unboarded,
-      ));
+      passengers.add(Passenger.fromJson(passenger));
     }
 
     for (var person in passengers) {
