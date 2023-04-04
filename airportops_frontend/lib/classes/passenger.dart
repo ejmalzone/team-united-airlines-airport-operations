@@ -12,6 +12,10 @@ class Passenger {
   final String flightDestination;
   final List accommodations;
   final String event;
+  final bool connection;
+  final bool wrongGate;
+  final bool wrongDeparture;
+  final String? scanTime;
 
   Status status = Status.unboarded;
 
@@ -28,6 +32,10 @@ class Passenger {
     required this.accommodations,
     required this.event,
     required this.status,
+    required this.connection,
+    required this.wrongGate,
+    required this.wrongDeparture,
+    required this.scanTime
   });
 
   bool isAdult() {
@@ -50,7 +58,7 @@ class Passenger {
     return Passenger(
       accommodations: instance['accommodations'] ?? <String>[],
       passengerId: instance['_id'],
-      birthday: DateTime.now(),
+      birthday: DateTime.parse(instance['DOB']),
       boarded: instance['boarded'] == true,
       event: instance['event'],
       flightDestination: instance['destination'],
@@ -60,6 +68,10 @@ class Passenger {
       row: instance['row'],
       seat: instance['seat'],
       status: instance['boarded'] ? Status.boarded : Status.unboarded,
+      connection: instance['connection'],
+      wrongGate: instance['wrongGate'],
+      wrongDeparture: instance['wrongDeparture'],
+      scanTime: instance['scanTime']
     );
   }
 }

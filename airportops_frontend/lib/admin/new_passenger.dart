@@ -190,6 +190,10 @@ class _NewPassengerState extends State<NewPassenger> {
         status: _boardedController.text == 'true'
             ? Status.boarded
             : Status.unboarded,
+        connection: false,
+        wrongGate: false,
+        wrongDeparture: false,
+        scanTime: null
       ); // TODO: Implement parsing accomodations
 
       Navigator.pop(context, newPassenger);
