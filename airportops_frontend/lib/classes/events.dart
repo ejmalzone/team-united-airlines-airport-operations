@@ -7,16 +7,29 @@ import 'package:jiffy/jiffy.dart';
 class Event {
   final String name;
 
-  int numBoarded;
-  int numNoShow;
-  int numWrong;
+  int p_boarded;
+  int p_unboarded;
+  int p_wrong;
+
+  int b_boarded;
+  int b_unboarded;
+  int b_wrong;
 
   List<Passenger> passengers = [];
   List<Baggage> bags = [];
   List<Competitor> competitors = [];
 
-  Event(this.name, this.numBoarded, this.numNoShow, this.numWrong,
-      this.passengers, this.bags, this.competitors) {}
+  Event(
+      this.name,
+      this.p_boarded,
+      this.p_unboarded,
+      this.p_wrong,
+      this.b_boarded,
+      this.b_unboarded,
+      this.b_wrong,
+      this.passengers,
+      this.bags,
+      this.competitors) {}
 
   String get Date {
     String result = Jiffy(DateTime.now()).format('MMM do yyyy');
@@ -39,8 +52,11 @@ class Event {
     passengers.clear();
     bags.clear();
     competitors.clear();
-    numBoarded = 0;
-    numNoShow = 0;
-    numWrong = 0;
+    p_boarded = 0;
+    p_unboarded = 0;
+    p_wrong = 0;
+    b_boarded = 0;
+    b_unboarded = 0;
+    b_wrong = 0;
   }
 }

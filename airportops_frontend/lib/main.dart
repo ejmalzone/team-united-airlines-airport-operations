@@ -33,7 +33,7 @@ Future<void> main() async {
       '/': (context) => PortalRoute(),
       '/portal': (context) => LoginRoute(),
       '/home': (context) => const HomeRoute(),
-      '/examplePassenger': (context) => PassengerProfileApp(),
+      '/examplePassenger': (context) => ExamplePassengerProfileApp(),
       '/baggage': (context) => BaggageRoute(),
       '/bars': (context) => ProgressBarRoute(),
       '/dbTesting': (context) => DatabaseRoute(),
@@ -54,20 +54,7 @@ class PassengerDisplayRoute extends StatelessWidget {
     List<Passenger> passengers = [];
     List<PassengerProfile> profiles = [];
     for (var passenger in data['data']) {
-      passengers.add(Passenger(
-        accommodations: passenger['accommodations'],
-        passengerId: passenger['_id'],
-        birthday: DateTime.now(),
-        boarded: passenger['boarded'] == true,
-        event: passenger['event'],
-        flightDestination: passenger['destination'],
-        flightSource: passenger['origin'],
-        nameFirst: passenger['firstName'],
-        nameLast: passenger['lastName'],
-        row: passenger['row'],
-        seat: passenger['seat'],
-        status: passenger['boarded'] == true ? Status.boarded : Status.unboarded,
-      ));
+      passengers.add(Passenger.fromJson(passenger));
     }
 
     for (var person in passengers) {
@@ -322,8 +309,8 @@ class HomeRoute extends StatelessWidget {
   }
 }
 
-class PassengerProfileApp extends StatelessWidget {
-  PassengerProfileApp({super.key});
+class ExamplePassengerProfileApp extends StatelessWidget {
+  ExamplePassengerProfileApp({super.key});
 
   final Passenger testP = Passenger(
     nameFirst: "Ethan",
@@ -342,6 +329,10 @@ class PassengerProfileApp extends StatelessWidget {
     passengerId: "3849673547ef8989",
     row: 5,
     status: Status.boarded,
+    connection: false,
+    wrongGate: false,
+    wrongDeparture: false,
+    scanTime: null,
   );
 
   @override

@@ -14,11 +14,11 @@ import 'package:jiffy/jiffy.dart';
 class CSRRoute extends StatelessWidget {
   CSRRoute({Key? key}) : super(key: key);
 
-  Event e1 = Event("Line Dancing", 0, 0, 0, [], [], []);
+  Event e1 = Event("Line Dancing", 0, 0, 0,0,0,0, [], [], []);
 
   List<Event> events = [];
 
-  late Event e2 = Event("Cowboy Rodeo", 0, 15, 0, [], [], []);
+  late Event e2 = Event("Cowboy Rodeo", 0, 15, 0,0,0,0, [], [], []);
 
   final Competitor c = Competitor(
       firstname: 'firstname',

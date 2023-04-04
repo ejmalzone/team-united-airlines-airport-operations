@@ -77,7 +77,7 @@ class _AdminRampState extends State<AdminRamp> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      widget.event.numBoarded.toString(),
+                      widget.event.b_boarded.toString(),
                       style: TextStyle(
                         fontFamily: 'Open Sans',
                         color: Color(0xFF008525),
@@ -86,7 +86,7 @@ class _AdminRampState extends State<AdminRamp> {
                       ),
                     ),
                     Text(
-                      'COMPLETED',
+                      'BOARDED',
                       style: TextStyle(
                         fontFamily: 'Open Sans',
                         fontWeight: FontWeight.w300,
@@ -109,16 +109,16 @@ class _AdminRampState extends State<AdminRamp> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      widget.event.numWrong.toString(),
+                      widget.event.b_unboarded.toString(),
                       style: TextStyle(
                         fontFamily: 'Open Sans',
-                        color: Color(0xFFBCBF14),
+                        color: Color(0xFF850000),
                         fontSize: 50,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
                     Text(
-                      'WRONG FLIGHT',
+                      'UNBOARDED',
                       style: TextStyle(
                         fontFamily: 'Open Sans',
                         fontWeight: FontWeight.w300,
@@ -157,11 +157,7 @@ class _AdminRampState extends State<AdminRamp> {
           height: 60,
           child: Center(
               child: ElevatedButton(
-            onPressed: () async {
-              print("SCAN");
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UniversalScanApp()));
-            },
+            onPressed: () async {},
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.white,
               backgroundColor: Colors.red,
@@ -178,4 +174,3 @@ class _AdminRampState extends State<AdminRamp> {
     );
   }
 }
-

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, avoid_print, use_build_context_synchronously, curly_braces_in_flow_control_structures
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, avoid_print, use_build_context_synchronously, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables
 
 import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
@@ -61,7 +61,7 @@ class AdminRouteState extends State<AdminRoute> {
             ));
 
     for (var e in widget.eventmap['data']) {
-      Event cEvent = Event(e['name'], 0, 0, 0, [], [], []);
+      Event cEvent = Event(e['name'], 0, 0, 0, 0, 0, 0, [], [], []);
       events.add(cEvent);
     }
     return Scaffold(
@@ -74,6 +74,90 @@ class AdminRouteState extends State<AdminRoute> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             AdminProfileBox(admin: c, image: image),
+            Align(
+              alignment: AlignmentDirectional(-1, -1),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(30, 30, 0, 0),
+                child: Text(
+                  'Current Event',
+                  style: TextStyle(
+                    fontFamily: 'Open Sans',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
+              child: Card(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                color: Color(0xFFA9C3FF),
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                      child: Text(
+                        'Line Dancing',
+                        style: TextStyle(
+                          fontFamily: 'Open Sans',
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(0, 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                        child: Text(
+                          'Monday April 3 2023',
+                          style: TextStyle(
+                            fontFamily: 'Open Sans',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                      child: Text(
+                        '[Passengers bar]',
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                      child: Text(
+                        '[Bags bar ]',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 60,
+                      child: Center(
+                          child: ElevatedButton(
+                        onPressed: () async {},
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFF00239E),
+                        ),
+                        child: Text(
+                          "View Event",
+                          style: TextStyle(
+                            fontFamily: 'Open Sans',
+                          ),
+                        ),
+                      )),
+                    )
+                  ],
+                ),
+              ),
+            ),
             Align(
               alignment: AlignmentDirectional(-1, -1),
               child: Padding(
@@ -191,32 +275,16 @@ class EventBox extends StatelessWidget {
                             await passengerRequest(event.name).then((pReq) {
                               if (pReq['status'] == 'success') {
                                 for (var passenger in pReq['data']) {
-                                  event.addPassenger(Passenger(
-                                    accommodations:
-                                        passenger['accommodations'] ?? [],
-                                    passengerId: passenger['_id'],
-                                    birthday: DateTime.now(),
-                                    boarded: passenger['boarded'] == true,
-                                    event: passenger['event'],
-                                    flightDestination: passenger['destination'],
-                                    flightSource: passenger['origin'],
-                                    nameFirst: passenger['firstName'],
-                                    nameLast: passenger['lastName'],
-                                    row: passenger['row'],
-                                    seat: passenger['seat'],
-                                    status: passenger['boarded'] == true
-                                        ? Status.boarded
-                                        : Status.unboarded,
-                                  ));
+                                  event.addPassenger(Passenger.fromJson(passenger));
                                 }
 
                                 for (var person in event.passengers) {
                                   if (person.boarded == true) {
-                                    event.numBoarded += 1;
+                                    event.p_boarded += 1;
                                   }
 
                                   if (person.boarded == false) {
-                                    event.numNoShow += 1;
+                                    event.p_unboarded += 1;
                                   }
                                 }
                               }
@@ -232,7 +300,10 @@ class EventBox extends StatelessWidget {
                                       weight: bag["weight"],
                                       event: bag["event"],
                                       checked: bag["checked"],
-                                      id: bag["_id"]));
+                                      id: bag["_id"],
+                                      status: bag["checked"] == true
+                                          ? Status.boarded
+                                          : Status.unboarded));
                                 }
                               }
                             });
@@ -248,7 +319,19 @@ class EventBox extends StatelessWidget {
                                       event: event.name,
                                       bagsScanned: [],
                                       passengersScanned: [],
-                                      position: Position.Csr));
+                                      position: comp['position'] == 0
+                                          ? Position.Csr
+                                          : Position.Ramp));
+                                }
+
+                                for (var bag in event.bags) {
+                                  if (bag.checked == true) {
+                                    event.b_boarded += 1;
+                                  }
+
+                                  if (bag.checked == false) {
+                                    event.b_unboarded += 1;
+                                  }
                                 }
                               }
                             });
