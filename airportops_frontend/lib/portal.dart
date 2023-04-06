@@ -820,7 +820,7 @@ class PortalRoute extends StatelessWidget {
                     'assets/icons8-airport-64.png', '/csrSelect'),
                 makeButton(context, 'Ramp Service',
                     'assets/icons8-luggage-64 (1).png', '/baggageSelect'),
-              ].withSpaceBetween(width: 36),
+              ].withSpaceBetween(width: 18),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -834,10 +834,10 @@ class PortalRoute extends StatelessWidget {
                     'assets/united-square-64.png',
                     '/home'),
               ].withSpaceBetween(
-                width: 36,
+                width: 18,
               ),
             ),
-          ].withSpaceBetween(height: 36),
+          ].withSpaceBetween(height: 18),
         ),
       ),
     );
