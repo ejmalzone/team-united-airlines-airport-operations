@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/customerservice/event_details.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CSRRoute extends StatelessWidget {
   CSRRoute({Key? key}) : super(key: key);
@@ -69,7 +70,41 @@ class CSRRoute extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  margin: EdgeInsets.only(left: 50, bottom: 50),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      shadowColor: MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.hovered)) {
+                          return Color.fromARGB(150, 0, 0, 0);
+                        }
+                        return Color.fromARGB(100, 0, 0, 0);
+                      }),
+                      backgroundColor: MaterialStateProperty.resolveWith((states) {
+                        return Color.fromARGB(255, 151, 151, 151);
+                      }),
+                      alignment: Alignment.center,
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                          side: BorderSide(color: Color.fromARGB(255, 31, 31, 31))
+                        )
+                      ),
+                    ),
+                    child: Image.asset("assets/logout.png", width: 45, alignment: Alignment.centerRight),
+                    onPressed: () async {
+                      final SharedPreferences prefs = await SharedPreferences.getInstance();
+                      prefs.remove(CUSTOMER_SERVICE_KEY);
+                      Navigator.of(context).pop();
+                    }
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
