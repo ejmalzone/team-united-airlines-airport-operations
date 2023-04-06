@@ -249,7 +249,8 @@ Future<Map<String, dynamic>> deleteBag({required String bagId}) async {
 Future<Map<String, dynamic>> scanBag({required String bagId, required String competitor}) async {
     var reply = await Requests.put(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/bag/',
-      json: {"bagId": bagId, competitor: competitor});
+      json: {"bagId": bagId, "competitor": competitor,
+            "scanTime": DateTime.now().toString()});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   return data;
@@ -258,7 +259,8 @@ Future<Map<String, dynamic>> scanBag({required String bagId, required String com
 Future<Map<String, dynamic>> scanPassenger({required String passengerId, required String competitor}) async {
     var reply = await Requests.put(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
-      json: {"passengerId": passengerId, competitor: competitor});
+      json: {"passengerId": passengerId, "competitor": competitor,
+            "scanTime": DateTime.now().toString()});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   return data;
