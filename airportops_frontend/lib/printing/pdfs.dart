@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io' as io;
 import 'dart:math';
 
+import 'package:airportops_frontend/enums.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -98,6 +99,19 @@ class PdfCreator {
       gate += '2';
     }
 
+    var flightSource = passenger.flightSource;
+    var flightDestination = passenger.flightDestination;
+    if (passenger.connection) {
+      flightSource = flightDestination;
+
+      do {
+        flightDestination = countries.keys.elementAt(rng.nextInt(countries.keys.length));
+      } while (flightDestination == passenger.flightDestination);
+
+      gate = _getRandomGate();
+      boardTime = '${10 + rng.nextInt(10)}:${rng.nextBool() ? '35' : '25'}';
+    }
+
     document.addPage(
       pw.Page(
         pageFormat: const PdfPageFormat(
@@ -141,7 +155,7 @@ class PdfCreator {
                           pw.TableRow(
                               verticalAlignment: pw.TableCellVerticalAlignment.top,
                               children: [
-                                pw.Text('${passenger.flightSource} -> ${passenger.flightDestination}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
+                                pw.Text('$flightSource -> $flightDestination', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
                                 pw.Text(gate, style: const pw.TextStyle(fontSize: 18)),
                                 pw.Text(boardTime, style: const pw.TextStyle(fontSize: 18)),
                                 pw.Text('${passenger.row}${passenger.seat}', style: const pw.TextStyle(fontSize: 18)),
@@ -304,5 +318,9 @@ class PdfCreator {
       final file = io.File('${await _localPath}/$name');
       await file.writeAsBytes(bytes);
     }// Page
+  }
+
+  static String _getRandomGate() {
+    return '${String.fromCharCode(97 + rng.nextInt(25)).toUpperCase()}${rng.nextInt(100)}';
   }
 }
