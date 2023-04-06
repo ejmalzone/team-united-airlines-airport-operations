@@ -149,18 +149,19 @@ class LoginRoute extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: 2250);
 
   Map<String, dynamic> _events = {};
+  Map<String, dynamic> curr_event = {};
 
   Future<String?> _authUser(LoginData data) async {
     return Future.delayed(loginTime).then((_) async {
       var loginData = await loginRequest(data.name, data.password);
       if (loginData["status"] == "success") {
         Map<String, dynamic> eventMap = await eventRequest();
+        Map<String, dynamic> curr_eventMap = await getCurrentEvent();
         if (eventMap['status'] == 'success') {
           _events = eventMap;
+          curr_event = curr_eventMap;
           await SharedPreferences.getInstance()
-          .then((final prefs) => {
-            prefs.setString(ADMIN_KEY, data.name)
-          });
+              .then((final prefs) => {prefs.setString(ADMIN_KEY, data.name)});
           return null;
         }
         return "Something went wrong! Please try again.";
@@ -195,13 +196,11 @@ class LoginRoute extends StatelessWidget {
             onLogin: _authUser,
             onSubmitAnimationCompleted: () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => AdminRoute(eventmap: _events)));
+                  builder: (context) => AdminRoute(eventmap: _events, curreventmap: curr_event)));
             },
             onRecoverPassword: _recoverPassword,
-            messages: LoginMessages(
-              userHint: "Username",
-              passwordHint: "Password"
-            ),
+            messages:
+                LoginMessages(userHint: "Username", passwordHint: "Password"),
             theme: LoginTheme(
               primaryColor: const Color.fromARGB(255, 0, 94, 170),
               errorColor: const Color.fromARGB(255, 78, 78, 78),

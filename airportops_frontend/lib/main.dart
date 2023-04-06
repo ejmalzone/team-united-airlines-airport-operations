@@ -189,14 +189,14 @@ class DatabaseRoute extends StatelessWidget {
                 onPressed: () async {
                   //print('Testing: ');
 
-                  var req = competitorRequest('default');
+                  var req = getCurrentEvent();
                   print(req);
                 },
                 child: const Text('Event Query'),
               ),
               ElevatedButton(
                 onPressed: () async {
-                  var req = await currPassengerRequest();
+                  var req = await setEvent('Tst2');
                   //print(req['data'][0]['boarded'] is bool);
                   //for (var person in req['data']) {
                   //  print('ID: ${person['_id']}');

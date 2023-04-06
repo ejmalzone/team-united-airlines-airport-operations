@@ -2,6 +2,7 @@
 
 import 'package:airportops_frontend/admin/profiles/competitor_profile.dart';
 import 'package:airportops_frontend/classes/events.dart';
+import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,57 @@ class _CompetitorsPageState extends State<CompetitorsPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                ElevatedButton(
+                    onPressed: () async {
+                      var curr = await getCurrentEvent();
+                      await setEvent(widget.event.name);
+                      if (curr['data']['name'] != widget.event.name) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Container(
+                            padding: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                                color: Color.fromARGB(206, 47, 124, 2),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Text(
+                                "${widget.event.name} is now set as the current event!",
+                                textAlign: TextAlign.center),
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          duration: Duration(seconds: 2),
+                        ));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Container(
+                            padding: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                                color: Color.fromARGB(216, 133, 0, 0),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Text(
+                                "${widget.event.name} is already set as the current event!",
+                                textAlign: TextAlign.center),
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          duration: Duration(seconds: 2),
+                        ));
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color.fromARGB(255, 47, 124, 2),
+                    ),
+                    child: Text(
+                      'Set Current Event',
+                      style: TextStyle(
+                        fontFamily: 'Open Sans',
+                        fontSize: 15,
+                      ),
+                    ))
               ],
             ),
           ],
@@ -108,10 +160,7 @@ class CCardState extends State<CCard> {
                       backgroundColor: Colors.black,
                       centerTitle: true,
                     ),
-                    body: CompProfile(c: widget.c)
-                )
-              )
-          );
+                    body: CompProfile(c: widget.c))));
         print('tapped card');
       },
       child: Padding(

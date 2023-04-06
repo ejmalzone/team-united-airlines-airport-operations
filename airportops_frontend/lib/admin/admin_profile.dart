@@ -13,7 +13,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminRoute extends StatefulWidget {
   Map<String, dynamic> eventmap;
-  AdminRoute({Key? key, required this.eventmap}) : super(key: key);
+  Map<String, dynamic> curreventmap;
+  AdminRoute({Key? key, required this.eventmap, required this.curreventmap})
+      : super(key: key);
 
   @override
   State<AdminRoute> createState() => AdminRouteState();
@@ -22,6 +24,7 @@ class AdminRoute extends StatefulWidget {
 class AdminRouteState extends State<AdminRoute> {
   AdminRouteState({Key? key});
 
+  late Event currentEvent;
   late List<Event> events = [];
 
   final Admin c = Admin("Stanley", "Duru", Position.Admin);
@@ -36,7 +39,7 @@ class AdminRouteState extends State<AdminRoute> {
     super.initState();
     controller = TextEditingController();
   }
-
+  
   @override
   void dispose() {
     controller.dispose();
@@ -60,10 +63,13 @@ class AdminRouteState extends State<AdminRoute> {
               ),
               actions: [TextButton(onPressed: submit, child: Text('Submit'))],
             ));
-
     for (var e in widget.eventmap['data']) {
-      Event cEvent = Event(e['name'], 0, 0, 0, 0, 0, 0, [], [], []);
-      events.add(cEvent);
+      if (e['name'] != widget.curreventmap['data']['name']) {
+        Event cEvent = Event(e['name'], 0, 0, 0, 0, 0, 0, [], [], []);
+        events.add(cEvent);
+      }else{
+        currentEvent = Event(widget.curreventmap['data']['name'], 0, 0, 0, 0, 0, 0, [], [], []);
+      }
     }
     return Scaffold(
       appBar: AppBar(
@@ -89,76 +95,7 @@ class AdminRouteState extends State<AdminRoute> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
-              child: Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                color: Color(0xFFA9C3FF),
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                      child: Text(
-                        'Line Dancing',
-                        style: TextStyle(
-                          fontFamily: 'Open Sans',
-                          fontSize: 30,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(0, 0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
-                        child: Text(
-                          'Monday April 3 2023',
-                          style: TextStyle(
-                            fontFamily: 'Open Sans',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-                      child: Text(
-                        '[Passengers bar]',
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                      child: Text(
-                        '[Bags bar ]',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 60,
-                      child: Center(
-                          child: ElevatedButton(
-                        onPressed: () async {},
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Color(0xFF00239E),
-                        ),
-                        child: Text(
-                          "View Event",
-                          style: TextStyle(
-                            fontFamily: 'Open Sans',
-                          ),
-                        ),
-                      )),
-                    )
-                  ],
-                ),
-              ),
-            ),
+            CurrBox(event: currentEvent),
             Align(
               alignment: AlignmentDirectional(-1, -1),
               child: Padding(
@@ -189,31 +126,35 @@ class AdminRouteState extends State<AdminRoute> {
                 child: Container(
                   margin: EdgeInsets.only(left: 50),
                   child: ElevatedButton(
-                    style: ButtonStyle(
-                      shadowColor: MaterialStateProperty.resolveWith((states) {
-                        if (states.contains(MaterialState.hovered)) {
-                          return Color.fromARGB(150, 0, 0, 0);
-                        }
-                        return Color.fromARGB(100, 0, 0, 0);
-                      }),
-                      backgroundColor: MaterialStateProperty.resolveWith((states) {
-                        return Color.fromARGB(255, 151, 151, 151);
-                      }),
-                      alignment: Alignment.center,
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                          side: BorderSide(color: Color.fromARGB(255, 31, 31, 31))
-                        )
+                      style: ButtonStyle(
+                        shadowColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          if (states.contains(MaterialState.hovered)) {
+                            return Color.fromARGB(150, 0, 0, 0);
+                          }
+                          return Color.fromARGB(100, 0, 0, 0);
+                        }),
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          return Color.fromARGB(255, 151, 151, 151);
+                        }),
+                        alignment: Alignment.center,
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(
+                                        color:
+                                            Color.fromARGB(255, 31, 31, 31)))),
                       ),
-                    ),
-                    child: Image.asset("assets/logout.png", width: 45, alignment: Alignment.centerRight),
-                    onPressed: () async {
-                      final SharedPreferences prefs = await SharedPreferences.getInstance();
-                      prefs.remove(CUSTOMER_SERVICE_KEY);
-                      Navigator.of(context).pop();
-                    }
-                  ),
+                      child: Image.asset("assets/logout.png",
+                          width: 45, alignment: Alignment.centerRight),
+                      onPressed: () async {
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.remove(CUSTOMER_SERVICE_KEY);
+                        Navigator.of(context).pop();
+                      }),
                 ),
               ),
             ),
@@ -240,6 +181,169 @@ class AdminRouteState extends State<AdminRoute> {
                     fontFamily: 'Open Sans',
                   ),
                 ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CurrBox extends StatefulWidget {
+  Event event;
+  CurrBox({Key? key, required this.event}) : super(key: key);
+
+  @override
+  State<CurrBox> createState() => _CurrBoxState();
+}
+
+class _CurrBoxState extends State<CurrBox> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
+      child: Card(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        color: Color(0xFFA9C3FF),
+        elevation: 10,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+              child: Text(
+                widget.event.name,
+                style: TextStyle(
+                  fontFamily: 'Open Sans',
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Align(
+              alignment: AlignmentDirectional(0, 0),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
+                child: Text(
+                  'Monday April 3 2023',
+                  style: TextStyle(
+                    fontFamily: 'Open Sans',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+              child: Text(
+                '[Passengers bar]',
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+              child: Text(
+                '[Bags bar ]',
+              ),
+            ),
+            SizedBox(
+              height: 60,
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () async {
+                    widget.event.Reset();
+                    await passengerRequest(widget.event.name).then((pReq) {
+                      if (pReq['status'] == 'success') {
+                        for (var passenger in pReq['data']) {
+                          widget.event.addPassenger(
+                              Passenger.fromJson(passenger));
+                        }
+
+                        for (var person in widget.event.passengers) {
+                          if (person.boarded == true) {
+                            widget.event.p_boarded += 1;
+                          }
+
+                          if (person.boarded == false) {
+                            widget.event.p_unboarded += 1;
+                          }
+                        }
+                      }
+                    });
+                    await bagsRequest(widget.event.name).then((bReq) {
+                      if (bReq["status"] == "success") {
+                        for (var bag in bReq["data"]) {
+                          widget.event.addBag(Baggage(
+                              nameFirst: bag["passengerFirst"],
+                              nameLast: bag["passengerLast"],
+                              originatingAirport: bag["origin"],
+                              destinationAirport: bag["destination"],
+                              weight: bag["weight"],
+                              event: bag["event"],
+                              checked: bag["checked"],
+                              id: bag["_id"],
+                              status: bag["checked"] == true
+                                  ? Status.boarded
+                                  : Status.unboarded));
+                        }
+                      }
+                    });
+
+                    await competitorRequest(widget.event.name).then((cReq) {
+                      if (cReq['status'] == 'success') {
+                        for (var comp in cReq['data']) {
+                          widget.event.addCompetitor(Competitor(
+                              firstname: comp['firstName'],
+                              lastname: comp['lastName'],
+                              stationCode: comp['stationCode'],
+                              username: comp['username'],
+                              event: widget.event.name,
+                              bagsScanned: [],
+                              passengersScanned: [],
+                              position: comp['position'] == 0
+                                  ? Position.Csr
+                                  : Position.Ramp));
+                        }
+
+                        for (var bag in widget.event.bags) {
+                          if (bag.checked == true) {
+                            widget.event.b_boarded += 1;
+                          }
+
+                          if (bag.checked == false) {
+                            widget.event.b_unboarded += 1;
+                          }
+                        }
+                      }
+                    });
+                    // for (var emp in employees) {
+                    //   event.addCompetitor(emp);
+                    // }
+
+                    // print(event.passengers);
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                EventRoute(event: widget.event)));
+
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Color(0xFF00239E),
+                  ),
+                  child: Text(
+                    "View Event",
+                    style: TextStyle(
+                      fontFamily: 'Open Sans',
+                    ),
+                  ),
+                )
               ),
             )
           ],
@@ -310,7 +414,8 @@ class EventBox extends StatelessWidget {
                             await passengerRequest(event.name).then((pReq) {
                               if (pReq['status'] == 'success') {
                                 for (var passenger in pReq['data']) {
-                                  event.addPassenger(Passenger.fromJson(passenger));
+                                  event.addPassenger(
+                                      Passenger.fromJson(passenger));
                                 }
 
                                 for (var person in event.passengers) {

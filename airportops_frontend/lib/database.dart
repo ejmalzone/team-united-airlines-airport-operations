@@ -45,6 +45,15 @@ Future<Map<String, dynamic>> eventRequest() async {
   return (data);
 }
 
+Future<Map<String, dynamic>> getCurrentEvent() async {
+  var reply = await Requests.get(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/event/current/');
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  print(data);
+  return (data);
+}
+
 Future<Map<String, dynamic>> signupRequest(
     String username, String password) async {
   var reply = await Requests.post(
@@ -99,17 +108,16 @@ Future<Map<String, dynamic>> bagsRequest(String event) async {
   return data;
 }
 
-
-
-/// Set the event and return true or false if it was successful.
+/// Set the event and return success or error if it was successful.
 /// [name] The name of the event
-Future<bool> setEvent(String name) async {
+Future<Map<String, dynamic>> setEvent(String name) async {
   var reply = await Requests.post(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/event/',
       json: {"setEvent": "true", "name": name});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
-  return data["status"] == "success" ? true : false;
+  print(data);
+  return data;
 }
 
 Future<Map<String, dynamic>> createPassenger(
@@ -141,7 +149,8 @@ Future<Map<String, dynamic>> createPassenger(
   return data;
 }
 
-Future<Map<String, dynamic>> deletePassenger({required String passengerId}) async {
+Future<Map<String, dynamic>> deletePassenger(
+    {required String passengerId}) async {
   var reply = await Requests.delete(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/bag/',
       json: {"passengerId": passengerId});
@@ -204,7 +213,6 @@ Future<Map<String, dynamic>> competitorRequest(String event) async {
   return data;
 }
 
-
 Future<Map<String, dynamic>> createBag(
     {required String passengerFirst,
     required String passengerLast,
@@ -237,4 +245,3 @@ Future<Map<String, dynamic>> deleteBag({required String bagId}) async {
   Map<String, dynamic> data = jsonDecode(body);
   return data;
 }
-
