@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/admin/event_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:airportops_frontend/login.dart';
 
 class AdminRoute extends StatefulWidget {
   Map<String, dynamic> eventmap;
@@ -210,7 +211,7 @@ class AdminRouteState extends State<AdminRoute> {
                     child: Image.asset("assets/logout.png", width: 45, alignment: Alignment.centerRight),
                     onPressed: () async {
                       final SharedPreferences prefs = await SharedPreferences.getInstance();
-                      prefs.remove(CUSTOMER_SERVICE_KEY);
+                      prefs.remove(ADMIN_KEY);
                       Navigator.of(context).pop();
                     }
                   ),
