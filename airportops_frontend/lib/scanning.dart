@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:honeywell_scanner/honeywell_scanner.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:requests/requests.dart';
+import 'package:airportops_frontend/database.dart';
 
 /*
   Honeywell Scanner Code
