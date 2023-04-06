@@ -12,21 +12,35 @@ import 'package:airportops_frontend/customerservice/event_details.dart';
 import 'package:jiffy/jiffy.dart';
 
 class CSRRoute extends StatelessWidget {
-  CSRRoute({Key? key}) : super(key: key);
+  CSRRoute({Key? key, Map<String, dynamic>? competitor}) : super(key: key) {
+    this.competitor = competitor!;
+  }
 
-  final Competitor c = Competitor(
-      firstname: 'firstname',
-      lastname: 'lastname',
-      stationCode: 'stationCode',
-      username: 'username',
-      event: 'event',
-      bagsScanned: [],
-      passengersScanned: [],
-      position: Position.Csr);
+  late Map<String, dynamic> competitor;
+
+  // final Competitor c = Competitor(
+  //     firstname: 'firstname',
+  //     lastname: 'lastname',
+  //     stationCode: 'stationCode',
+  //     username: 'username',
+  //     event: 'event',
+  //     bagsScanned: [],
+  //     passengersScanned: [],
+  //     position: Position.Csr);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   @override
   Widget build(BuildContext context) {
+    final Competitor c = Competitor(
+        firstname: competitor["first"],
+        lastname: competitor["last"],
+        stationCode: 'stationCode',
+        username: competitor["username"],
+        event: 'event',
+        bagsScanned: [],
+        passengersScanned: [],
+        position: Position.Csr);
+
     void submit() {
       Navigator.of(context).pop();
     }

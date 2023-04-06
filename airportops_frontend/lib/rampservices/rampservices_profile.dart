@@ -16,18 +16,22 @@ import 'dart:convert';
 import 'package:airportops_frontend/classes/competitor.dart';
 
 class BaggageRoute extends StatelessWidget {
-  BaggageRoute({Key? key}) : super(key: key);
+  BaggageRoute({Key? key, Map<String, dynamic>? competitor}) : super(key: key) {
+    this.competitor = competitor!;
+  }
+
+  late Map<String, dynamic> competitor;
 
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
-  final Competitor c = Competitor(
-      firstname: 'firstname',
-      lastname: 'lastname',
-      stationCode: 'stationCode',
-      username: 'username',
-      event: 'event',
-      bagsScanned: [],
-      passengersScanned: [],
-      position: Position.Ramp);
+  // final Competitor c = Competitor(
+  //     firstname: 'firstname',
+  //     lastname: 'lastname',
+  //     stationCode: 'stationCode',
+  //     username: 'username',
+  //     event: 'event',
+  //     bagsScanned: [],
+  //     passengersScanned: [],
+  //     position: Position.Ramp);
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +61,17 @@ class BaggageRoute extends StatelessWidget {
     //       passengersScanned: [],
     //       position: Position.Csr);
     // }
+
+    final Competitor c = Competitor(
+        firstname: competitor["first"],
+        lastname: competitor["last"],
+        stationCode: 'stationCode',
+        username: competitor["username"],
+        event: 'event',
+        bagsScanned: [],
+        passengersScanned: [],
+        position: Position.Ramp);
+
     void submit() {
       Navigator.of(context).pop();
     }

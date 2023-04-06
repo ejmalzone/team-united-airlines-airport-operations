@@ -16,7 +16,11 @@ import 'dart:convert';
 import 'package:airportops_frontend/classes/competitor.dart';
 
 class CSRRoute extends StatelessWidget {
-  CSRRoute({Key? key}) : super(key: key);
+  CSRRoute({Key? key, Map<String, dynamic>? competitor}) : super(key: key) {
+    this.competitor = competitor!;
+  }
+
+  late Map<String, dynamic> competitor;
 
   Event e1 = Event("Line Dancing", 0, 0, 0, 0, 0, 0, [], [], []);
 
@@ -26,15 +30,15 @@ class CSRRoute extends StatelessWidget {
 
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
-  final Competitor c = Competitor(
-      firstname: 'firstname',
-      lastname: 'lastname',
-      stationCode: 'stationCode',
-      username: 'username',
-      event: 'event',
-      bagsScanned: [],
-      passengersScanned: [],
-      position: Position.Csr);
+  // final Competitor c = Competitor(
+  //     firstname: 'firstname',
+  //     lastname: 'lastname',
+  //     stationCode: 'stationCode',
+  //     username: 'username',
+  //     event: 'event',
+  //     bagsScanned: [],
+  //     passengersScanned: [],
+  //     position: Position.Csr);
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +68,16 @@ class CSRRoute extends StatelessWidget {
     //       passengersScanned: [],
     //       position: Position.Csr);
     // }
+
+    final Competitor c = Competitor(
+        firstname: competitor["first"],
+        lastname: competitor["last"],
+        stationCode: 'stationCode',
+        username: competitor["username"],
+        event: 'event',
+        bagsScanned: [],
+        passengersScanned: [],
+        position: Position.Csr);
 
     void submit() async {
       //c = await customerRetreval();
