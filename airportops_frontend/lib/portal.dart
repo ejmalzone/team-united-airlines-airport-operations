@@ -194,6 +194,50 @@ class PortalRoute extends StatelessWidget {
       shadowColor: Colors.black12,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.5)),
     );
+    makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
+      String portalName = "";
+      String key = ADMIN_KEY;
+      switch(portal) {
+        case (0): {
+          portalName = "Admin";
+          key = ADMIN_KEY;
+          break;
+        }
+        case (1): {
+          portalName = "Customer Service";
+          key = CUSTOMER_SERVICE_KEY;
+          break;
+        }
+        case (2): {
+          portalName = "Ramp Services";
+          key = RAMP_SERVICES_KEY;
+          break;
+        }
+      }
+      showDialog<dynamic>(
+        context: context,
+        builder: (BuildContext context) =>
+          AlertDialog(
+            title: const Text("Sign out?"),
+            content: Text("You are logged into the $portalName portal already. Would you like to sign out?"),
+            actions: <Widget> [
+              TextButton(
+                child: const Text('Yes'),
+                onPressed: () {
+                  prefs.remove(key);
+                  Navigator.pop(context, 'ack');
+                }
+              ),
+              TextButton(
+                child: const Text('No'),
+                onPressed: () {
+                  Navigator.pop(context, 'ack');
+                }
+              ),
+            ],
+          )
+      );
+    }
     return ElevatedButton(
         style: buttonStyle,
         onPressed: () async {
@@ -201,7 +245,13 @@ class PortalRoute extends StatelessWidget {
           if (endRoute == '/admin') {
             Map<String, dynamic> eventMap = await eventRequest();
             String? user = prefs.getString(ADMIN_KEY);
-            if (user != null) {
+            String? CSRData = prefs.getString(CUSTOMER_SERVICE_KEY);
+            String? RSData = prefs.getString(RAMP_SERVICES_KEY);
+            if (CSRData != null) {
+              makeLogoutAlert(context, 1, prefs);
+            } else if (RSData != null) {
+              makeLogoutAlert(context, 2, prefs);
+            } else if (user != null) {
               await usernameValidation(user).then((data) async => {
                     if (data["status"] == "success")
                       {
@@ -227,9 +277,15 @@ class PortalRoute extends StatelessWidget {
             }
           } else if (endRoute == '/csrSelect') {
             //Navigator.pushNamed(context, endRoute);
-            String? competitor = prefs.getString(CUSTOMER_SERVICE_KEY);
-            if (competitor != null) {
-              Map<String, dynamic> compData = jsonDecode(competitor);
+            String? user = prefs.getString(ADMIN_KEY);
+            String? CSRData = prefs.getString(CUSTOMER_SERVICE_KEY);
+            String? RSData = prefs.getString(RAMP_SERVICES_KEY);
+            if (user != null) {
+              makeLogoutAlert(context, 0, prefs);
+            } else if (RSData != null) {
+              makeLogoutAlert(context, 2, prefs);
+            } else if (CSRData != null) {
+              Map<String, dynamic> compData = jsonDecode(CSRData);
               await validateCompetitor(compData["username"])
                   .then((data) async => {
                         if (data["status"] == "success")
@@ -254,27 +310,33 @@ class PortalRoute extends StatelessWidget {
               );
             }
           } else if (endRoute == '/baggageSelect') {
-            String? competitor = prefs.getString(RAMP_SERVICES_KEY);
-            if (competitor != null) {
-              Map<String, dynamic> compData = jsonDecode(competitor);
+            String? user = prefs.getString(ADMIN_KEY);
+            String? CSRData = prefs.getString(CUSTOMER_SERVICE_KEY);
+            String? RSData = prefs.getString(RAMP_SERVICES_KEY);
+            if (user != null) {
+              makeLogoutAlert(context, 0, prefs);
+            } else if (CSRData != null) {
+              makeLogoutAlert(context, 1, prefs);
+            } else if (RSData != null) {
+              Map<String, dynamic> compData = jsonDecode(RSData);
               await validateCompetitor(compData["username"])
-                  .then((data) async => {
-                        if (data["status"] == "success")
-                          {
-                            await Navigator.of(context)
-                                .push(MaterialPageRoute(builder: ((context) {
-                              return BaggageRoute();
-                            })))
-                          }
-                        else
-                          {
-                            prefs.remove(RAMP_SERVICES_KEY),
-                            await Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => RampServicesLogin()),
-                            )
-                          }
-                      });
+              .then((data) async => {
+                    if (data["status"] == "success")
+                      {
+                        await Navigator.of(context)
+                            .push(MaterialPageRoute(builder: ((context) {
+                          return BaggageRoute();
+                        })))
+                      }
+                    else
+                      {
+                        prefs.remove(RAMP_SERVICES_KEY),
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => RampServicesLogin()),
+                        )
+                      }
+                  });
             } else {
               await Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => RampServicesLogin()),
@@ -302,6 +364,50 @@ class PortalRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
+      String portalName = "";
+      String key = ADMIN_KEY;
+      switch(portal) {
+        case (0): {
+          portalName = "Admin";
+          key = ADMIN_KEY;
+          break;
+        }
+        case (1): {
+          portalName = "Customer Service";
+          key = CUSTOMER_SERVICE_KEY;
+          break;
+        }
+        case (2): {
+          portalName = "Ramp Services";
+          key = RAMP_SERVICES_KEY;
+          break;
+        }
+      }
+      showDialog<dynamic>(
+        context: context,
+        builder: (BuildContext context) =>
+          AlertDialog(
+            title: const Text("Sign out?"),
+            content: Text("You are logged into the $portalName portal already. Would you like to sign out?"),
+            actions: <Widget> [
+              TextButton(
+                child: const Text('Yes'),
+                onPressed: () {
+                  prefs.remove(key);
+                  Navigator.pop(context, 'ack');
+                }
+              ),
+              TextButton(
+                child: const Text('No'),
+                onPressed: () {
+                  Navigator.pop(context, 'ack');
+                }
+              ),
+            ],
+          )
+      );
+    }
     if (kIsWeb) {
       return Scaffold(
         backgroundColor: Colors.white,
@@ -349,31 +455,32 @@ class PortalRoute extends StatelessWidget {
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           {
-                            Map<String, dynamic> eventMap =
-                                await eventRequest();
+                            Map<String, dynamic> eventMap = await eventRequest();
                             String? user = prefs.getString(ADMIN_KEY);
-                            if (user != null) {
-                              await usernameValidation(user)
-                                  .then((data) async => {
-                                        if (data["status"] == "success")
-                                          {
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: ((context) {
-                                              return AdminRoute(
-                                                  eventmap: eventMap);
-                                            })))
-                                          }
-                                        else
-                                          {
-                                            prefs.remove(ADMIN_KEY),
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: ((context) {
-                                              return LoginRoute();
-                                            })))
-                                          }
-                                      });
+                            String? CSRData = prefs.getString(CUSTOMER_SERVICE_KEY);
+                            String? RSData = prefs.getString(RAMP_SERVICES_KEY);
+                            if (CSRData != null) {
+                              makeLogoutAlert(context, 1, prefs);
+                            } else if (RSData != null) {
+                              makeLogoutAlert(context, 2, prefs);
+                            } else if (user != null) {
+                              await usernameValidation(user).then((data) async => {
+                                    if (data["status"] == "success")
+                                      {
+                                        await Navigator.of(context)
+                                            .push(MaterialPageRoute(builder: ((context) {
+                                          return AdminRoute(eventmap: eventMap);
+                                        })))
+                                      }
+                                    else
+                                      {
+                                        prefs.remove(ADMIN_KEY),
+                                        await Navigator.of(context)
+                                            .push(MaterialPageRoute(builder: ((context) {
+                                          return LoginRoute();
+                                        })))
+                                      }
+                                  });
                             } else {
                               await Navigator.of(context)
                                   .push(MaterialPageRoute(builder: ((context) {
@@ -441,35 +548,36 @@ class PortalRoute extends StatelessWidget {
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           {
-                            String? competitor =
-                                prefs.getString(RAMP_SERVICES_KEY);
-                            if (competitor != null) {
-                              Map<String, dynamic> compData =
-                                  jsonDecode(competitor);
+                            String? user = prefs.getString(ADMIN_KEY);
+                            String? CSRData = prefs.getString(CUSTOMER_SERVICE_KEY);
+                            String? RSData = prefs.getString(RAMP_SERVICES_KEY);
+                            if (user != null) {
+                              makeLogoutAlert(context, 0, prefs);
+                            } else if (CSRData != null) {
+                              makeLogoutAlert(context, 1, prefs);
+                            } else if (RSData != null) {
+                              Map<String, dynamic> compData = jsonDecode(RSData);
                               await validateCompetitor(compData["username"])
-                                  .then((data) async => {
-                                        if (data["status"] == "success")
-                                          {
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: ((context) {
-                                              return BaggageRoute();
-                                            })))
-                                          }
-                                        else
-                                          {
-                                            prefs.remove(RAMP_SERVICES_KEY),
-                                            await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      RampServicesLogin()),
-                                            )
-                                          }
-                                      });
+                              .then((data) async => {
+                                if (data["status"] == "success")
+                                  {
+                                    await Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: ((context) {
+                                      return BaggageRoute();
+                                    })))
+                                  }
+                                else
+                                  {
+                                    prefs.remove(RAMP_SERVICES_KEY),
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) => RampServicesLogin()),
+                                    )
+                                  }
+                              });
                             } else {
                               await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => RampServicesLogin()),
+                                MaterialPageRoute(builder: (context) => RampServicesLogin()),
                               );
                             }
                           }
@@ -538,36 +646,36 @@ class PortalRoute extends StatelessWidget {
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           {
-                            String? competitor =
-                                prefs.getString(CUSTOMER_SERVICE_KEY);
-                            if (competitor != null) {
-                              Map<String, dynamic> compData =
-                                  jsonDecode(competitor);
+                            String? user = prefs.getString(ADMIN_KEY);
+                            String? CSRData = prefs.getString(CUSTOMER_SERVICE_KEY);
+                            String? RSData = prefs.getString(RAMP_SERVICES_KEY);
+                            if (user != null) {
+                              makeLogoutAlert(context, 0, prefs);
+                            } else if (RSData != null) {
+                              makeLogoutAlert(context, 2, prefs);
+                            } else if (CSRData != null) {
+                              Map<String, dynamic> compData = jsonDecode(CSRData);
                               await validateCompetitor(compData["username"])
-                                  .then((data) async => {
-                                        if (data["status"] == "success")
-                                          {
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: ((context) {
-                                              return CSRRoute();
-                                            })))
-                                          }
-                                        else
-                                          {
-                                            prefs.remove(CUSTOMER_SERVICE_KEY),
-                                            await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CustomerServiceLogin()),
-                                            )
-                                          }
-                                      });
+                              .then((data) async => {
+                                    if (data["status"] == "success")
+                                      {
+                                        await Navigator.of(context)
+                                            .push(MaterialPageRoute(builder: ((context) {
+                                          return CSRRoute();
+                                        })))
+                                      }
+                                    else
+                                      {
+                                        prefs.remove(CUSTOMER_SERVICE_KEY),
+                                        await Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) => CustomerServiceLogin()),
+                                        )
+                                      }
+                                  });
                             } else {
                               await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        CustomerServiceLogin()),
+                                MaterialPageRoute(builder: (context) => CustomerServiceLogin()),
                               );
                             }
                           }
