@@ -28,13 +28,17 @@ class PdfCreator {
 
   static int _id = 0;
 
-  static generateBoardingPassPages(final List<Passenger> passenger) async {
+  static generateBoardingPassPages(final List<Passenger> passengers) async {
+    if (passengers.isEmpty) {
+      return;
+    }
+
     final bytes = await rootBundle.load('assets/united-high-res.png');
     final unitedLogo = pw.MemoryImage(bytes.buffer.asUint8List());
 
     final pdf = pw.Document();
 
-    for (var value in passenger) {
+    for (var value in passengers) {
       addBoardingPassPage(unitedLogo, pdf, value);
     }
 
@@ -45,6 +49,10 @@ class PdfCreator {
   }
 
   static generateBaggageTagPages(final List<Baggage> bags) async {
+    if (bags.isEmpty) {
+      return;
+    }
+
     final bytes = await rootBundle.load('assets/united-high-res.png');
     final unitedLogo = pw.MemoryImage(bytes.buffer.asUint8List());
 
@@ -62,6 +70,21 @@ class PdfCreator {
 
   static addBoardingPassPage(final pw.MemoryImage unitedLogo, final pw.Document document, final Passenger passenger) async {
     final now = DateTime.now();
+
+    final String boardTime;
+
+    if (passenger.wrongDeparture) {
+      String wrongTime;
+
+      // have to do this in case it gets 25 again
+      do {
+        wrongTime = rng.nextInt(60).toString().padLeft(2, '0');
+      } while (wrongTime == '25');
+
+      boardTime = '12:$wrongTime';
+    } else {
+      boardTime = '12:25';
+    }
 
     document.addPage(
       pw.Page(
@@ -108,7 +131,7 @@ class PdfCreator {
                               children: [
                                 pw.Text('${passenger.flightSource} -> ${passenger.flightDestination}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
                                 pw.Text('${String.fromCharCode(97 + rng.nextInt(25)).toUpperCase()}${100 + rng.nextInt(155)}', style: const pw.TextStyle(fontSize: 18)),
-                                pw.Text('${now.hour}:${now.minute.toString().padLeft(2, '0')}', style: const pw.TextStyle(fontSize: 18)),
+                                pw.Text(boardTime, style: const pw.TextStyle(fontSize: 18)),
                                 pw.Text('${passenger.row}${passenger.seat}', style: const pw.TextStyle(fontSize: 18)),
                               ]
                           ),
