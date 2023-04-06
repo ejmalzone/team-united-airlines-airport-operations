@@ -69,9 +69,9 @@ class PdfCreator {
   }
 
   static addBoardingPassPage(final pw.MemoryImage unitedLogo, final pw.Document document, final Passenger passenger) async {
-    final now = DateTime.now();
+    final flag = (passenger.wrongDeparture || passenger.wrongGate || passenger.connection) ? '*' : '';
 
-    final String boardTime;
+    var boardTime = '12:';
     if (passenger.wrongDeparture) {
       String wrongTime;
 
@@ -80,12 +80,23 @@ class PdfCreator {
         wrongTime = rng.nextInt(60).toString().padLeft(2, '0');
       } while (wrongTime == '25');
 
-      boardTime = '12:$wrongTime';
+      boardTime += wrongTime;
     } else {
-      boardTime = '12:25';
+      boardTime += '25';
     }
 
-    final String flag = (passenger.wrongDeparture || passenger.wrongGate) ? '*' : '';
+    var gate = 'B1';
+    if (passenger.wrongGate) {
+      String wrongGate;
+
+      do {
+        wrongGate = rng.nextInt(10).toString();
+      } while (wrongGate == '2');
+
+      gate += wrongGate;
+    } else {
+      gate += '2';
+    }
 
     document.addPage(
       pw.Page(
@@ -131,7 +142,7 @@ class PdfCreator {
                               verticalAlignment: pw.TableCellVerticalAlignment.top,
                               children: [
                                 pw.Text('${passenger.flightSource} -> ${passenger.flightDestination}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
-                                pw.Text('${String.fromCharCode(97 + rng.nextInt(25)).toUpperCase()}${100 + rng.nextInt(155)}', style: const pw.TextStyle(fontSize: 18)),
+                                pw.Text(gate, style: const pw.TextStyle(fontSize: 18)),
                                 pw.Text(boardTime, style: const pw.TextStyle(fontSize: 18)),
                                 pw.Text('${passenger.row}${passenger.seat}', style: const pw.TextStyle(fontSize: 18)),
                               ]
