@@ -72,7 +72,6 @@ class PdfCreator {
     final now = DateTime.now();
 
     final String boardTime;
-
     if (passenger.wrongDeparture) {
       String wrongTime;
 
@@ -85,6 +84,8 @@ class PdfCreator {
     } else {
       boardTime = '12:25';
     }
+
+    final String flag = (passenger.wrongDeparture || passenger.wrongGate) ? '*' : '';
 
     document.addPage(
       pw.Page(
@@ -103,7 +104,7 @@ class PdfCreator {
                 pw.Row(children: [
                   pw.Image(unitedLogo, width: 200, height: 50),
                   pw.SizedBox(width: 190),
-                  pw.Text((_id++).toString(), style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 24))
+                  pw.Text((_id++).toString() + flag, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 24))
                 ]),
                 pw.Row(children: [
                   pw.Text('${passenger.nameFirst.toUpperCase()} / ${passenger.nameLast.toUpperCase()}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 12))
