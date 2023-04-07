@@ -242,16 +242,19 @@ class Competitor {
 
 class CustomerServiceLogin extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: 1500);
+  Map<String, dynamic> _competitor = {};
 
   Future<String?> _authUser(LoginData data) async {
     return Future.delayed(loginTime).then((_) async {
       var loginData =
           await loginCompetitor(data.name, int.parse(data.password), 0);
       if (loginData["status"] == "success") {
+        var dataMap = {"username": data.name, "first": loginData["data"]["firstName"],
+              "last": loginData["data"]["lastName"]};
+        _competitor = dataMap;
         await SharedPreferences.getInstance().then((final prefs) =>
             {prefs.setString(CUSTOMER_SERVICE_KEY, jsonEncode(
-              {"username": data.name, "first": loginData["data"]["firstName"],
-              "last": loginData["data"]["lastName"]}))});
+              dataMap))});
         return null;
       }
       return "Login failed!";
@@ -269,10 +272,12 @@ class CustomerServiceLogin extends StatelessWidget {
           position: 0,
           pin: int.parse(data.password!));
       if (signupResponse["status"] == "success") {
+        var dataMap = {"username": data.name, "first": additionalData["first"],
+            "last": additionalData["last"]};
+        _competitor = dataMap;
         await SharedPreferences.getInstance().then((final prefs) =>
           {prefs.setString(CUSTOMER_SERVICE_KEY, jsonEncode(
-            {"username": data.name, "first": additionalData["first"],
-            "last": additionalData["last"]}))});
+            dataMap))});
         return null;
       }
       return "Username is already taken!";
@@ -326,7 +331,7 @@ class CustomerServiceLogin extends StatelessWidget {
                 signUpSuccess: "Success!"),
             onSubmitAnimationCompleted: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => CSRRoute()));
+                  MaterialPageRoute(builder: (context) => CSRRoute(competitor: _competitor)));
             },
             additionalSignupFields: const [
               UserFormField(
@@ -357,15 +362,19 @@ class CustomerServiceLogin extends StatelessWidget {
 class RampServicesLogin extends StatelessWidget {
   Duration get loginTime => Duration(milliseconds: 1500);
 
+  Map<String, dynamic> _competitor = {};
+
   Future<String?> _authUser(LoginData data) async {
     return Future.delayed(loginTime).then((_) async {
       var loginData =
           await loginCompetitor(data.name, int.parse(data.password), 1);
       if (loginData["status"] == "success") {
+        var dataMap = {"username": data.name, "first": loginData["data"]["firstName"],
+              "last": loginData["data"]["lastName"]};
+        _competitor = dataMap;
         await SharedPreferences.getInstance().then((final prefs) =>
             {prefs.setString(RAMP_SERVICES_KEY, jsonEncode(
-              {"username": data.name, "first": loginData["data"]["firstName"],
-              "last": loginData["data"]["lastName"]}))});
+              dataMap))});
         return null;
       }
       return "Login Failed!";
@@ -383,10 +392,12 @@ class RampServicesLogin extends StatelessWidget {
           position: 1,
           pin: int.parse(data.password!));
       if (signupResponse["status"] == "success") {
+        var dataMap = {"username": data.name, "first": additionalData["first"],
+              "last": additionalData["last"]};
+        _competitor = dataMap;
         await SharedPreferences.getInstance().then((final prefs) =>
             {prefs.setString(RAMP_SERVICES_KEY, jsonEncode(
-              {"username": data.name, "first": additionalData["first"],
-              "last": additionalData["last"]}))});
+              dataMap))});
         return null;
       }
       return "Username is already taken!";
@@ -440,7 +451,7 @@ class RampServicesLogin extends StatelessWidget {
                 signUpSuccess: "Success!"),
             onSubmitAnimationCompleted: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => BaggageRoute()));
+                  MaterialPageRoute(builder: (context) => BaggageRoute(competitor: _competitor)));
             },
             additionalSignupFields: const [
               UserFormField(
