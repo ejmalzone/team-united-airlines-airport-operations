@@ -1,4 +1,7 @@
+import 'package:airportops_frontend/admin/new_bag.dart';
 import 'package:airportops_frontend/admin/new_passenger.dart';
+import 'package:airportops_frontend/classes/baggage.dart';
+import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
@@ -156,14 +159,31 @@ class _AdminRampState extends State<AdminRamp> {
         SizedBox(
           height: 60,
           child: Center(
-              child: ElevatedButton(
-            onPressed: () async {},
+            child: ElevatedButton(
+            onPressed: () async {
+              Baggage newBag = await Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => NewBag()));
+              setState(() {
+                widget.event.addBag(newBag);
+                var newB = createBag(
+                    passengerFirst: newBag.nameFirst,
+                    passengerLast: newBag.nameLast,
+                    origin: newBag.originatingAirport,
+                    destination: newBag.destinationAirport,
+                    weight: newBag.weight,
+                    wrongDestination: false,
+                    event: widget.event.name);
+              });
+              for (int i = 0; i < widget.event.bags.length; i++) {
+                print(widget.event.bags[i].fullName);
+              }
+            },
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.white,
-              backgroundColor: Colors.red,
+              backgroundColor: Color(0xFF00239E),
             ),
             child: Text(
-              "Edit Bags",
+              "Add Bags",
               style: TextStyle(
                 fontFamily: 'Open Sans',
               ),

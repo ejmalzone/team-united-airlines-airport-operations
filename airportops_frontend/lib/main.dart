@@ -196,7 +196,9 @@ class DatabaseRoute extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  var req = await setEvent('Tst2');
+                  var req = await createBag(passengerFirst: 'test', 
+                  passengerLast: 'bag', origin: 'DTW', destination: 'IAH', 
+                  weight: 78, wrongDestination: false, event: 'Test3');
                   //print(req['data'][0]['boarded'] is bool);
                   //for (var person in req['data']) {
                   //  print('ID: ${person['_id']}');

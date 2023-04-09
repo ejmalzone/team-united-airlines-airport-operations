@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:date_field/date_field.dart';
@@ -6,31 +7,31 @@ import 'package:flutter/material.dart';
 
 import '../widgets.dart';
 
-class NewPassenger extends StatefulWidget {
-  const NewPassenger({Key? key}) : super(key: key);
+class NewBag extends StatefulWidget {
+  const NewBag({Key? key}) : super(key: key);
 
   @override
-  State<NewPassenger> createState() => _NewPassengerState();
+  State<NewBag> createState() => _NewBagState();
 }
 
-class _NewPassengerState extends State<NewPassenger> {
+class _NewBagState extends State<NewBag> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _flightSourceController = TextEditingController();
   final _flightDestinationController = TextEditingController();
-  final _citizenshipController = TextEditingController();
-  final _seatController = TextEditingController();
-  final _passengerIdController = TextEditingController();
-  final _rowController = TextEditingController();
-  final _boardedController = TextEditingController();
-  final _eventController = TextEditingController();
-  final _statusController = TextEditingController();
+  final _weightController = TextEditingController();
+  // final _seatController = TextEditingController();
+  // final _passengerIdController = TextEditingController();
+  // final _rowController = TextEditingController();
+  // final _boardedController = TextEditingController();
+  // final _eventController = TextEditingController();
+  // final _statusController = TextEditingController();
 
   late String selectedCountry = "Select a Country";
 
-  DateTime _birthday = DateTime.now();
+  // DateTime _birthday = DateTime.now();
   DateTime _flightSourceDate = DateTime.now();
   DateTime _flightDestinationDate = DateTime.now();
 
@@ -167,36 +168,17 @@ class _NewPassengerState extends State<NewPassenger> {
   void submitForm() async {
     // validate form and create new passenger object
     if (_formKey.currentState!.validate()) {
-      Passenger newPassenger = Passenger(
-        nameFirst: _firstNameController.text,
-        nameLast: _lastNameController.text,
-        //reservationNum: 0, // You can set this to a unique value
-        birthday: _birthday, // Use the value from the DateTimeFormField
-        flightSource: _flightSourceController.text,
-        //flightSourceDate:
-        //    _flightSourceDate, // Use the value from the DateTimeFormField
-        flightDestination: _flightDestinationController.text,
-        //flightDestinationDate:
-        // _flightDestinationDate, // Use the value from the DateTimeFormField
-        //citizenship: _citizenshipController.text,
-        seat: _seatController.text,
-        passengerId: '12345',
-        // row: int.parse(_rowController.text),
-        row: 5,
-        boarded: _boardedController.text == 'true',
-        event: _eventController.text,
-        //requests: []); // You can add requests here if needed
-        accommodations: [],
-        status: _boardedController.text == 'true'
-            ? Status.boarded
-            : Status.unboarded,
-        connection: false,
-        wrongGate: false,
-        wrongDeparture: false,
-        scanTime: null
-      ); // TODO: Implement parsing accomodations
-
-      Navigator.pop(context, newPassenger);
+      Baggage newBag = Baggage(
+          nameFirst: _firstNameController.text,
+          nameLast: _lastNameController.text,
+          originatingAirport: _flightSourceController.text,
+          destinationAirport: _flightDestinationController.text,
+          weight: int.parse(_weightController.text),
+          event: '',
+          checked: false,
+          id: '',
+          status: Status.unboarded);
+      Navigator.pop(context, newBag);
     }
   }
 
@@ -204,7 +186,7 @@ class _NewPassengerState extends State<NewPassenger> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("New Passenger Page"),
+          title: const Text("New Bag"),
           backgroundColor: Colors.black,
           centerTitle: true,
         ),
@@ -241,62 +223,6 @@ class _NewPassengerState extends State<NewPassenger> {
                   },
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Icon(Icons.date_range),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: DateTimeFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'Birthday',
-                            border: OutlineInputBorder(),
-                          ),
-                          mode: DateTimeFieldPickerMode.date,
-                          onDateSelected: (DateTime value) {
-                            setState(() {
-                              _birthday = value;
-                            });
-                          }),
-                    ),
-                    const SizedBox(width: 16),
-                    Container(
-                      width: 80,
-                      child: TextFormField(
-                        controller: _citizenshipController,
-                        decoration: const InputDecoration(
-                          labelText: 'Citizenship',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text.';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Container(
-                      width: 80,
-                      child: TextFormField(
-                        controller: _seatController,
-                        decoration: const InputDecoration(
-                          labelText: 'Seat No.',
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text.';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
                 CountrySelector(
                   label: "Flight Source",
                   countries: sortedCountries,
@@ -305,7 +231,6 @@ class _NewPassengerState extends State<NewPassenger> {
                   },
                   controller: _flightSourceController,
                 ),
-
                 const SizedBox(height: 16),
                 CountrySelector(
                   label: "Flight Destination",
@@ -314,6 +239,33 @@ class _NewPassengerState extends State<NewPassenger> {
                     print("Selected country: $country");
                   },
                   controller: _flightDestinationController,
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 80,
+                      child: TextFormField(
+                        controller: _weightController,
+                        decoration: const InputDecoration(
+                          labelText: 'Weight',
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text.';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                      child: Text('LBS'),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 32),
                 Padding(

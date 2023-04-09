@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:airportops_frontend/classes/baggage.dart';
+import 'package:airportops_frontend/database.dart';
+import 'package:airportops_frontend/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 
@@ -47,22 +49,25 @@ class BagProfile extends StatelessWidget {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding:
-                                      EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 10, 0, 0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Align(
-                                        alignment: AlignmentDirectional(-1, -0.7),
+                                        alignment:
+                                            AlignmentDirectional(-1, -0.7),
                                         child: Text(
                                           "${bag.fullName}'s bag",
                                           style: TextStyle(
@@ -87,13 +92,13 @@ class BagProfile extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding:
-                                      EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 15, 0, 0),
                                   child: Container(
                                     width: 100,
                                     height: 40,
                                     decoration: BoxDecoration(
-                                      color: Colors.blue,
+                                      color: bag.status.color,
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(23),
                                         bottomRight: Radius.circular(20),
@@ -104,7 +109,7 @@ class BagProfile extends StatelessWidget {
                                     child: Align(
                                       alignment: AlignmentDirectional(0, 0),
                                       child: Text(
-                                        '[Status]',
+                                        bag.status.name,
                                         style: TextStyle(
                                           fontFamily: 'Open Sans',
                                           color: Colors.white,
@@ -196,6 +201,35 @@ class BagProfile extends StatelessWidget {
                         )
                       ],
                     ))),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+                onPressed: () async {
+                  deleteBag(bagId: bag.id);
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Container(
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(206, 47, 124, 2),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20))),
+                      child: Text(
+                          "${bag.fullName}'bag is successfully deleted!",
+                          textAlign: TextAlign.center),
+                    ),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    duration: Duration(seconds: 2),
+                  ));
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xFF850000),
+                ),
+                child: const Text('Delete Bag')),
           )
         ],
       ),
