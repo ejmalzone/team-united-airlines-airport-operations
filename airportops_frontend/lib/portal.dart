@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
-import 'package:airportops_frontend/customerservice/customerservicerep_page.dart';
+import 'package:airportops_frontend/customerservice/customerservice_profile.dart';
+
 import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/main.dart';
 import 'package:airportops_frontend/rampservices/rampservices_profile.dart';

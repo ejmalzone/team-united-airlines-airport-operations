@@ -152,10 +152,11 @@ Future<Map<String, dynamic>> createPassenger(
 Future<Map<String, dynamic>> deletePassenger(
     {required String passengerId}) async {
   var reply = await Requests.delete(
-      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/bag/',
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
       json: {"passengerId": passengerId});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return data;
 }
 
@@ -200,6 +201,7 @@ Future<Map<String, dynamic>> validateCompetitor(String username) async {
       json: {"username": username});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return data;
 }
 
@@ -217,8 +219,8 @@ Future<Map<String, dynamic>> createBag(
     {required String passengerFirst,
     required String passengerLast,
     required String origin,
-    required int destination,
-    required String weight,
+    required String destination,
+    required int weight,
     required bool wrongDestination,
     required String event}) async {
   var reply = await Requests.post(
@@ -234,6 +236,7 @@ Future<Map<String, dynamic>> createBag(
       });
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  print(data);
   return data;
 }
 
@@ -246,21 +249,29 @@ Future<Map<String, dynamic>> deleteBag({required String bagId}) async {
   return data;
 }
 
-Future<Map<String, dynamic>> scanBag({required String bagId, required String competitor}) async {
-    var reply = await Requests.put(
+Future<Map<String, dynamic>> scanBag(
+    {required String bagId, required String competitor}) async {
+  var reply = await Requests.put(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/bag/',
-      json: {"bagId": bagId, "competitor": competitor,
-            "scanTime": DateTime.now().toString()});
+      json: {
+        "bagId": bagId,
+        "competitor": competitor,
+        "scanTime": DateTime.now().toString()
+      });
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   return data;
 }
 
-Future<Map<String, dynamic>> scanPassenger({required String passengerId, required String competitor}) async {
-    var reply = await Requests.put(
+Future<Map<String, dynamic>> scanPassenger(
+    {required String passengerId, required String competitor}) async {
+  var reply = await Requests.put(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
-      json: {"passengerId": passengerId, "competitor": competitor,
-            "scanTime": DateTime.now().toString()});
+      json: {
+        "passengerId": passengerId,
+        "competitor": competitor,
+        "scanTime": DateTime.now().toString()
+      });
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   return data;

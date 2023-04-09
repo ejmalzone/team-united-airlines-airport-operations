@@ -75,6 +75,11 @@ class AdminRouteState extends State<AdminRoute> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
+        title: Image.asset(
+          'assets/kisspng-logo-brand-font-airline-logo-5b1d7561d2b990.7344765815286572498631.png',
+          fit: BoxFit.contain,
+          height: 80),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Column(

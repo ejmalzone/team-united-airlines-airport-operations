@@ -29,6 +29,7 @@ class EventRouteState extends State<EventRoute> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           title: Text(widget.event.name),
+          centerTitle: true,
         ),
         body: SafeArea(
           child: Column(
