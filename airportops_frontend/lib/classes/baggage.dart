@@ -9,6 +9,7 @@ class Baggage {
   final String event;
   final bool checked;
   final String id;
+  final bool wrongDestination;
 
   Status status = Status.unboarded;
 
@@ -21,7 +22,8 @@ class Baggage {
     required this.event,
     required this.checked,
     required this.id,
-    required this.status
+    required this.status,
+    required this.wrongDestination
   });
 
   String get fullName {
@@ -47,6 +49,7 @@ class Baggage {
       weight: instance['weight'],
       id: instance['_id'],
       status: instance['checked'] ? Status.unboarded : Status.boarded,
+      wrongDestination: instance['wrongDestination']
     );
   }
 }
