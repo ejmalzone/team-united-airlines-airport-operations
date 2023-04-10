@@ -16,7 +16,6 @@ import 'database.dart';
 import 'login.dart';
 
 class PortalRoute extends StatelessWidget {
-
 //   ElevatedButton makeButton(BuildContext context, String text, String img,
 //       [String? endRoute]) {
 //     const buttonTextStyle = TextStyle(
@@ -195,6 +194,7 @@ class PortalRoute extends StatelessWidget {
       textStyle: buttonTextStyle,
       shadowColor: Colors.black12,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.5)),
+      padding: const EdgeInsets.all(8),
     );
     makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
       String portalName = "";
@@ -366,7 +366,6 @@ class PortalRoute extends StatelessWidget {
               .withSpaceBetween(height: 8),
         ));
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -838,37 +837,40 @@ class PortalRoute extends StatelessWidget {
         toolbarHeight: 105,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        //child: Column(
+        //  mainAxisAlignment: MainAxisAlignment.center,
+        //  children: [
+        child: ListView(
+          padding: const EdgeInsets.all(16),
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // makeButton(context, 'Customer Service',
-                //     'assets/icons8-airport-64.png', '/customerservice'),
-                // makeButton(context, 'Ramp Service',
-                //     'assets/icons8-luggage-64 (1).png', '/baggage'),
-                makeButton(context, 'Customer Service',
-                    'assets/icons8-airport-64.png', '/csrSelect'),
-                makeButton(context, 'Ramp Service',
-                    'assets/icons8-luggage-64 (1).png', '/baggageSelect'),
-              ].withSpaceBetween(width: 18),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                makeButton(
-                    context, 'Admin', 'assets/united-square-64.png', '/admin'),
-                makeButton(
-                    //TEMPORARY DEBUG BUTTON
-                    context,
-                    'Debug',
-                    'assets/united-square-64.png',
-                    '/home'),
-              ].withSpaceBetween(
-                width: 18,
-              ),
-            ),
+            //Row(
+            //  mainAxisAlignment: MainAxisAlignment.center,
+            //  children: [
+            // makeButton(context, 'Customer Service',
+            //     'assets/icons8-airport-64.png', '/customerservice'),
+            // makeButton(context, 'Ramp Service',
+            //     'assets/icons8-luggage-64 (1).png', '/baggage'),
+            makeButton(context, 'Customer Service',
+                'assets/icons8-airport-64.png', '/csrSelect'),
+            makeButton(context, 'Ramp Service',
+                'assets/icons8-luggage-64 (1).png', '/baggageSelect'),
+            //].withSpaceBetween(width: 18),
+            //),
+            //Row(
+            //  mainAxisAlignment: MainAxisAlignment.center,
+            //  children: [
+            makeButton(
+                context, 'Admin', 'assets/united-square-64.png', '/admin'),
+            makeButton(
+                //TEMPORARY DEBUG BUTTON
+                context,
+                'Debug',
+                'assets/united-square-64.png',
+                '/home'),
+            //  ].withSpaceBetween(
+            //    width: 18,
+            //  ),
+            // ),
           ].withSpaceBetween(height: 18),
         ),
       ),
