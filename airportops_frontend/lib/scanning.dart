@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,8 @@ import 'package:honeywell_scanner/honeywell_scanner.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:requests/requests.dart';
 import 'package:airportops_frontend/database.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 /*
   Honeywell Scanner Code
@@ -29,9 +32,12 @@ class _HoneywellScanAppState extends State<HoneywellScanApp> {
         setState(() {
           lastScan = scannedData?.code;
         });
-        await Requests.put(
-            'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
-            json: {"passengerId": scannedData?.code});
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        var compJson = prefs.getString(RAMP_SERVICES_KEY);
+        var compData = jsonDecode(compJson!);
+
+        await scanBag(
+            bagId: scannedData!.code!, competitor: compData["username"]);
       },
       onScannerErrorCallback: (error) {},
     );
@@ -108,9 +114,13 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
 
                     person.raiseForStatus();
 
-                    var reply = await Requests.put(
-                        'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
-                        json: {"passengerId": this.code});
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    var compJson = prefs.getString(CUSTOMER_SERVICE_KEY);
+                    var compData = jsonDecode(compJson!);
+
+                    var reply = scanPassenger(
+                        passengerId: code!, competitor: compData["username"]);
                   },
                   child: Text('Query based on ${this.code}'),
                 ),
@@ -220,7 +230,14 @@ class _RSEScanAppState extends State<RSEScanApp> {
                   onPressed: () {
                     _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
                         context: context,
-                        onCode: (code) {
+                        onCode: (code) async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          var compJson = prefs.getString(CUSTOMER_SERVICE_KEY);
+                          var compData = jsonDecode(compJson!);
+
+                          var reply = scanBag(
+                              bagId: code!, competitor: compData["username"]);
                           setState(() {
                             this.code = code;
                           });
