@@ -28,7 +28,7 @@ class AdminProfileBox extends StatelessWidget {
           padding: EdgeInsetsDirectional.fromSTEB(30, 20, 30, 0),
           child: Container(
             width: double.infinity,
-            height: 92,
+            //height: 92,
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
