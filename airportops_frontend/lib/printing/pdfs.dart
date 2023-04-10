@@ -119,7 +119,7 @@ class PdfCreator {
             (3 + 1/4) * PdfPageFormat.inch,
             marginTop: .25 * PdfPageFormat.inch,
             marginLeft: .25 * PdfPageFormat.inch,
-            marginRight: .25 * PdfPageFormat.inch,
+            marginRight: .05 * PdfPageFormat.inch,
         ),
         build: (pw.Context context) {
           return pw.Row(children: [
@@ -141,7 +141,7 @@ class PdfCreator {
                   pw.Column(children: [
                     pw.SizedBox(height: 0.05 * PdfPageFormat.inch),
                     pw.Table(
-                        defaultColumnWidth: const pw.FixedColumnWidth(120),
+                        defaultColumnWidth: const pw.FixedColumnWidth(100),
                         children: [
                           pw.TableRow(
                             verticalAlignment: pw.TableCellVerticalAlignment.top,
@@ -165,15 +165,15 @@ class PdfCreator {
                     ),
                   ]),
                   pw.Container(
-                    transform: Matrix4Transform()
-                      .rotateDegrees(90, origin: const Offset(75/2, 25/2))
-                      .translate(x: -50.0, y: -10.0)
-                      .matrix4,
+                    // transform: Matrix4Transform()
+                    //   .rotateDegrees(90, origin: const Offset(75/2, 25/2))
+                    //   .translate(x: -50.0, y: -10.0)
+                    //   .matrix4,
                     child: pw.BarcodeWidget(
                       data: passenger.passengerId,
-                      barcode: pw.Barcode.code128(),
-                      width: 150,
-                      height: 50,
+                      barcode: pw.Barcode.qrCode(),
+                      width: 100,
+                      height: 100,
                       drawText: false,
                     ),
                   )
