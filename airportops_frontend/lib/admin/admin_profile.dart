@@ -302,6 +302,7 @@ class _CurrBoxState extends State<CurrBox> {
                             event: bag["event"],
                             checked: bag["checked"],
                             id: bag["_id"],
+                            wrongDestination: bag["wrongDestination"],
                             status: bag["checked"] == true
                                 ? Status.boarded
                                 : Status.unboarded));
@@ -455,6 +456,7 @@ class EventBox extends StatelessWidget {
                                       event: bag["event"],
                                       checked: bag["checked"],
                                       id: bag["_id"],
+                                      wrongDestination: bag["wrongDestination"],
                                       status: bag["checked"] == true
                                           ? Status.boarded
                                           : Status.unboarded));
