@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:airportops_frontend/admin/new_passenger.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/database.dart';
@@ -16,6 +18,28 @@ class AdminPassengers extends StatefulWidget {
 }
 
 class _AdminPassengersState extends State<AdminPassengers> {
+  List<Passenger> _foundPassengers = [];
+  @override
+  void initState() {
+    _foundPassengers = widget.event.passengers;
+    super.initState();
+  }
+
+  void filter(String keyword) {
+    List<Passenger> results = [];
+    if (keyword.isEmpty) {
+      results = widget.event.passengers;
+    } else {
+      results = widget.event.passengers
+          .where(
+              (p) => p.fullName.toLowerCase().contains(keyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundPassengers = results;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -169,6 +193,9 @@ class _AdminPassengersState extends State<AdminPassengers> {
             decoration: const InputDecoration(
                 labelText: 'Search for passengers',
                 suffixIcon: Icon(Icons.search)),
+            onChanged: (value) {
+              filter(value);
+            },
           ),
         ),
         Flexible(
@@ -180,8 +207,8 @@ class _AdminPassengersState extends State<AdminPassengers> {
             child: ListView(
               // mainAxisSize: MainAxisSize.max,
               // crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: List.generate(widget.event.passengers.length, (index) {
-                return PCard(p: widget.event.passengers[index]);
+              children: List.generate(_foundPassengers.length, (index) {
+                return PCard(p: _foundPassengers[index]);
               }),
             ),
           ),

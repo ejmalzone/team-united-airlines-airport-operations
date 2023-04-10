@@ -16,6 +16,7 @@ import 'database.dart';
 import 'login.dart';
 
 class PortalRoute extends StatelessWidget {
+
 //   ElevatedButton makeButton(BuildContext context, String text, String img,
 //       [String? endRoute]) {
 //     const buttonTextStyle = TextStyle(
@@ -365,6 +366,7 @@ class PortalRoute extends StatelessWidget {
               .withSpaceBetween(height: 8),
         ));
   }
+
 
   @override
   Widget build(BuildContext context) {
