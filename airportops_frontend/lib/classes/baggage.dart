@@ -25,7 +25,7 @@ class Baggage {
   });
 
   String get fullName {
-    return '$nameFirst, $nameLast';
+    return '$nameFirst $nameLast';
   }
 
   String get route {
