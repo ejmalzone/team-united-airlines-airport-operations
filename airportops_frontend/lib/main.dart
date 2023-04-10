@@ -196,9 +196,14 @@ class DatabaseRoute extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () async {
-                  var req = await createBag(passengerFirst: 'test', 
-                  passengerLast: 'bag', origin: 'DTW', destination: 'IAH', 
-                  weight: 78, wrongDestination: false, event: 'Test3');
+                  var req = await createBag(
+                      passengerFirst: 'test',
+                      passengerLast: 'bag',
+                      origin: 'DTW',
+                      destination: 'IAH',
+                      weight: 78,
+                      wrongDestination: false,
+                      event: 'Test3');
                   //print(req['data'][0]['boarded'] is bool);
                   //for (var person in req['data']) {
                   //  print('ID: ${person['_id']}');
@@ -223,91 +228,94 @@ class HomeRoute extends StatelessWidget {
           title: const Text('Home Page'),
           backgroundColor: Colors.black,
         ),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              child: const Text('Example Passenger'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/examplePassenger');
-              },
-            ),
-            ElevatedButton(
-                child: const Text('Baggage Information'),
+        body: ListView(children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ElevatedButton(
+                child: const Text('Example Passenger'),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/baggage');
-                }),
-            ElevatedButton(
-              child: const Text('Test Save Boarding Passes to PDF'),
-              onPressed: () async {
-                final data = (await currPassengerRequest())['data'];
-
-                List<Passenger> passengers = [];
-                for (var passengerInstance in data) {
-                  passengers.add(Passenger.fromJson(passengerInstance));
-                }
-
-                PdfCreator.generateBoardingPassPages(passengers);
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Test Save Baggage Tags to PDF'),
-              onPressed: () async {
-                Map<String, dynamic> reqData = await eventRequest();
-                Map<String, dynamic> bagData = await bagsRequest(reqData['data'][0]['name']);
-                final bagInstances = bagData['data'];
-
-                List<Baggage> bags = [];
-
-                for (var bagInstance in bagInstances) {
-                  bags.add(Baggage.fromJson(bagInstance));
-                }
-
-                PdfCreator.generateBaggageTagPages(bags);
-              },
-            ),
-            ElevatedButton(
-                child: const Text('Login Route'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
-                }),
-            ElevatedButton(
-                child: const Text('Admin Panel'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/admin');
-                }),
-            ElevatedButton(
-                child: const Text('Progress Bar Demo'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/bars');
-                }),
-            ElevatedButton(
-                child: const Text('Database Testing'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/dbTesting');
-                }),
-            ElevatedButton(
-                child: const Text('Scan Boarding Pass'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/camera');
-                }),
-            ElevatedButton(
-                child: const Text('View Passenger Status'),
+                  Navigator.pushNamed(context, '/examplePassenger');
+                },
+              ),
+              ElevatedButton(
+                  child: const Text('Baggage Information'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/baggage');
+                  }),
+              ElevatedButton(
+                child: const Text('Test Save Boarding Passes to PDF'),
                 onPressed: () async {
-                  var req = await currPassengerRequest();
-                  //Navigator.pushNamed(context, '/passengerTesting');
-                  await Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PassengerDisplayRoute(data: req)));
-                }),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/honeywell');
-              },
-              child: const Text('Honeywell Testing'),
-            )
-          ].withSpaceBetween(height: 8),
-        )));
+                  final data = (await currPassengerRequest())['data'];
+
+                  List<Passenger> passengers = [];
+                  for (var passengerInstance in data) {
+                    passengers.add(Passenger.fromJson(passengerInstance));
+                  }
+
+                  PdfCreator.generateBoardingPassPages(passengers);
+                },
+              ),
+              ElevatedButton(
+                child: const Text('Test Save Baggage Tags to PDF'),
+                onPressed: () async {
+                  Map<String, dynamic> reqData = await eventRequest();
+                  Map<String, dynamic> bagData =
+                      await bagsRequest(reqData['data'][0]['name']);
+                  final bagInstances = bagData['data'];
+
+                  List<Baggage> bags = [];
+
+                  for (var bagInstance in bagInstances) {
+                    bags.add(Baggage.fromJson(bagInstance));
+                  }
+
+                  PdfCreator.generateBaggageTagPages(bags);
+                },
+              ),
+              ElevatedButton(
+                  child: const Text('Login Route'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/login');
+                  }),
+              ElevatedButton(
+                  child: const Text('Admin Panel'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/admin');
+                  }),
+              ElevatedButton(
+                  child: const Text('Progress Bar Demo'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/bars');
+                  }),
+              ElevatedButton(
+                  child: const Text('Database Testing'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/dbTesting');
+                  }),
+              ElevatedButton(
+                  child: const Text('Scan Boarding Pass'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/camera');
+                  }),
+              ElevatedButton(
+                  child: const Text('View Passenger Status'),
+                  onPressed: () async {
+                    var req = await currPassengerRequest();
+                    //Navigator.pushNamed(context, '/passengerTesting');
+                    await Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            PassengerDisplayRoute(data: req)));
+                  }),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/honeywell');
+                },
+                child: const Text('Honeywell Testing'),
+              )
+            ].withSpaceBetween(height: 8),
+          )
+        ]));
   }
 }
 

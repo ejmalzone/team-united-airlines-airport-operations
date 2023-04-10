@@ -432,185 +432,87 @@ class PortalRoute extends StatelessWidget {
           centerTitle: false,
           elevation: 0,
         ),
-        body: SafeArea(
-          child: GestureDetector(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                        child: SelectionArea(
-                            child: Text(
-                          'United Airlines Safety Rodeo',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          {
-                            Map<String, dynamic> eventMap =
-                                await eventRequest();
-                            Map<String, dynamic> currEventMap =
-                                await getCurrentEvent();
-                            String? user = prefs.getString(ADMIN_KEY);
-                            String? CSRData =
-                                prefs.getString(CUSTOMER_SERVICE_KEY);
-                            String? RSData = prefs.getString(RAMP_SERVICES_KEY);
-                            if (CSRData != null) {
-                              makeLogoutAlert(context, 1, prefs);
-                            } else if (RSData != null) {
-                              makeLogoutAlert(context, 2, prefs);
-                            } else if (user != null) {
-                              await usernameValidation(user)
-                                  .then((data) async => {
-                                        if (data["status"] == "success")
-                                          {
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: ((context) {
-                                              return AdminRoute(
-                                                eventmap: eventMap,
-                                                curreventmap: currEventMap,
-                                              );
-                                            })))
-                                          }
-                                        else
-                                          {
-                                            prefs.remove(ADMIN_KEY),
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: ((context) {
-                                              return LoginRoute();
-                                            })))
-                                          }
-                                      });
-                            } else {
-                              await Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: ((context) {
-                                return LoginRoute();
-                              })));
-                            }
-                          }
-                        },
-                        child: Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 173, 177, 180), //change?
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 4,
-                                color: Color(0x33000000),
-                                offset: Offset(0, 2),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: Colors.white, //change?
-                              width: 2,
+        //body: SafeArea(
+        body: ListView(
+          children: [
+            GestureDetector(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                          child: SelectionArea(
+                              child: Text(
+                            'United Airlines Safety Rodeo',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold,
                             ),
-                          ),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Admin',
-                                      style: TextStyle(
-                                        fontFamily: 'Outfit',
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Image.network(
-                                      'assets/united-square-64.png',
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
+                          )),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          {
-                            String? user = prefs.getString(ADMIN_KEY);
-                            String? CSRData =
-                                prefs.getString(CUSTOMER_SERVICE_KEY);
-                            String? RSData = prefs.getString(RAMP_SERVICES_KEY);
-                            if (user != null) {
-                              makeLogoutAlert(context, 0, prefs);
-                            } else if (CSRData != null) {
-                              makeLogoutAlert(context, 1, prefs);
-                            } else if (RSData != null) {
-                              Map<String, dynamic> compData =
-                                  jsonDecode(RSData);
-                              await validateCompetitor(compData["username"])
-                                  .then((data) async => {
-                                        if (data["status"] == "success")
-                                          {
-                                            await Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: ((context) {
-                                              return BaggageRoute(
-                                                competitor: compData,
-                                              );
-                                            })))
-                                          }
-                                        else
-                                          {
-                                            prefs.remove(RAMP_SERVICES_KEY),
-                                            await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      RampServicesLogin()),
-                                            )
-                                          }
-                                      });
-                            } else {
-                              await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => RampServicesLogin()),
-                              );
+                        GestureDetector(
+                          onTap: () async {
+                            final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            {
+                              Map<String, dynamic> eventMap =
+                                  await eventRequest();
+                              Map<String, dynamic> currEventMap =
+                                  await getCurrentEvent();
+                              String? user = prefs.getString(ADMIN_KEY);
+                              String? CSRData =
+                                  prefs.getString(CUSTOMER_SERVICE_KEY);
+                              String? RSData =
+                                  prefs.getString(RAMP_SERVICES_KEY);
+                              if (CSRData != null) {
+                                makeLogoutAlert(context, 1, prefs);
+                              } else if (RSData != null) {
+                                makeLogoutAlert(context, 2, prefs);
+                              } else if (user != null) {
+                                await usernameValidation(user)
+                                    .then((data) async => {
+                                          if (data["status"] == "success")
+                                            {
+                                              await Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: ((context) {
+                                                return AdminRoute(
+                                                  eventmap: eventMap,
+                                                  curreventmap: currEventMap,
+                                                );
+                                              })))
+                                            }
+                                          else
+                                            {
+                                              prefs.remove(ADMIN_KEY),
+                                              await Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: ((context) {
+                                                return LoginRoute();
+                                              })))
+                                            }
+                                        });
+                              } else {
+                                await Navigator.of(context).push(
+                                    MaterialPageRoute(builder: ((context) {
+                                  return LoginRoute();
+                                })));
+                              }
                             }
-                          }
-                        },
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                          },
                           child: Container(
                             width: 100,
                             decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 173, 177, 180),
+                              color:
+                                  Color.fromARGB(255, 173, 177, 180), //change?
                               boxShadow: [
                                 BoxShadow(
                                   blurRadius: 4,
@@ -638,7 +540,7 @@ class PortalRoute extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Ramp Service',
+                                        'Admin',
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
                                           fontSize: 30,
@@ -651,7 +553,7 @@ class PortalRoute extends StatelessWidget {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Image.network(
-                                        'assets/icons8-luggage-64 (1).png',
+                                        'assets/united-square-64.png',
                                         width: 100,
                                         height: 100,
                                         fit: BoxFit.cover,
@@ -663,118 +565,228 @@ class PortalRoute extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          {
-                            String? user = prefs.getString(ADMIN_KEY);
-                            String? CSRData =
-                                prefs.getString(CUSTOMER_SERVICE_KEY);
-                            String? RSData = prefs.getString(RAMP_SERVICES_KEY);
-                            if (user != null) {
-                              makeLogoutAlert(context, 0, prefs);
-                            } else if (RSData != null) {
-                              makeLogoutAlert(context, 2, prefs);
-                            } else if (CSRData != null) {
-                              Map<String, dynamic> compData =
-                                  jsonDecode(CSRData);
-                              await validateCompetitor(compData["username"])
-                                  .then((data) async => {
-                                        if (data["status"] == "success")
-                                          {
-                                            await Navigator.of(context).push(
+                        GestureDetector(
+                          onTap: () async {
+                            final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            {
+                              String? user = prefs.getString(ADMIN_KEY);
+                              String? CSRData =
+                                  prefs.getString(CUSTOMER_SERVICE_KEY);
+                              String? RSData =
+                                  prefs.getString(RAMP_SERVICES_KEY);
+                              if (user != null) {
+                                makeLogoutAlert(context, 0, prefs);
+                              } else if (CSRData != null) {
+                                makeLogoutAlert(context, 1, prefs);
+                              } else if (RSData != null) {
+                                Map<String, dynamic> compData =
+                                    jsonDecode(RSData);
+                                await validateCompetitor(compData["username"])
+                                    .then((data) async => {
+                                          if (data["status"] == "success")
+                                            {
+                                              await Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: ((context) {
+                                                return BaggageRoute(
+                                                  competitor: compData,
+                                                );
+                                              })))
+                                            }
+                                          else
+                                            {
+                                              prefs.remove(RAMP_SERVICES_KEY),
+                                              await Navigator.of(context).push(
                                                 MaterialPageRoute(
-                                                    builder: ((context) {
-                                              return CSRRoute(
-                                                competitor: compData,
-                                              );
-                                            })))
-                                          }
-                                        else
-                                          {
-                                            prefs.remove(CUSTOMER_SERVICE_KEY),
-                                            await Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CustomerServiceLogin()),
-                                            )
-                                          }
-                                      });
-                            } else {
-                              await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        CustomerServiceLogin()),
-                              );
+                                                    builder: (context) =>
+                                                        RampServicesLogin()),
+                                              )
+                                            }
+                                        });
+                              } else {
+                                await Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          RampServicesLogin()),
+                                );
+                              }
                             }
-                          }
-                        },
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                          child: Container(
-                            width: 100,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 173, 177, 180),
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4,
-                                  color: Color(0x33000000),
-                                  offset: Offset(0, 2),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Colors.white, //change?
-                                width: 2,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12, 12, 12, 12),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Customer Service',
-                                        style: TextStyle(
-                                          fontFamily: 'Outfit',
-                                          fontSize: 28,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Image.network(
-                                        'assets/icons8-airport-64.png',
-                                        width: 100,
-                                        height: 100,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ],
-                                  ),
+                          },
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                            child: Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 173, 177, 180),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 4,
+                                    color: Color(0x33000000),
+                                    offset: Offset(0, 2),
+                                  )
                                 ],
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.white, //change?
+                                  width: 2,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12, 12, 12, 12),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Ramp Service',
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Image.network(
+                                          'assets/icons8-luggage-64 (1).png',
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        GestureDetector(
+                          onTap: () async {
+                            final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            {
+                              String? user = prefs.getString(ADMIN_KEY);
+                              String? CSRData =
+                                  prefs.getString(CUSTOMER_SERVICE_KEY);
+                              String? RSData =
+                                  prefs.getString(RAMP_SERVICES_KEY);
+                              if (user != null) {
+                                makeLogoutAlert(context, 0, prefs);
+                              } else if (RSData != null) {
+                                makeLogoutAlert(context, 2, prefs);
+                              } else if (CSRData != null) {
+                                Map<String, dynamic> compData =
+                                    jsonDecode(CSRData);
+                                await validateCompetitor(compData["username"])
+                                    .then((data) async => {
+                                          if (data["status"] == "success")
+                                            {
+                                              await Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: ((context) {
+                                                return CSRRoute(
+                                                  competitor: compData,
+                                                );
+                                              })))
+                                            }
+                                          else
+                                            {
+                                              prefs
+                                                  .remove(CUSTOMER_SERVICE_KEY),
+                                              await Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        CustomerServiceLogin()),
+                                              )
+                                            }
+                                        });
+                              } else {
+                                await Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CustomerServiceLogin()),
+                                );
+                              }
+                            }
+                          },
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                            child: Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 173, 177, 180),
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 4,
+                                    color: Color(0x33000000),
+                                    offset: Offset(0, 2),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.white, //change?
+                                  width: 2,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12, 12, 12, 12),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Customer Service',
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Image.network(
+                                          'assets/icons8-airport-64.png',
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
 
-                /**
+                  /**
                * 
                * FFButtonWidget(
                 onPressed: () {
@@ -800,29 +812,32 @@ class PortalRoute extends StatelessWidget {
               ) ,
                * */
 
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.green,
-                    ),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomeRoute()));
-                      print("link to debug button");
-                    },
-                    child: Text(
-                      "DEBUG",
-                      style: TextStyle(
-                        fontFamily: 'Open Sans',
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.green,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeRoute()));
+                        print("link to debug button");
+                      },
+                      child: Text(
+                        "DEBUG",
+                        style: TextStyle(
+                          fontFamily: 'Open Sans',
+                        ),
                       ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       );
     }
