@@ -20,6 +20,29 @@ class CompetitorsPage extends StatefulWidget {
 
 class _CompetitorsPageState extends State<CompetitorsPage> {
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
+
+  List<Competitor> _foundComps = [];
+  @override
+  void initState() {
+    _foundComps = widget.event.competitors;
+    super.initState();
+  }
+
+  void filter(String keyword) {
+    List<Competitor> results = [];
+    if (keyword.isEmpty) {
+      results = widget.event.competitors;
+    } else {
+      results = widget.event.competitors
+          .where(
+              (c) => c.fullname.toLowerCase().contains(keyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundComps = results;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -116,6 +139,9 @@ class _CompetitorsPageState extends State<CompetitorsPage> {
           decoration: const InputDecoration(
               labelText: 'Search for competitors',
               suffixIcon: Icon(Icons.search)),
+          onChanged: (value) {
+            filter(value);
+          },
         ),
       ),
       Flexible(
@@ -127,8 +153,8 @@ class _CompetitorsPageState extends State<CompetitorsPage> {
           child: ListView(
             // mainAxisSize: MainAxisSize.max,
             // crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: List.generate(widget.event.competitors.length, (index) {
-              return CCard(c: widget.event.competitors[index]);
+            children: List.generate(_foundComps.length, (index) {
+              return CCard(c:_foundComps[index]);
             }),
           ),
         ),
