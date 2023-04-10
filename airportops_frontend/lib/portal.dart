@@ -297,7 +297,7 @@ class PortalRoute extends StatelessWidget {
                           {
                             await Navigator.of(context)
                                 .push(MaterialPageRoute(builder: ((context) {
-                              return CSRRoute();
+                              return CSRRoute(competitor: compData);
                             })))
                           }
                         else
@@ -330,7 +330,7 @@ class PortalRoute extends StatelessWidget {
                           {
                             await Navigator.of(context)
                                 .push(MaterialPageRoute(builder: ((context) {
-                              return BaggageRoute();
+                              return BaggageRoute(competitor: compData);
                             })))
                           }
                         else

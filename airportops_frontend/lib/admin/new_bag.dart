@@ -173,6 +173,7 @@ class _NewBagState extends State<NewBag> {
           nameLast: _lastNameController.text,
           originatingAirport: _flightSourceController.text,
           destinationAirport: _flightDestinationController.text,
+          wrongDestination: false,
           weight: int.parse(_weightController.text),
           event: '',
           checked: false,
