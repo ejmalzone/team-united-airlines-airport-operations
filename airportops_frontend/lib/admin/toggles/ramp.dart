@@ -18,6 +18,28 @@ class AdminRamp extends StatefulWidget {
 }
 
 class _AdminRampState extends State<AdminRamp> {
+  List<Baggage> _foundBags = [];
+  @override
+  void initState() {
+    _foundBags = widget.event.bags;
+    super.initState();
+  }
+
+  void filter(String keyword) {
+    List<Baggage> results = [];
+    if (keyword.isEmpty) {
+      results = widget.event.bags;
+    } else {
+      results = widget.event.bags
+          .where(
+              (b) => b.fullName.toLowerCase().contains(keyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundBags = results;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -139,6 +161,9 @@ class _AdminRampState extends State<AdminRamp> {
             decoration: const InputDecoration(
                 labelText: 'Search for passengers',
                 suffixIcon: Icon(Icons.search)),
+            onChanged: (value) {
+              filter(value);
+            },
           ),
         ),
         Flexible(
@@ -150,8 +175,8 @@ class _AdminRampState extends State<AdminRamp> {
             child: ListView(
               // mainAxisSize: MainAxisSize.max,
               // crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: List.generate(widget.event.bags.length, (index) {
-                return BCard(b: widget.event.bags[index]);
+              children: List.generate(_foundBags.length, (index) {
+                return BCard(b: _foundBags[index]);
               }),
             ),
           ),
@@ -159,7 +184,7 @@ class _AdminRampState extends State<AdminRamp> {
         SizedBox(
           height: 60,
           child: Center(
-            child: ElevatedButton(
+              child: ElevatedButton(
             onPressed: () async {
               Baggage newBag = await Navigator.push(
                   context, MaterialPageRoute(builder: (context) => NewBag()));
