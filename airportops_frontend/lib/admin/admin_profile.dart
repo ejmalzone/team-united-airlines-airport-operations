@@ -6,6 +6,7 @@ import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/extensions.dart';
+import 'package:airportops_frontend/progress_bar.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:airportops_frontend/login.dart';
 import 'package:universal_html/html.dart';
+import 'package:airportops_frontend/progress_bar.dart';
 
 import '../printing/pdfs.dart';
 
@@ -252,6 +254,9 @@ class _CurrBoxState extends State<CurrBox> {
   void getdata() async {}
   @override
   Widget build(BuildContext context) {
+    int width = 50;
+    int height = 10;
+    Size size = Size(width.toDouble(), height.toDouble());
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
       child: Card(
@@ -289,6 +294,12 @@ class _CurrBoxState extends State<CurrBox> {
                 ),
               ),
             ),
+            Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                child: ProgressBar(size: size)),
+            //Padding(
+            //padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 5),
+            //child: ProgressBar(size: size)),
             // Padding(
             //   padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
             //   child: Text(
