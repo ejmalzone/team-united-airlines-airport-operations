@@ -163,38 +163,43 @@ class _NewPassengerState extends State<NewPassenger> {
       .toList()
     ..sort((a, b) => a.split(' ')[0].compareTo(b.split(' ')[0]));
 
+  bool connection = false;
+  bool gate = false;
+  bool wrongFlight = false;
+
+  List<String> accommodations = [];
+
   @override
   void submitForm() async {
     // validate form and create new passenger object
     if (_formKey.currentState!.validate()) {
       Passenger newPassenger = Passenger(
-        nameFirst: _firstNameController.text,
-        nameLast: _lastNameController.text,
-        //reservationNum: 0, // You can set this to a unique value
-        birthday: _birthday, // Use the value from the DateTimeFormField
-        flightSource: _flightSourceController.text,
-        //flightSourceDate:
-        //    _flightSourceDate, // Use the value from the DateTimeFormField
-        flightDestination: _flightDestinationController.text,
-        //flightDestinationDate:
-        // _flightDestinationDate, // Use the value from the DateTimeFormField
-        //citizenship: _citizenshipController.text,
-        seat: _seatController.text,
-        passengerId: '12345',
-        // row: int.parse(_rowController.text),
-        row: 5,
-        boarded: _boardedController.text == 'true',
-        event: _eventController.text,
-        //requests: []); // You can add requests here if needed
-        accommodations: [],
-        status: _boardedController.text == 'true'
-            ? Status.boarded
-            : Status.unboarded,
-        connection: false,
-        wrongGate: false,
-        wrongDeparture: false,
-        scanTime: null
-      ); // TODO: Implement parsing accomodations
+          nameFirst: _firstNameController.text,
+          nameLast: _lastNameController.text,
+          //reservationNum: 0, // You can set this to a unique value
+          birthday: _birthday, // Use the value from the DateTimeFormField
+          flightSource: _flightSourceController.text,
+          //flightSourceDate:
+          //    _flightSourceDate, // Use the value from the DateTimeFormField
+          flightDestination: _flightDestinationController.text,
+          //flightDestinationDate:
+          // _flightDestinationDate, // Use the value from the DateTimeFormField
+          //citizenship: _citizenshipController.text,
+          seat: _seatController.text,
+          passengerId: '12345',
+          // row: int.parse(_rowController.text),
+          row: 5,
+          boarded: _boardedController.text == 'true',
+          event: _eventController.text,
+          //requests: []); // You can add requests here if needed
+          accommodations: [],
+          status: _boardedController.text == 'true'
+              ? Status.boarded
+              : Status.unboarded,
+          connection: connection,
+          wrongGate: gate,
+          wrongDeparture: wrongFlight,
+          scanTime: null); // TODO: Implement parsing accomodations
 
       Navigator.pop(context, newPassenger);
     }
@@ -305,7 +310,6 @@ class _NewPassengerState extends State<NewPassenger> {
                   },
                   controller: _flightSourceController,
                 ),
-
                 const SizedBox(height: 16),
                 CountrySelector(
                   label: "Flight Destination",
@@ -314,6 +318,39 @@ class _NewPassengerState extends State<NewPassenger> {
                     print("Selected country: $country");
                   },
                   controller: _flightDestinationController,
+                ),
+                const SizedBox(height: 16),
+                CheckboxListTile(
+                  title: Text('Connection'),
+                  value: connection,
+                  onChanged: (value) {
+                    setState(() {
+                      connection = value!;
+                    });
+                  },
+                  controlAffinity: ListTileControlAffinity.leading,
+                ),
+                const SizedBox(height: 16),
+                CheckboxListTile(
+                  title: Text('Wrong Gate'),
+                  value: gate,
+                  onChanged: (value) {
+                    setState(() {
+                      gate = value!;
+                    });
+                  },
+                  controlAffinity: ListTileControlAffinity.leading,
+                ),
+                const SizedBox(height: 16),
+                CheckboxListTile(
+                  title: Text('Wrong Flight'),
+                  value: wrongFlight,
+                  onChanged: (value) {
+                    setState(() {
+                      wrongFlight = value!;
+                    });
+                  },
+                  controlAffinity: ListTileControlAffinity.leading,
                 ),
                 const SizedBox(height: 32),
                 Padding(
