@@ -35,6 +35,15 @@ Future<Map<String, dynamic>> eventPost(String name) async {
   return (data);
 }
 
+Future<Map<String, dynamic>> deleteEvent({required String eventId}) async {
+  var reply = await Requests.delete(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/event/',
+      json: {"eventId": eventId});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  return data;
+}
+
 Future<Map<String, dynamic>> eventRequest() async {
   var reply = await Requests.get(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/event/');
@@ -129,6 +138,9 @@ Future<Map<String, dynamic>> createPassenger(
     required String originAirport,
     required String destinationAirport,
     List<String>? accommodations,
+    bool? connection,
+    bool? gate,
+    bool? wrongFlight,
     required String event}) async {
   var reply = await Requests.post(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
@@ -141,7 +153,10 @@ Future<Map<String, dynamic>> createPassenger(
         "origin": originAirport,
         "destination": destinationAirport,
         "accommodations": accommodations,
-        "event": event
+        "event": event,
+        "connection": connection,
+        "wrongGate" : gate,
+        "wrongDeparture": wrongFlight
       });
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
@@ -276,3 +291,5 @@ Future<Map<String, dynamic>> scanPassenger(
   Map<String, dynamic> data = jsonDecode(body);
   return data;
 }
+
+

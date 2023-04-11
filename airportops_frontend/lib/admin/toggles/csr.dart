@@ -90,14 +90,14 @@ class _AdminPassengersState extends State<AdminPassengers> {
         ),
         Container(
           width: 100,
-          height: 100,
+          //height: 100,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 width: 100,
-                height: 100,
+                //height: 100,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -121,7 +121,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
                 ),
               ),
               SizedBox(
-                height: 100,
+                height: 50,
                 child: VerticalDivider(
                   thickness: 1,
                   color: Colors.black,
@@ -129,7 +129,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
               ),
               Container(
                 width: 100,
-                height: 100,
+                //height: 100,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -152,38 +152,38 @@ class _AdminPassengersState extends State<AdminPassengers> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 100,
-                child: VerticalDivider(
-                  thickness: 1,
-                  color: Colors.black,
-                ),
-              ),
-              Container(
-                width: 100,
-                height: 100,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                      widget.event.p_wrong.toString(),
-                      style: TextStyle(
-                        fontFamily: 'Open Sans',
-                        color: Color(0xFFBCBF14),
-                        fontSize: 50,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    Text(
-                      'WRONG',
-                      style: TextStyle(
-                        fontFamily: 'Open Sans',
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // SizedBox(
+              //   height: 50,
+              //   child: VerticalDivider(
+              //     thickness: 1,
+              //     color: Colors.black,
+              //   ),
+              // ),
+              // Container(
+              //   width: 100,
+              //   //height: 100,
+              //   child: Column(
+              //     mainAxisSize: MainAxisSize.max,
+              //     children: [
+              //       Text(
+              //         widget.event.p_wrong.toString(),
+              //         style: TextStyle(
+              //           fontFamily: 'Open Sans',
+              //           color: Color(0xFFBCBF14),
+              //           fontSize: 50,
+              //           fontWeight: FontWeight.w800,
+              //         ),
+              //       ),
+              //       Text(
+              //         'WRONG',
+              //         style: TextStyle(
+              //           fontFamily: 'Open Sans',
+              //           fontWeight: FontWeight.w300,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -215,42 +215,105 @@ class _AdminPassengersState extends State<AdminPassengers> {
         ),
         SizedBox(
           height: 60,
-          child: Center(
-              child: ElevatedButton(
-            onPressed: () async {
-              print("pressed add passengers");
-              print(widget.event.passengers);
-
-              Passenger newPassenger = await Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => NewPassenger()));
-
-              setState(() {
-                widget.event.addPassenger(newPassenger);
-                var newPass = createPassenger(
-                    first: newPassenger.nameFirst,
-                    last: newPassenger.nameLast,
-                    DOB: newPassenger.birthday.toIso8601String(),
-                    row: newPassenger.row,
-                    seat: newPassenger.seat,
-                    originAirport: newPassenger.flightSource,
-                    destinationAirport: newPassenger.flightDestination,
-                    event: widget.event.name);
-              });
-              for (int i = 0; i < widget.event.passengers.length; i++) {
-                print(widget.event.passengers[i].fullName);
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Color(0xFF00239E),
-            ),
-            child: Text(
-              "Add Passenger",
-              style: TextStyle(
-                fontFamily: 'Open Sans',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  print("pressed add passengers");
+                  print(widget.event.passengers);
+                
+                  Passenger newPassenger = await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NewPassenger()));
+                
+                  setState(() {
+                    widget.event.addPassenger(newPassenger);
+                    var newPass = createPassenger(
+                        first: newPassenger.nameFirst,
+                        last: newPassenger.nameLast,
+                        DOB: newPassenger.birthday.toIso8601String(),
+                        row: newPassenger.row,
+                        seat: newPassenger.seat,
+                        originAirport: newPassenger.flightSource,
+                        destinationAirport: newPassenger.flightDestination,
+                        connection: newPassenger.connection,
+                        gate: newPassenger.wrongGate,
+                        wrongFlight: newPassenger.wrongDeparture,
+                        event: widget.event.name);
+                  });
+                  for (int i = 0; i < widget.event.passengers.length; i++) {
+                    print("${widget.event.passengers[i].fullName} - ${widget.event.passengers[i].connection}");
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xFF00239E),
+                ),
+                child: Text(
+                  "Add Passenger",
+                  style: TextStyle(
+                    fontFamily: 'Open Sans',
+                  ),
+                ),
               ),
-            ),
-          )),
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    var curr = await getCurrentEvent();
+                    await setEvent(widget.event.name);
+                    if (curr['data']['name'] != widget.event.name) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Container(
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(206, 47, 124, 2),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: Text(
+                              "${widget.event.name} is now set as the current event!",
+                              textAlign: TextAlign.center),
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        duration: Duration(seconds: 2),
+                      ));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Container(
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(216, 133, 0, 0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: Text(
+                              "${widget.event.name} is already set as the current event!",
+                              textAlign: TextAlign.center),
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        duration: Duration(seconds: 2),
+                      ));
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Color.fromARGB(255, 47, 124, 2),
+                  ),
+                  child: Text(
+                    'Set Current Event',
+                    style: TextStyle(
+                      fontFamily: 'Open Sans',
+                      fontSize: 15,
+                    ),
+                  )),
+              )
+
+            ]
+          ),
         )
       ],
     );
