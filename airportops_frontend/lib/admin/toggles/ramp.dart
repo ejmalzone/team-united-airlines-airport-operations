@@ -249,7 +249,7 @@ class _AdminRampState extends State<AdminRamp> {
                   ),
                 ),
               ),
-                            Padding(
+              Padding(
                 padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                 child: ElevatedButton(
                   onPressed: () async {
@@ -258,11 +258,10 @@ class _AdminRampState extends State<AdminRamp> {
                     if (curr['data']['name'] != widget.event.name) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Container(
-                          padding: EdgeInsets.all(16),
-                          decoration: BoxDecoration(
+                          padding: const EdgeInsets.all(16),
+                          decoration: const BoxDecoration(
                               color: Color.fromARGB(206, 47, 124, 2),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
+                              borderRadius: BorderRadius.all(Radius.circular(20))),
                           child: Text(
                               "${widget.event.name} is now set as the current event!",
                               textAlign: TextAlign.center),
@@ -301,7 +300,8 @@ class _AdminRampState extends State<AdminRamp> {
                       fontFamily: 'Open Sans',
                       fontSize: 15,
                     ),
-                  )),
+                  )
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),

@@ -20,11 +20,11 @@ class BagProfile extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
                 child: Container(
                     width: double.infinity,
                     height: 179.8,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color(0xFFE9E9E9),
                       boxShadow: [
                         BoxShadow(
@@ -43,22 +43,20 @@ class BagProfile extends StatelessWidget {
                         Container(
                           width: 100,
                           height: 5,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Color(0xFF987700),
                           ),
                         ),
                         Expanded(
                           child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 10, 0, 0),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -66,11 +64,10 @@ class BagProfile extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Align(
-                                        alignment:
-                                            AlignmentDirectional(-1, -0.7),
+                                        alignment: const AlignmentDirectional(-1, -0.7),
                                         child: Text(
                                           "${bag.fullName}'s bag",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontFamily: 'Open Sans',
                                             fontWeight: FontWeight.bold,
                                             fontSize: 30,
@@ -78,12 +75,12 @@ class BagProfile extends StatelessWidget {
                                         ),
                                       ),
                                       Align(
-                                        alignment: AlignmentDirectional(-1, 0),
+                                        alignment: const AlignmentDirectional(-1, 0),
                                         child: Text(
-                                          'R-1234',
-                                          style: TextStyle(
+                                          '${bag.weight}lbs',
+                                          style: const TextStyle(
                                             fontFamily: 'Open Sans',
-                                            fontSize: 15,
+                                            fontSize: 16.5,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -210,11 +207,10 @@ class BagProfile extends StatelessWidget {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Container(
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.all(16),
+                      decoration: const BoxDecoration(
                           color: Color.fromARGB(206, 47, 124, 2),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20))),
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
                       child: Text(
                           "${bag.fullName}'bag is successfully deleted!",
                           textAlign: TextAlign.center),
@@ -236,194 +232,3 @@ class BagProfile extends StatelessWidget {
     );
   }
 }
-
-
-// Align(
-//           alignment: AlignmentDirectional(0, 0),
-//           child: Padding(
-//             padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-//             child: Container(
-//               width: 340.1,
-//               height: 179.8,
-//               decoration: BoxDecoration(
-//                 color: Color(0xFFE9E9E9),
-//                 boxShadow: [
-//                   BoxShadow(
-//                     blurRadius: 4,
-//                     color: Color(0x33000000),
-//                     offset: Offset(0, 2),
-//                   )
-//                 ],
-//                 shape: BoxShape.rectangle,
-//               ),
-//               alignment: AlignmentDirectional(0, 0),
-//               child: Column(
-//                 mainAxisSize: MainAxisSize.max,
-//                 mainAxisAlignment: MainAxisAlignment.start,
-//                 crossAxisAlignment: CrossAxisAlignment.stretch,
-//                 children: [
-//                   Container(
-//                     width: 100,
-//                     height: 5,
-//                     decoration: BoxDecoration(
-//                       color: Color(0xFF987700),
-//                     ),
-//                   ),
-//                   Expanded(
-//                     child: Row(
-
-//                       children: [
-//                         Container(
-//                           width: 186.5,
-//                           height: 82.9,
-//                           decoration: BoxDecoration(
-//                             color: Color(0xFFE9E9E9),
-//                           ),
-//                           child: Padding(
-//                             padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-//                             child: Column(
-//                               mainAxisSize: MainAxisSize.max,
-//                               children: [
-//                                 Align(
-//                                   alignment: AlignmentDirectional(-1, -0.7),
-//                                   child: Text(
-//                                     'Joel Fester',
-//                                     style:
-//                                         TextStyle(
-//                                               fontFamily: 'Open Sans',
-//                                               fontWeight: FontWeight.bold,
-//                                             ),
-//                                   ),
-//                                 ),
-//                                 Align(
-//                                   alignment: AlignmentDirectional(-1, 0),
-//                                   child: Text(
-//                                     'R-1234',
-//                                     style: TextStyle(
-//                                           fontFamily: 'Open Sans',
-//                                           fontSize: 12,
-//                                           fontWeight: FontWeight.w600,
-//                                         ),
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                         Padding(
-//                           padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-//                           child: Container(
-//                             width: 70,
-//                             height: 34.7,
-//                             decoration: BoxDecoration(
-//                               color: Color(0xFF850000),
-//                               borderRadius: BorderRadius.only(
-//                                 bottomLeft: Radius.circular(23),
-//                                 bottomRight: Radius.circular(20),
-//                                 topLeft: Radius.circular(20),
-//                                 topRight: Radius.circular(20),
-//                               ),
-//                             ),
-//                             child: Align(
-//                               alignment: AlignmentDirectional(0, 0),
-//                               child: Text(
-//                                 '[Status]',
-//                                 style: TextStyle(
-//                                       fontFamily: 'Open Sans',
-//                                       color: Colors.red,
-//                                       fontWeight: FontWeight.w500,
-//                                     ),
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   Padding(
-//                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-//                     child: Row(
-//                       mainAxisSize: MainAxisSize.max,
-//                       mainAxisAlignment: MainAxisAlignment.center,
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       children: [
-//                         Column(
-//                           mainAxisSize: MainAxisSize.max,
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Text(
-//                               '7:50am',
-//                               style: TextStyle(
-//                                     fontFamily: 'Open Sans',
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.normal,
-//                                   ),
-//                             ),
-//                             Text(
-//                               'IAH',
-//                               style: TextStyle(
-//                                     fontFamily: 'Open Sans',
-//                                     fontWeight: FontWeight.bold,
-//                                   ),
-//                             ),
-//                             Text(
-//                               'May 5th',
-//                               style: TextStyle(
-//                                     fontFamily: 'Open Sans',
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.w500,
-//                                   ),
-//                             ),
-//                           ],
-//                         ),
-//                         Column(
-//                           mainAxisSize: MainAxisSize.max,
-//                           children: [
-//                             // SizedBox(
-//                             //   width: 200,
-//                             //   child: StyledDivider(
-//                             //     thickness: 2,
-//                             //     color: Color(0xFF7F7F7F),
-//                             //     lineStyle: DividerLineStyle.dotted,
-//                             //   ),
-//                             // ),
-//                             Expanded(child: Text('. ' * 1000, maxLines: 1))
-//                           ],
-//                         ),
-//                         Column(
-//                           mainAxisSize: MainAxisSize.max,
-//                           crossAxisAlignment: CrossAxisAlignment.end,
-//                           children: [
-//                             Text(
-//                               '5:40am',
-//                               style: TextStyle(
-//                                     fontFamily: 'Open Sans',
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.normal,
-//                                   ),
-//                             ),
-//                             Text(
-//                               'DTW',
-//                               style: TextStyle(
-//                                     fontFamily: 'Open Sans',
-//                                     fontWeight: FontWeight.bold,
-//                                   ),
-//                             ),
-//                             Text(
-//                               'May 5th',
-//                               style: TextStyle(
-//                                     fontFamily: 'Open Sans',
-//                                     fontSize: 10,
-//                                     fontWeight: FontWeight.w500,
-//                                   ),
-//                             ),
-//                           ],
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         )
