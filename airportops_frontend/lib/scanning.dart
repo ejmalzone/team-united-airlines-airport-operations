@@ -227,17 +227,19 @@ class _RSEScanAppState extends State<RSEScanApp> {
                 IconButton(
                   icon: const Icon(Icons.camera_enhance),
                   iconSize: 50,
-                  onPressed: () {
+                  onPressed: () async {
                     _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
                         context: context,
                         onCode: (code) async {
-                          SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          var compJson = prefs.getString(CUSTOMER_SERVICE_KEY);
-                          var compData = jsonDecode(compJson!);
-
-                          var reply = scanBag(
-                              bagId: code!, competitor: compData["username"]);
+                          await SharedPreferences.getInstance()
+                          .then((prefs) async {
+                            var comp = prefs.getString(RAMP_SERVICES_KEY);
+                            var compData = jsonDecode(comp!);
+                            await scanBag(
+                              bagId: code!, competitor: compData["username"])
+                              .then((reply) {
+                              });
+                          });
                           setState(() {
                             this.code = code;
                           });

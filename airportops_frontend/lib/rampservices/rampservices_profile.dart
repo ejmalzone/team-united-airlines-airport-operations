@@ -97,7 +97,7 @@ class BaggageRoute extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => UniversalScanApp()));
+                          builder: (context) => RSEScanApp()));
                   print("LINK TO SCAN BUTTON");
                 },
                 child: Text(
@@ -146,7 +146,7 @@ class BaggageRoute extends StatelessWidget {
                         }),
                         backgroundColor:
                             MaterialStateProperty.resolveWith((states) {
-                          return Color.fromARGB(255, 151, 151, 151);
+                          return Color.fromARGB(100, 151, 151, 151);
                         }),
                         alignment: Alignment.center,
                         shape:
@@ -155,7 +155,7 @@ class BaggageRoute extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(18.0),
                                     side: BorderSide(
                                         color:
-                                            Color.fromARGB(255, 31, 31, 31)))),
+                                            Color.fromARGB(100, 31, 31, 31)))),
                       ),
                       child: Image.asset("assets/logout.png",
                           width: 45, alignment: Alignment.centerRight),
