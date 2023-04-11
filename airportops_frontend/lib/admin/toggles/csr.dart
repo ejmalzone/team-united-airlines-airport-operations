@@ -90,14 +90,14 @@ class _AdminPassengersState extends State<AdminPassengers> {
         ),
         Container(
           width: 100,
-          height: 100,
+          //height: 100,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 width: 100,
-                height: 100,
+                //height: 100,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -121,7 +121,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
                 ),
               ),
               SizedBox(
-                height: 100,
+                height: 50,
                 child: VerticalDivider(
                   thickness: 1,
                   color: Colors.black,
@@ -129,7 +129,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
               ),
               Container(
                 width: 100,
-                height: 100,
+                //height: 100,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -153,7 +153,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
                 ),
               ),
               SizedBox(
-                height: 100,
+                height: 50,
                 child: VerticalDivider(
                   thickness: 1,
                   color: Colors.black,
@@ -161,7 +161,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
               ),
               Container(
                 width: 100,
-                height: 100,
+                //height: 100,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
