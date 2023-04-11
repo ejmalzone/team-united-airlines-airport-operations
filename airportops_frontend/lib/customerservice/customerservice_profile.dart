@@ -110,7 +110,7 @@ class CSRRoute extends StatelessWidget {
                   print("LINK TO SCAN BUTTON");
                 },
                 child: Text(
-                  "UNIVERSAL SCANNER",
+                  "SCAN BOARDING PASS",
                   style: TextStyle(
                     fontFamily: 'Open Sans',
                   ),
