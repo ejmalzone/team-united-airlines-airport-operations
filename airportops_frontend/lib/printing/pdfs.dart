@@ -155,7 +155,7 @@ class PdfCreator {
                           pw.TableRow(
                               verticalAlignment: pw.TableCellVerticalAlignment.top,
                               children: [
-                                pw.Text('$flightSource -> $flightDestination', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
+                                pw.Text('$flightSource -> $flightDestination', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 16)),
                                 pw.Text(gate, style: const pw.TextStyle(fontSize: 18)),
                                 pw.Text(boardTime, style: const pw.TextStyle(fontSize: 18)),
                                 pw.Text('${passenger.row}${passenger.seat}', style: const pw.TextStyle(fontSize: 18)),

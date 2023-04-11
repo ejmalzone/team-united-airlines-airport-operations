@@ -187,11 +187,15 @@ class _NewPassengerState extends State<NewPassenger> {
           // _flightDestinationDate, // Use the value from the DateTimeFormField
           //citizenship: _citizenshipController.text,
           seat: _seatController.text,
-          passengerId: '12345',
+          passengerId: Object.hash(
+              _firstNameController.text,
+              _lastNameController.text,
+              _birthday.toIso8601String(),
+              _flightSourceController.text,
+              _flightDestinationController.text
+          ).toString(),
           // row: int.parse(_rowController.text),
           row: 5,
-          boarded: _boardedController.text == 'true',
-          event: _eventController.text,
           //requests: []); // You can add requests here if needed
           accommodations: [],
           status: _boardedController.text == 'true'
@@ -200,7 +204,10 @@ class _NewPassengerState extends State<NewPassenger> {
           connection: connection,
           wrongGate: gate,
           wrongDeparture: wrongFlight,
-          scanTime: null); // TODO: Implement parsing accomodations
+          scanTime: null,
+          boarded: _boardedController.text == 'true',
+          event: _eventController.text,
+      ); // TODO: Implement parsing accomodations
 
       Navigator.pop(context, newPassenger);
     }
