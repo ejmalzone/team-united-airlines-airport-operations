@@ -196,7 +196,7 @@ class _AdminRampState extends State<AdminRamp> {
                     origin: newBag.originatingAirport,
                     destination: newBag.destinationAirport,
                     weight: newBag.weight,
-                    wrongDestination: false,
+                    wrongDestination: newBag.wrongDestination,
                     event: widget.event.name);
               });
               for (int i = 0; i < widget.event.bags.length; i++) {
