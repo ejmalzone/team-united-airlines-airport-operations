@@ -47,7 +47,7 @@ class AdminRouteState extends State<AdminRoute> {
     /*if (!kIsWeb) {
       SystemChrome.setPreferredOrientations(
           [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
-    }*/ 
+    }*/
     // The above commented out block, as well as the block in dispose(), will force
     // landscape orientation on mobile
   }
@@ -61,8 +61,8 @@ class AdminRouteState extends State<AdminRoute> {
         DeviceOrientation.landscapeRight,
         DeviceOrientation.portraitDown,
         DeviceOrientation.portraitUp
-      ]);*/
-    }
+      ]);
+    }*/
 
     super.dispose();
   }
