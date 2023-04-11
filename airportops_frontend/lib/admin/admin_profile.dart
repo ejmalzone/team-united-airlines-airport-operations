@@ -5,12 +5,15 @@ import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
+import 'package:airportops_frontend/extensions.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/admin/event_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:airportops_frontend/login.dart';
+
+import '../printing/pdfs.dart';
 
 class AdminRoute extends StatefulWidget {
   Map<String, dynamic> eventmap;
@@ -206,15 +209,6 @@ class CurrBox extends StatefulWidget {
 }
 
 class _CurrBoxState extends State<CurrBox> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
-  // void getData() async {
-
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -266,100 +260,195 @@ class _CurrBoxState extends State<CurrBox> {
                 '[Bags bar ]',
               ),
             ),
-            SizedBox(
-              height: 60,
-              child: Center(
-                  child: ElevatedButton(
-                onPressed: () async {
-                  widget.event.Reset();
-                  await passengerRequest(widget.event.name).then((pReq) {
-                    if (pReq['status'] == 'success') {
-                      for (var passenger in pReq['data']) {
-                        widget.event
-                            .addPassenger(Passenger.fromJson(passenger));
-                      }
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 60,
+                  child: Center(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          widget.event.Reset();
+                          await passengerRequest(widget.event.name).then((pReq) {
+                            if (pReq['status'] == 'success') {
+                              for (var passenger in pReq['data']) {
+                                widget.event
+                                    .addPassenger(Passenger.fromJson(passenger));
+                              }
 
-                      for (var person in widget.event.passengers) {
-                        if (person.boarded == true) {
-                          widget.event.p_boarded += 1;
-                        }
+                              for (var person in widget.event.passengers) {
+                                if (person.boarded == true) {
+                                  widget.event.p_boarded += 1;
+                                }
 
-                        if (person.boarded == false) {
-                          widget.event.p_unboarded += 1;
-                        }
-                      }
-                    }
-                  });
-                  await bagsRequest(widget.event.name).then((bReq) {
-                    if (bReq["status"] == "success") {
-                      for (var bag in bReq["data"]) {
-                        widget.event.addBag(Baggage(
-                            nameFirst: bag["passengerFirst"],
-                            nameLast: bag["passengerLast"],
-                            originatingAirport: bag["origin"],
-                            destinationAirport: bag["destination"],
-                            weight: bag["weight"],
-                            event: bag["event"],
-                            checked: bag["checked"],
-                            id: bag["_id"],
-                            wrongDestination: bag["wrongDestination"],
-                            status: bag["checked"] == true
-                                ? Status.boarded
-                                : Status.unboarded));
-                      }
-                    }
-                  });
+                                if (person.boarded == false) {
+                                  widget.event.p_unboarded += 1;
+                                }
+                              }
+                            }
+                          });
+                          await bagsRequest(widget.event.name).then((bReq) {
+                            if (bReq["status"] == "success") {
+                              for (var bag in bReq["data"]) {
+                                widget.event.addBag(Baggage(
+                                    nameFirst: bag["passengerFirst"],
+                                    nameLast: bag["passengerLast"],
+                                    originatingAirport: bag["origin"],
+                                    destinationAirport: bag["destination"],
+                                    weight: bag["weight"],
+                                    event: bag["event"],
+                                    checked: bag["checked"],
+                                    id: bag["_id"],
+                                    wrongDestination: bag["wrongDestination"],
+                                    status: bag["checked"] == true
+                                        ? Status.boarded
+                                        : Status.unboarded));
+                              }
+                            }
+                          });
 
-                  await competitorRequest(widget.event.name).then((cReq) {
-                    if (cReq['status'] == 'success') {
-                      for (var comp in cReq['data']) {
-                        widget.event.addCompetitor(Competitor(
-                            firstname: comp['firstName'],
-                            lastname: comp['lastName'],
-                            stationCode: comp['stationCode'],
-                            username: comp['username'],
-                            event: widget.event.name,
-                            bagsScanned: [],
-                            passengersScanned: [],
-                            position: comp['position'] == 0
-                                ? Position.Csr
-                                : Position.Ramp));
-                      }
+                          await competitorRequest(widget.event.name).then((cReq) {
+                            if (cReq['status'] == 'success') {
+                              for (var comp in cReq['data']) {
+                                widget.event.addCompetitor(Competitor(
+                                    firstname: comp['firstName'],
+                                    lastname: comp['lastName'],
+                                    stationCode: comp['stationCode'],
+                                    username: comp['username'],
+                                    event: widget.event.name,
+                                    bagsScanned: [],
+                                    passengersScanned: [],
+                                    position: comp['position'] == 0
+                                        ? Position.Csr
+                                        : Position.Ramp));
+                              }
 
-                      for (var bag in widget.event.bags) {
-                        if (bag.checked == true) {
-                          widget.event.b_boarded += 1;
-                        }
+                              for (var bag in widget.event.bags) {
+                                if (bag.checked == true) {
+                                  widget.event.b_boarded += 1;
+                                }
 
-                        if (bag.checked == false) {
-                          widget.event.b_unboarded += 1;
-                        }
-                      }
-                    }
-                  });
-                  // for (var emp in employees) {
-                  //   event.addCompetitor(emp);
-                  // }
+                                if (bag.checked == false) {
+                                  widget.event.b_unboarded += 1;
+                                }
+                              }
+                            }
+                          });
+                          // for (var emp in employees) {
+                          //   event.addCompetitor(emp);
+                          // }
 
-                  // print(event.passengers);
+                          // print(event.passengers);
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              EventRoute(event: widget.event)));
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF00239E),
-                ),
-                child: Text(
-                  "View Event",
-                  style: TextStyle(
-                    fontFamily: 'Open Sans',
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      EventRoute(event: widget.event)));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFF00239E),
+                        ),
+                        child: Text(
+                          "View Event",
+                          style: TextStyle(
+                            fontFamily: 'Open Sans',
+                          ),
+                        ),
+                      )
                   ),
                 ),
-              )),
+                SizedBox(
+                  height: 60,
+                  child: Center(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          Map<String, dynamic> reqData = await eventRequest();
+                          Map<String, dynamic> bagData = await bagsRequest(reqData['data'][0]['name']);
+                          final bagInstances = bagData['data'];
+
+                          List<Baggage> bags = [];
+
+                          for (var bagInstance in bagInstances) {
+                            bags.add(Baggage.fromJson(bagInstance));
+                          }
+
+                          PdfCreator.generateBaggageTagPages(bags);
+
+                          showDialog<dynamic>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                  title: const Text("Generating..."),
+                                  content: const Text("Generating PDF"),
+                                  actions: [
+                                    TextButton(
+                                        child: Text("Ok"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        }
+                                    )
+                                  ]
+                              ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFF00239E),
+                        ),
+                        child: Text(
+                          "Save Baggage Tags to PDF",
+                          style: TextStyle(
+                            fontFamily: 'Open Sans',
+                          ),
+                        ),
+                      )
+                  ),
+                ),
+                SizedBox(
+                  height: 60,
+                  child: Center(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          final data = (await currPassengerRequest())['data'];
+
+                          List<Passenger> passengers = [];
+                          for (var passengerInstance in data) {
+                            passengers.add(Passenger.fromJson(passengerInstance));
+                          }
+
+                          PdfCreator.generateBoardingPassPages(passengers);
+
+                          showDialog<dynamic>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                title: const Text("Generating..."),
+                                content: const Text("Generating PDF"),
+                                actions: [
+                                  TextButton(
+                                      child: Text("Ok"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      }
+                                  )
+                                ]
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFF00239E),
+                        ),
+                        child: Text(
+                          "Save Boarding Passes to PDF",
+                          style: TextStyle(
+                            fontFamily: 'Open Sans',
+                          ),
+                        ),
+                      )
+                  ),
+                ),
+              ].withSpaceBetween(width: 20)
             )
           ],
         ),
