@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:airportops_frontend/admin/new_passenger.dart';
+import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/database.dart';
+import 'package:airportops_frontend/printing/pdfs.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -256,8 +258,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
                   ),
                 ),
               ),
-
-              Padding(
+                            Padding(
                 padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                 child: ElevatedButton(
                   onPressed: () async {
@@ -310,8 +311,46 @@ class _AdminPassengersState extends State<AdminPassengers> {
                       fontSize: 15,
                     ),
                   )),
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                final data = (await currPassengerRequest())['data'];
 
+                List<Passenger> passengers = [];
+                for (var passengerInstance in data) {
+                  passengers.add(Passenger.fromJson(passengerInstance));
+                }
+
+                PdfCreator.generateBoardingPassPages(passengers);
+
+                showDialog<dynamic>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                      title: const Text("Generating..."),
+                      content: const Text("Generating PDF"),
+                      actions: [
+                        TextButton(
+                            child: Text("Ok"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            })
+                      ]),
+                );
+                  },
+                  style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Color(0xFF00239E),
+                  ),
+                  child: Text(
+                "Print Boarding Passes",
+                style: TextStyle(
+                  fontFamily: 'Open Sans',
+                ),
+                  ),
+                ),
+              ),
             ]
           ),
         )

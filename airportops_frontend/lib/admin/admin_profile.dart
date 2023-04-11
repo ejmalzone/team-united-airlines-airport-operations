@@ -92,8 +92,11 @@ class AdminRouteState extends State<AdminRoute> {
       } else {
         currentEvent = Event(
             widget.curreventmap['data']['name'], 0, 0, 0, 0, 0, 0, [], [], []);
+        currentEvent.b_unboarded = widget.curreventmap['data']['bags'];
+        currentEvent.p_unboarded = widget.curreventmap['data']['passengers'];
       }
     }
+    print(widget.curreventmap);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -241,6 +244,13 @@ class CurrBox extends StatefulWidget {
 
 class _CurrBoxState extends State<CurrBox> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void getdata() async {}
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
@@ -271,7 +281,7 @@ class _CurrBoxState extends State<CurrBox> {
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                 child: Text(
-                  'Monday April 3 2023',
+                  widget.event.Date,
                   style: TextStyle(
                     fontFamily: 'Open Sans',
                     fontWeight: FontWeight.w500,
@@ -279,18 +289,18 @@ class _CurrBoxState extends State<CurrBox> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-              child: Text(
-                '[Passengers bar]',
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-              child: Text(
-                '[Bags bar ]',
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
+            //   child: Text(
+            //     widget.event.p_unboarded.toString(),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+            //   child: Text(
+            //     widget.event.b_unboarded.toString(),
+            //   ),
+            // ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -347,7 +357,7 @@ class _CurrBoxState extends State<CurrBox> {
                             if (bag.checked == true) {
                               if (bag.wrongDestination == true) {
                                 widget.event.b_wrong += 1;
-                              }else{
+                              } else {
                                 widget.event.b_boarded += 1;
                               }
                             }
@@ -395,90 +405,6 @@ class _CurrBoxState extends State<CurrBox> {
                       ),
                       child: Text(
                         "View Event",
-                        style: TextStyle(
-                          fontFamily: 'Open Sans',
-                        ),
-                      ),
-                    )),
-                  ),
-                  SizedBox(
-                    height: 60,
-                    child: Center(
-                        child: ElevatedButton(
-                      onPressed: () async {
-                        Map<String, dynamic> reqData = await getCurrentEvent();
-                        Map<String, dynamic> bagData =
-                            await bagsRequest(reqData['data']['name']);
-                        final bagInstances = bagData['data'];
-
-                        List<Baggage> bags = [];
-
-                        for (var bagInstance in bagInstances) {
-                          bags.add(Baggage.fromJson(bagInstance));
-                        }
-
-                        PdfCreator.generateBaggageTagPages(bags);
-
-                        showDialog<dynamic>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                              title: const Text("Generating..."),
-                              content: const Text("Generating PDF"),
-                              actions: [
-                                TextButton(
-                                    child: Text("Ok"),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    })
-                              ]),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Color(0xFF00239E),
-                      ),
-                      child: Text(
-                        "Save Baggage Tags to PDF",
-                        style: TextStyle(
-                          fontFamily: 'Open Sans',
-                        ),
-                      ),
-                    )),
-                  ),
-                  SizedBox(
-                    height: 60,
-                    child: Center(
-                        child: ElevatedButton(
-                      onPressed: () async {
-                        final data = (await currPassengerRequest())['data'];
-
-                        List<Passenger> passengers = [];
-                        for (var passengerInstance in data) {
-                          passengers.add(Passenger.fromJson(passengerInstance));
-                        }
-
-                        PdfCreator.generateBoardingPassPages(passengers);
-
-                        showDialog<dynamic>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                              title: const Text("Generating..."),
-                              content: const Text("Generating PDF"),
-                              actions: [
-                                TextButton(
-                                    child: Text("Ok"),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    })
-                              ]),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Color(0xFF00239E),
-                      ),
-                      child: Text(
-                        "Save Boarding Passes to PDF",
                         style: TextStyle(
                           fontFamily: 'Open Sans',
                         ),
@@ -592,7 +518,7 @@ class EventBox extends StatelessWidget {
                                 if (bag.checked == true) {
                                   if (bag.wrongDestination == true) {
                                     event.b_wrong += 1;
-                                  }else{
+                                  } else {
                                     event.b_boarded += 1;
                                   }
                                 }
@@ -601,7 +527,6 @@ class EventBox extends StatelessWidget {
                                   event.b_unboarded += 1;
                                 }
                               }
-                              
                             });
 
                             await competitorRequest(event.name).then((cReq) {

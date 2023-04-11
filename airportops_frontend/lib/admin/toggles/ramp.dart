@@ -2,6 +2,7 @@ import 'package:airportops_frontend/admin/new_bag.dart';
 import 'package:airportops_frontend/admin/new_passenger.dart';
 import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/database.dart';
+import 'package:airportops_frontend/printing/pdfs.dart';
 import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
@@ -215,37 +216,138 @@ class _AdminRampState extends State<AdminRamp> {
         ),
         SizedBox(
           height: 60,
-          child: Center(
-              child: ElevatedButton(
-            onPressed: () async {
-              Baggage newBag = await Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => NewBag()));
-              setState(() {
-                widget.event.addBag(newBag);
-                var newB = createBag(
-                    passengerFirst: newBag.nameFirst,
-                    passengerLast: newBag.nameLast,
-                    origin: newBag.originatingAirport,
-                    destination: newBag.destinationAirport,
-                    weight: newBag.weight,
-                    wrongDestination: newBag.wrongDestination,
-                    event: widget.event.name);
-              });
-              for (int i = 0; i < widget.event.bags.length; i++) {
-                print(widget.event.bags[i].fullName);
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Color(0xFF00239E),
-            ),
-            child: Text(
-              "Add Bags",
-              style: TextStyle(
-                fontFamily: 'Open Sans',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  Baggage newBag = await Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => NewBag()));
+                  setState(() {
+                    widget.event.addBag(newBag);
+                    var newB = createBag(
+                        passengerFirst: newBag.nameFirst,
+                        passengerLast: newBag.nameLast,
+                        origin: newBag.originatingAirport,
+                        destination: newBag.destinationAirport,
+                        weight: newBag.weight,
+                        wrongDestination: newBag.wrongDestination,
+                        event: widget.event.name);
+                  });
+                  for (int i = 0; i < widget.event.bags.length; i++) {
+                    print(widget.event.bags[i].fullName);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xFF00239E),
+                ),
+                child: Text(
+                  "Add Bags",
+                  style: TextStyle(
+                    fontFamily: 'Open Sans',
+                  ),
+                ),
               ),
-            ),
-          )),
+                            Padding(
+                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    var curr = await getCurrentEvent();
+                    await setEvent(widget.event.name);
+                    if (curr['data']['name'] != widget.event.name) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Container(
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(206, 47, 124, 2),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: Text(
+                              "${widget.event.name} is now set as the current event!",
+                              textAlign: TextAlign.center),
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        duration: Duration(seconds: 2),
+                      ));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Container(
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(216, 133, 0, 0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: Text(
+                              "${widget.event.name} is already set as the current event!",
+                              textAlign: TextAlign.center),
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        duration: Duration(seconds: 2),
+                      ));
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Color.fromARGB(255, 47, 124, 2),
+                  ),
+                  child: Text(
+                    'Set Current Event',
+                    style: TextStyle(
+                      fontFamily: 'Open Sans',
+                      fontSize: 15,
+                    ),
+                  )),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                Map<String, dynamic> reqData = await getCurrentEvent();
+                Map<String, dynamic> bagData =
+                    await bagsRequest(reqData['data']['name']);
+                final bagInstances = bagData['data'];
+
+                List<Baggage> bags = [];
+
+                for (var bagInstance in bagInstances) {
+                  bags.add(Baggage.fromJson(bagInstance));
+                }
+
+                PdfCreator.generateBaggageTagPages(bags);
+
+                showDialog<dynamic>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                      title: const Text("Generating..."),
+                      content: const Text("Generating PDF"),
+                      actions: [
+                        TextButton(
+                            child: Text("Ok"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            })
+                      ]),
+                );
+                  },
+                  style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Color(0xFF00239E),
+                  ),
+                  child: Text(
+                "Print Bag tags",
+                style: TextStyle(
+                  fontFamily: 'Open Sans',
+                ),
+                  ),
+                ),
+              )
+            ],
+          ),
         )
       ],
     );

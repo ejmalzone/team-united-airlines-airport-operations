@@ -61,7 +61,7 @@ class AdminProfileBox extends StatelessWidget {
                       Align(
                         alignment: AlignmentDirectional(0, 0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 10, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(5, 10, 0, 10),
                           child: Container(
                             width: 74,
                             height: 61,
@@ -81,7 +81,7 @@ class AdminProfileBox extends StatelessWidget {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(10, 20, 0, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
