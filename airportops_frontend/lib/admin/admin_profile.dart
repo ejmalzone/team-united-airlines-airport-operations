@@ -15,7 +15,6 @@ import 'package:airportops_frontend/admin/event_details.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:airportops_frontend/login.dart';
-import 'package:universal_html/html.dart';
 import 'package:airportops_frontend/progress_bar.dart';
 
 import '../printing/pdfs.dart';
