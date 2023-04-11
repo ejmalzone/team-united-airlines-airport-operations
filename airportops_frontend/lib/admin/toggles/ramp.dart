@@ -159,7 +159,7 @@ class _AdminRampState extends State<AdminRamp> {
           padding: EdgeInsetsDirectional.fromSTEB(50, 10, 50, 8),
           child: TextField(
             decoration: const InputDecoration(
-                labelText: 'Search for passengers',
+                labelText: 'Search for bags',
                 suffixIcon: Icon(Icons.search)),
             onChanged: (value) {
               filter(value);
@@ -196,7 +196,7 @@ class _AdminRampState extends State<AdminRamp> {
                     origin: newBag.originatingAirport,
                     destination: newBag.destinationAirport,
                     weight: newBag.weight,
-                    wrongDestination: false,
+                    wrongDestination: newBag.wrongDestination,
                     event: widget.event.name);
               });
               for (int i = 0; i < widget.event.bags.length; i++) {
