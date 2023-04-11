@@ -159,7 +159,7 @@ class _AdminRampState extends State<AdminRamp> {
           padding: EdgeInsetsDirectional.fromSTEB(50, 10, 50, 8),
           child: TextField(
             decoration: const InputDecoration(
-                labelText: 'Search for passengers',
+                labelText: 'Search for bags',
                 suffixIcon: Icon(Icons.search)),
             onChanged: (value) {
               filter(value);
