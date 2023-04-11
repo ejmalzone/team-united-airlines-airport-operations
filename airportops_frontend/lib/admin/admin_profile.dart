@@ -137,7 +137,7 @@ class AdminRouteState extends State<AdminRoute> {
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Container(
-                margin: EdgeInsets.only(left: 50),
+                margin: EdgeInsets.only(left: 40, top: 10),
                 child: ElevatedButton(
                     style: ButtonStyle(
                       shadowColor: MaterialStateProperty.resolveWith((states) {
@@ -148,14 +148,14 @@ class AdminRouteState extends State<AdminRoute> {
                       }),
                       backgroundColor:
                           MaterialStateProperty.resolveWith((states) {
-                        return Color.fromARGB(255, 151, 151, 151);
+                        return Color.fromARGB(100, 151, 151, 151);
                       }),
                       alignment: Alignment.center,
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                               side: BorderSide(
-                                  color: Color.fromARGB(255, 31, 31, 31)))),
+                                  color: Color.fromARGB(100, 31, 31, 31)))),
                     ),
                     child: Image.asset("assets/logout.png",
                         width: 45, alignment: Alignment.centerRight),
