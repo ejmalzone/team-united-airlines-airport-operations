@@ -40,9 +40,7 @@ class ProgressState extends State<ProgressBar> {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-        size: widget.size,
-        painter: ProgressPainter(repaint: _currentProgress)
-    );
+        size: widget.size, painter: ProgressPainter(repaint: _currentProgress));
   }
 }
 
@@ -76,7 +74,9 @@ class ProgressPainter extends CustomPainter {
     final fill = repaint.value * size.width;
 
     // background rect
-    canvas.drawRect(Offset(fill, 0) & Size((1.0 - repaint.value) * size.width, size.height), undone);
+    canvas.drawRect(
+        Offset(fill, 0) & Size((1.0 - repaint.value) * size.width, size.height),
+        undone);
     // filling rect
     canvas.drawRect(const Offset(0, 0) & Size(fill + 1, size.height), paint1);
   }
