@@ -99,7 +99,8 @@ class BaggageRoute extends StatelessWidget {
                   print("LINK TO SCAN BUTTON");
                 },
                 child: Text(
-                  "SCAN BOARDING PASS",
+                  //"SCAN BOARDING PASS",
+                  "SCAN BAGGAGE TAG",
                   style: TextStyle(
                     fontFamily: 'Open Sans',
                   ),
