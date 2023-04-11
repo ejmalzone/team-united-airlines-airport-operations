@@ -36,6 +36,7 @@ class _NewBagState extends State<NewBag> {
   DateTime _flightDestinationDate = DateTime.now();
 
   var countries = {
+    "ORD": "Chicago",
     "DCA": "Washington",
     "EWR": "Newark",
     "LGA": "New York",
