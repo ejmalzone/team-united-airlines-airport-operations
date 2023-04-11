@@ -268,7 +268,7 @@ Future<Map<String, dynamic>> deleteBag({required String bagId}) async {
 Future<Map<String, dynamic>> scanBag(
     {required String bagId, required String competitor}) async {
   final DateTime now = DateTime.now();
-  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final DateFormat formatter = DateFormat('yyyy-MM-dd-HH-mm-ss');
   final String formatted = formatter.format(now);
   var reply = await Requests.put(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/bag/',
@@ -285,7 +285,7 @@ Future<Map<String, dynamic>> scanBag(
 Future<Map<String, dynamic>> scanPassenger(
     {required String passengerId, required String competitor}) async {
   final DateTime now = DateTime.now();
-  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final DateFormat formatter = DateFormat('yyyy-MM-dd-HH-mm-ss');
   final String formatted = formatter.format(now);
   var reply = await Requests.put(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
