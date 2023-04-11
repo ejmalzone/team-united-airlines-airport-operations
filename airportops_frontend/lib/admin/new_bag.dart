@@ -164,6 +164,8 @@ class _NewBagState extends State<NewBag> {
       .toList()
     ..sort((a, b) => a.split(' ')[0].compareTo(b.split(' ')[0]));
 
+  bool wrongDestination = false;
+
   @override
   void submitForm() async {
     // validate form and create new passenger object
@@ -173,7 +175,7 @@ class _NewBagState extends State<NewBag> {
           nameLast: _lastNameController.text,
           originatingAirport: _flightSourceController.text,
           destinationAirport: _flightDestinationController.text,
-          wrongDestination: false,
+          wrongDestination: wrongDestination,
           weight: int.parse(_weightController.text),
           event: '',
           checked: false,
@@ -267,6 +269,17 @@ class _NewBagState extends State<NewBag> {
                       child: Text('LBS'),
                     ),
                   ],
+                ),
+                const SizedBox(height: 16),
+                CheckboxListTile(
+                  title: Text('Wrong Destination'),
+                  value: wrongDestination,
+                  onChanged: (value) {
+                    setState(() {
+                      wrongDestination = value!;
+                    });
+                  },
+                  controlAffinity: ListTileControlAffinity.leading,
                 ),
                 const SizedBox(height: 32),
                 Padding(
