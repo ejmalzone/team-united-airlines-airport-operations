@@ -77,7 +77,9 @@ class CSRRoute extends StatelessWidget {
         event: 'event',
         bagsScanned: [],
         passengersScanned: [],
-        position: Position.Csr);
+        position: Position.Csr,
+        wrong: 0,
+        scanned: 0);
 
     void submit() async {
       //c = await customerRetreval();

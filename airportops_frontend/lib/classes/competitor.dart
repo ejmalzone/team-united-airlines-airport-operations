@@ -33,17 +33,20 @@ class Competitor {
   final List<Baggage> bagsScanned;
   final List<Passenger> passengersScanned;
   final Position position;
+  int scanned;
+  int wrong;
 
-  Competitor({
-    required this.firstname,
-    required this.lastname,
-    required this.stationCode,
-    required this.username,
-    required this.event,
-    required this.bagsScanned,
-    required this.passengersScanned,
-    required this.position,
-  });
+  Competitor(
+      {required this.firstname,
+      required this.lastname,
+      required this.stationCode,
+      required this.username,
+      required this.event,
+      required this.bagsScanned,
+      required this.passengersScanned,
+      required this.position,
+      required this.scanned,
+      required this.wrong});
 
   String get fullname {
     return '$firstname $lastname';
@@ -55,6 +58,13 @@ class Competitor {
 
   void addbag(Baggage b) {
     bagsScanned.add(b);
+  }
+
+  void Reset() {
+    passengersScanned.clear();
+    bagsScanned.clear();
+    scanned = 0;
+    wrong = 0;
   }
 }
 
@@ -249,12 +259,14 @@ class CustomerServiceLogin extends StatelessWidget {
       var loginData =
           await loginCompetitor(data.name, int.parse(data.password), 0);
       if (loginData["status"] == "success") {
-        var dataMap = {"username": data.name, "first": loginData["data"]["firstName"],
-              "last": loginData["data"]["lastName"]};
+        var dataMap = {
+          "username": data.name,
+          "first": loginData["data"]["firstName"],
+          "last": loginData["data"]["lastName"]
+        };
         _competitor = dataMap;
         await SharedPreferences.getInstance().then((final prefs) =>
-            {prefs.setString(CUSTOMER_SERVICE_KEY, jsonEncode(
-              dataMap))});
+            {prefs.setString(CUSTOMER_SERVICE_KEY, jsonEncode(dataMap))});
         return null;
       }
       return "Login failed!";
@@ -272,12 +284,14 @@ class CustomerServiceLogin extends StatelessWidget {
           position: 0,
           pin: int.parse(data.password!));
       if (signupResponse["status"] == "success") {
-        var dataMap = {"username": data.name, "first": additionalData["first"],
-            "last": additionalData["last"]};
+        var dataMap = {
+          "username": data.name,
+          "first": additionalData["first"],
+          "last": additionalData["last"]
+        };
         _competitor = dataMap;
         await SharedPreferences.getInstance().then((final prefs) =>
-          {prefs.setString(CUSTOMER_SERVICE_KEY, jsonEncode(
-            dataMap))});
+            {prefs.setString(CUSTOMER_SERVICE_KEY, jsonEncode(dataMap))});
         return null;
       }
       return "Username is already taken!";
@@ -330,8 +344,8 @@ class CustomerServiceLogin extends StatelessWidget {
                 confirmPasswordError: "PINs do not match.",
                 signUpSuccess: "Success!"),
             onSubmitAnimationCompleted: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => CSRRoute(competitor: _competitor)));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => CSRRoute(competitor: _competitor)));
             },
             additionalSignupFields: const [
               UserFormField(
@@ -369,12 +383,14 @@ class RampServicesLogin extends StatelessWidget {
       var loginData =
           await loginCompetitor(data.name, int.parse(data.password), 1);
       if (loginData["status"] == "success") {
-        var dataMap = {"username": data.name, "first": loginData["data"]["firstName"],
-              "last": loginData["data"]["lastName"]};
+        var dataMap = {
+          "username": data.name,
+          "first": loginData["data"]["firstName"],
+          "last": loginData["data"]["lastName"]
+        };
         _competitor = dataMap;
         await SharedPreferences.getInstance().then((final prefs) =>
-            {prefs.setString(RAMP_SERVICES_KEY, jsonEncode(
-              dataMap))});
+            {prefs.setString(RAMP_SERVICES_KEY, jsonEncode(dataMap))});
         return null;
       }
       return "Login Failed!";
@@ -392,12 +408,14 @@ class RampServicesLogin extends StatelessWidget {
           position: 1,
           pin: int.parse(data.password!));
       if (signupResponse["status"] == "success") {
-        var dataMap = {"username": data.name, "first": additionalData["first"],
-              "last": additionalData["last"]};
+        var dataMap = {
+          "username": data.name,
+          "first": additionalData["first"],
+          "last": additionalData["last"]
+        };
         _competitor = dataMap;
         await SharedPreferences.getInstance().then((final prefs) =>
-            {prefs.setString(RAMP_SERVICES_KEY, jsonEncode(
-              dataMap))});
+            {prefs.setString(RAMP_SERVICES_KEY, jsonEncode(dataMap))});
         return null;
       }
       return "Username is already taken!";
@@ -450,8 +468,8 @@ class RampServicesLogin extends StatelessWidget {
                 confirmPasswordError: "PINs do not match.",
                 signUpSuccess: "Success!"),
             onSubmitAnimationCompleted: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => BaggageRoute(competitor: _competitor)));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => BaggageRoute(competitor: _competitor)));
             },
             additionalSignupFields: const [
               UserFormField(

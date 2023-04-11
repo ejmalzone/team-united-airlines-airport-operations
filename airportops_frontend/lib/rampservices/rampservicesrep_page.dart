@@ -22,7 +22,9 @@ class CSRRoute extends StatelessWidget {
       event: 'event',
       bagsScanned: [],
       passengersScanned: [],
-      position: Position.Ramp);
+      position: Position.Ramp,
+      wrong: 0,
+      scanned: 0);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   @override

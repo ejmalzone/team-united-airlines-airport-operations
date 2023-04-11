@@ -6,13 +6,13 @@ enum Position { Ramp, Csr, Admin }
 
 enum Accommodations { wheelchair, stroller }
 
-enum Status { boarded, noShow, wrongFlight, unboarded, completed }
+enum Status { boarded, noShow, wrongflight, unboarded, completed }
 
 extension StatusExtension on Status {
   static const colors = {
     Status.boarded: Colors.green,
     Status.noShow: Colors.red,
-    Status.wrongFlight: Colors.yellow,
+    Status.wrongflight: Color(0xFFBCBF14),
     Status.unboarded: Colors.black54,
     Status.completed: Colors.green
   };

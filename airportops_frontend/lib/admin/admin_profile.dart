@@ -14,6 +14,7 @@ import 'package:airportops_frontend/admin/event_details.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:airportops_frontend/login.dart';
+import 'package:universal_html/html.dart';
 
 import '../printing/pdfs.dart';
 
@@ -150,38 +151,44 @@ class AdminRouteState extends State<AdminRoute> {
               }),
             )),
           ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                margin: EdgeInsets.only(left: 40, top: 10),
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                      shadowColor: MaterialStateProperty.resolveWith((states) {
-                        if (states.contains(MaterialState.hovered)) {
-                          return Color.fromARGB(150, 0, 0, 0);
-                        }
-                        return Color.fromARGB(100, 0, 0, 0);
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+            child: Expanded(
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Container(
+                  margin: EdgeInsets.only(left: 40, top: 10),
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                        shadowColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          if (states.contains(MaterialState.hovered)) {
+                            return Color.fromARGB(150, 0, 0, 0);
+                          }
+                          return Color.fromARGB(100, 0, 0, 0);
+                        }),
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          return Color.fromARGB(100, 151, 151, 151);
+                        }),
+                        alignment: Alignment.center,
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(
+                                        color:
+                                            Color.fromARGB(100, 31, 31, 31)))),
+                      ),
+                      child: Image.asset("assets/logout.png",
+                          width: 45, alignment: Alignment.centerRight),
+                      onPressed: () async {
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.remove(ADMIN_KEY);
+                        Navigator.of(context).pop();
                       }),
-                      backgroundColor:
-                          MaterialStateProperty.resolveWith((states) {
-                        return Color.fromARGB(100, 151, 151, 151);
-                      }),
-                      alignment: Alignment.center,
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(
-                                  color: Color.fromARGB(100, 31, 31, 31)))),
-                    ),
-                    child: Image.asset("assets/logout.png",
-                        width: 45, alignment: Alignment.centerRight),
-                    onPressed: () async {
-                      final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.remove(ADMIN_KEY);
-                      Navigator.of(context).pop();
-                    }),
+                ),
               ),
             ),
           ),
@@ -196,8 +203,15 @@ class AdminRouteState extends State<AdminRoute> {
                 final eventName = await openDialog();
                 if (eventName == null || eventName.isEmpty) return;
                 setState(() {
+                  List<Event> temp = [];
+                  events.clear();
+                  //temp = events;
                   var e = eventPost(eventName);
                   newEventName = eventName;
+                  Event newE =
+                      Event(newEventName, 0, 0, 0, 0, 0, 0, [], [], []);
+                  temp.add(newE);
+                  //events = temp;
                   print(e);
                 });
                 print(eventRequest());
@@ -295,7 +309,14 @@ class _CurrBoxState extends State<CurrBox> {
 
                             for (var person in widget.event.passengers) {
                               if (person.boarded == true) {
-                                widget.event.p_boarded += 1;
+                                if (person.connection == true ||
+                                    person.wrongGate == true ||
+                                    person.wrongDeparture == true) {
+                                  widget.event.p_wrong += 1;
+                                  person.status = Status.wrongflight;
+                                } else {
+                                  widget.event.p_boarded += 1;
+                                }
                               }
 
                               if (person.boarded == false) {
@@ -322,6 +343,19 @@ class _CurrBoxState extends State<CurrBox> {
                                       : Status.unboarded));
                             }
                           }
+                          for (var bag in widget.event.bags) {
+                            if (bag.checked == true) {
+                              if (bag.wrongDestination == true) {
+                                widget.event.b_wrong += 1;
+                              }else{
+                                widget.event.b_boarded += 1;
+                              }
+                            }
+
+                            if (bag.checked == false) {
+                              widget.event.b_unboarded += 1;
+                            }
+                          }
                         });
 
                         await competitorRequest(widget.event.name).then((cReq) {
@@ -337,17 +371,9 @@ class _CurrBoxState extends State<CurrBox> {
                                   passengersScanned: [],
                                   position: comp['position'] == 0
                                       ? Position.Csr
-                                      : Position.Ramp));
-                            }
-
-                            for (var bag in widget.event.bags) {
-                              if (bag.checked == true) {
-                                widget.event.b_boarded += 1;
-                              }
-
-                              if (bag.checked == false) {
-                                widget.event.b_unboarded += 1;
-                              }
+                                      : Position.Ramp,
+                                  wrong: 0,
+                                  scanned: 0));
                             }
                           }
                         });
@@ -561,6 +587,21 @@ class EventBox extends StatelessWidget {
                                           : Status.unboarded));
                                 }
                               }
+
+                              for (var bag in event.bags) {
+                                if (bag.checked == true) {
+                                  if (bag.wrongDestination == true) {
+                                    event.b_wrong += 1;
+                                  }else{
+                                    event.b_boarded += 1;
+                                  }
+                                }
+
+                                if (bag.checked == false) {
+                                  event.b_unboarded += 1;
+                                }
+                              }
+                              
                             });
 
                             await competitorRequest(event.name).then((cReq) {
@@ -576,17 +617,9 @@ class EventBox extends StatelessWidget {
                                       passengersScanned: [],
                                       position: comp['position'] == 0
                                           ? Position.Csr
-                                          : Position.Ramp));
-                                }
-
-                                for (var bag in event.bags) {
-                                  if (bag.checked == true) {
-                                    event.b_boarded += 1;
-                                  }
-
-                                  if (bag.checked == false) {
-                                    event.b_unboarded += 1;
-                                  }
+                                          : Position.Ramp,
+                                      wrong: 0,
+                                      scanned: 0));
                                 }
                               }
                             });

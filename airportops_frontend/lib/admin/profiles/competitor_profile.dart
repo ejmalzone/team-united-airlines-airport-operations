@@ -39,7 +39,7 @@ class CompProfileState extends State<CompProfile> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        '0',
+                        widget.c.scanned.toString(),
                         style: TextStyle(
                           fontFamily: 'Open Sans',
                           color: Color(0xFF008525),
@@ -72,10 +72,10 @@ class CompProfileState extends State<CompProfile> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          '0',
+                          widget.c.wrong.toString(),
                           style: TextStyle(
                             fontFamily: 'Open Sans',
-                            color: Colors.red,
+                            color: Color(0xFF850000),
                             fontSize: 50,
                             fontWeight: FontWeight.w800,
                           ),

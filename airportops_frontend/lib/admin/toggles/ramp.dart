@@ -152,6 +152,38 @@ class _AdminRampState extends State<AdminRamp> {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 50,
+                child: VerticalDivider(
+                  thickness: 1,
+                  color: Colors.black,
+                ),
+              ),
+              Container(
+                width: 120,
+                //height: 100,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      widget.event.b_wrong.toString(),
+                      style: TextStyle(
+                        fontFamily: 'Open Sans',
+                        color: Color(0xFFBCBF14),
+                        fontSize: 50,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    Text(
+                      'WRONG',
+                      style: TextStyle(
+                        fontFamily: 'Open Sans',
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

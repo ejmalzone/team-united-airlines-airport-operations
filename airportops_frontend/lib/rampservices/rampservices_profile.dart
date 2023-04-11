@@ -70,7 +70,9 @@ class BaggageRoute extends StatelessWidget {
         event: 'event',
         bagsScanned: [],
         passengersScanned: [],
-        position: Position.Ramp);
+        position: Position.Ramp,
+        wrong: 0,
+        scanned: 0);
 
     void submit() {
       Navigator.of(context).pop();

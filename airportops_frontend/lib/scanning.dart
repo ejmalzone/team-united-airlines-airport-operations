@@ -38,7 +38,11 @@ class _HoneywellScanAppState extends State<HoneywellScanApp> {
 
         await scanBag(
             bagId: scannedData!.code!, competitor: compData["username"]);
+        
+        
+        
       },
+
       onScannerErrorCallback: (error) {},
     );
     honeywellScanner.startScanner();

@@ -103,7 +103,7 @@ Future<Map<String, dynamic>> passengerRequest(String event) async {
   String body = reply.content();
   // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
-  print(data);
+  //print(data);
   return data;
 }
 
@@ -114,7 +114,7 @@ Future<Map<String, dynamic>> bagsRequest(String event) async {
   String body = reply.content();
   // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
-  print(data);
+  //print(data);
   return data;
 }
 

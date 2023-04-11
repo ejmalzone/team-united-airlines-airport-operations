@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:airportops_frontend/admin/profiles/competitor_profile.dart';
+import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/events.dart';
+import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/widgets.dart';
@@ -77,7 +79,6 @@ class _CompetitorsPageState extends State<CompetitorsPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
               ],
             ),
           ],
@@ -104,7 +105,7 @@ class _CompetitorsPageState extends State<CompetitorsPage> {
             // mainAxisSize: MainAxisSize.max,
             // crossAxisAlignment: CrossAxisAlignment.stretch,
             children: List.generate(_foundComps.length, (index) {
-              return CCard(c:_foundComps[index]);
+              return CCard(c: _foundComps[index]);
             }),
           ),
         ),
@@ -127,6 +128,63 @@ class CCardState extends State<CCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+        widget.c.Reset();
+        List<Passenger> passengers = [];
+        List<Baggage> bags = [];
+        var compdata = await competitorRequest(widget.c.event);
+        var pdetails = await passengerRequest(widget.c.event);
+        var bagdetails = await bagsRequest(widget.c.event);
+        for (var comps in compdata['data']) {
+          if (comps['username'] == widget.c.username) {
+            List<String>? pids = (comps["passengersScanned"] as List)
+                .map((item) => item as String)
+                .toList();
+            List<String> bids = (comps["bagsScanned"] as List)
+                .map((item) => item as String)
+                .toList();
+            for (var p in pdetails['data']) {
+              if (pids.contains(p['_id'])) {
+                Passenger temp = Passenger.fromJson(p);
+                if (temp.connection == true ||
+                    temp.wrongGate == true ||
+                    temp.wrongDeparture == true) {
+                  temp.status = Status.wrongflight;
+                }
+                passengers.add(temp);
+              }
+            }
+            for (var b in bagdetails['data']) {
+              if (bids.contains(b["_id"])) {
+                bags.add(Baggage(
+                    nameFirst: b["passengerFirst"],
+                    nameLast: b["passengerLast"],
+                    originatingAirport: b["origin"],
+                    destinationAirport: b["destination"],
+                    weight: b["weight"],
+                    event: b["event"],
+                    checked: b["checked"],
+                    id: b["_id"],
+                    wrongDestination: b["wrongDestination"],
+                    status: b["checked"] == true
+                        ? Status.boarded
+                        : Status.unboarded));
+              }
+            }
+            for (var p in passengers) {
+              widget.c.addpass(p);
+              if (p.boarded == true && p.status != Status.wrongflight) {
+                widget.c.scanned += 1;
+              }
+              if (p.status == Status.wrongflight) {
+                widget.c.wrong += 1;
+              }
+            }
+            for (var b in bags) {
+              widget.c.addbag(b);
+            }
+          }
+        }
+        print(widget.c.scanned);
         Navigator.push(
             context,
             MaterialPageRoute(
