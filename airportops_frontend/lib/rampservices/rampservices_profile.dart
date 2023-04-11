@@ -94,14 +94,12 @@ class BaggageRoute extends StatelessWidget {
                   backgroundColor: Colors.green,
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RSEScanApp()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RSEScanApp()));
                   print("LINK TO SCAN BUTTON");
                 },
                 child: Text(
-                  "UNIVERSAL SCANNER",
+                  "SCAN BOARDING PASS",
                   style: TextStyle(
                     fontFamily: 'Open Sans',
                   ),
