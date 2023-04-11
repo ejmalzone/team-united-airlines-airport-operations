@@ -97,7 +97,7 @@ class BaggageRoute extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => UniversalScanApp()));
+                          builder: (context) => RSEScanApp()));
                   print("LINK TO SCAN BUTTON");
                 },
                 child: Text(
