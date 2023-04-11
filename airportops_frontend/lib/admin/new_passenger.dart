@@ -35,6 +35,7 @@ class _NewPassengerState extends State<NewPassenger> {
   DateTime _flightDestinationDate = DateTime.now();
 
   var countries = {
+    "ORD": "Chicago",
     "DCA": "Washington",
     "EWR": "Newark",
     "LGA": "New York",
@@ -343,7 +344,7 @@ class _NewPassengerState extends State<NewPassenger> {
                 ),
                 const SizedBox(height: 16),
                 CheckboxListTile(
-                  title: Text('Wrong Flight'),
+                  title: Text('Wrong Departure Time'),
                   value: wrongFlight,
                   onChanged: (value) {
                     setState(() {
