@@ -380,9 +380,9 @@ class _CurrBoxState extends State<CurrBox> {
                     child: Center(
                         child: ElevatedButton(
                       onPressed: () async {
-                        Map<String, dynamic> reqData = await eventRequest();
+                        Map<String, dynamic> reqData = await getCurrentEvent();
                         Map<String, dynamic> bagData =
-                            await bagsRequest(reqData['data'][0]['name']);
+                            await bagsRequest(reqData['data']['name']);
                         final bagInstances = bagData['data'];
 
                         List<Baggage> bags = [];
