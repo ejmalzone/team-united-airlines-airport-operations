@@ -181,6 +181,12 @@ class CCardState extends State<CCard> {
             }
             for (var b in bags) {
               widget.c.addbag(b);
+              if (b.checked == true && b.status != Status.wrongflight) {
+                widget.c.scanned += 1;
+              }
+              if (b.status == Status.wrongflight) {
+                widget.c.wrong += 1;
+              }
             }
           }
         }

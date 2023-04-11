@@ -357,6 +357,7 @@ class _CurrBoxState extends State<CurrBox> {
                             if (bag.checked == true) {
                               if (bag.wrongDestination == true) {
                                 widget.event.b_wrong += 1;
+                                bag.status = Status.wrongflight;
                               } else {
                                 widget.event.b_boarded += 1;
                               }
