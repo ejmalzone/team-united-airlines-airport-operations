@@ -2,6 +2,7 @@
 
 import 'package:requests/requests.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 //Future<String> testRequest() async {
 Future<Map<String, dynamic>> testRequest() async {
@@ -266,12 +267,15 @@ Future<Map<String, dynamic>> deleteBag({required String bagId}) async {
 
 Future<Map<String, dynamic>> scanBag(
     {required String bagId, required String competitor}) async {
+  final DateTime now = DateTime.now();
+  final DateFormat formatter = DateFormat('yyyy-MM-dd-jms');
+  final String formatted = formatter.format(now);
   var reply = await Requests.put(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/bag/',
       json: {
         "bagId": bagId,
         "competitor": competitor,
-        "scanTime": DateTime.now().toString()
+        "scanTime": formatted
       });
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
@@ -280,12 +284,15 @@ Future<Map<String, dynamic>> scanBag(
 
 Future<Map<String, dynamic>> scanPassenger(
     {required String passengerId, required String competitor}) async {
+  final DateTime now = DateTime.now();
+  final DateFormat formatter = DateFormat('yyyy-MM-dd-jms');
+  final String formatted = formatter.format(now);
   var reply = await Requests.put(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/',
       json: {
         "passengerId": passengerId,
         "competitor": competitor,
-        "scanTime": DateTime.now().toString()
+        "scanTime": formatted
       });
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
