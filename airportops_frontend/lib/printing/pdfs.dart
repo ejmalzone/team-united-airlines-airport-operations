@@ -195,6 +195,13 @@ class PdfCreator {
   }
 
   static addBaggageTagPage(final pw.MemoryImage unitedLogo, final pw.Document document, final Baggage bag) async {
+    var destination = bag.destinationAirport;
+    if (bag.wrongDestination) {
+      do {
+        destination = countries.keys.elementAt(rng.nextInt(countries.keys.length));
+      } while (destination == bag.destinationAirport);
+    }
+
     document.addPage(pw.Page(
         margin: const pw.EdgeInsets.all(0.1 * PdfPageFormat.inch),
         pageFormat: const PdfPageFormat(
@@ -238,7 +245,7 @@ class PdfCreator {
                 "${DateTime.now().day.toString()} ${DateFormat('MMM').format(DateTime(0, DateTime.now().month))} ${DateTime.now().year.toString()}"),
             //pw.Text("4016 649626"), // bag ID number?
             pw.Text(bag.id),
-            pw.Text(bag.destinationAirport),
+            pw.Text(destination),
             pw.Text("UA474 1340"), //Flight number?
             pw.BarcodeWidget(
               data: bag.id,
@@ -248,7 +255,7 @@ class PdfCreator {
               drawText: false,
             ),
             pw.Text(
-                "${bag.nameLast}/${bag.nameFirst}       ${bag.destinationAirport}"),
+                "${bag.nameLast}/${bag.nameFirst}       ${destination}"),
             pw.BarcodeWidget(
               data: bag.id,
               barcode: pw.Barcode.code128(),
@@ -283,7 +290,7 @@ class PdfCreator {
             pw.Text("${DateTime.now().day.toString()} ${DateFormat('MMM').format(DateTime(0, DateTime.now().month))} ${DateTime.now().year.toString()}"),
             //pw.Text("4016 649626"), // bag ID number?
             pw.Text(bag.id),
-            pw.Text(bag.destinationAirport),
+            pw.Text(destination),
             pw.Text("UA474 1340"), //Flight number?
             pw.BarcodeWidget(
               data: bag.id,
@@ -292,7 +299,7 @@ class PdfCreator {
               height: 50,
               drawText: false,
             ),
-            pw.Text("${bag.nameLast}/${bag.nameFirst}       ${bag.destinationAirport}"),
+            pw.Text("${bag.nameLast}/${bag.nameFirst}       ${destination}"),
             pw.BarcodeWidget(
               data: bag.id,
               barcode: pw.Barcode.code128(),
