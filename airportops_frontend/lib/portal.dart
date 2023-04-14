@@ -184,19 +184,7 @@ class PortalRoute extends StatelessWidget {
 //   }
 // }
 
-  ElevatedButton makeButton(BuildContext context, String text, String img,
-      [String? endRoute]) {
-    const buttonTextStyle = TextStyle(
-        color: Colors.black87, fontSize: 16, fontWeight: FontWeight.bold);
-    var buttonStyle = ElevatedButton.styleFrom(
-      minimumSize: const Size(180, 180),
-      backgroundColor: Colors.grey,
-      textStyle: buttonTextStyle,
-      shadowColor: Colors.black12,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.5)),
-      padding: const EdgeInsets.all(8),
-    );
-    makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
+makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
       String portalName = "";
       String key = ADMIN_KEY;
       switch (portal) {
@@ -241,6 +229,18 @@ class PortalRoute extends StatelessWidget {
               ));
     }
 
+  ElevatedButton makeButton(BuildContext context, String text, String img,
+      [String? endRoute]) {
+    const buttonTextStyle = TextStyle(
+        color: Colors.black87, fontSize: 16, fontWeight: FontWeight.bold);
+    var buttonStyle = ElevatedButton.styleFrom(
+      minimumSize: const Size(180, 180),
+      backgroundColor: Colors.grey,
+      textStyle: buttonTextStyle,
+      shadowColor: Colors.black12,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.5)),
+      padding: const EdgeInsets.all(8),
+    );
     return ElevatedButton(
         style: buttonStyle,
         onPressed: () async {
@@ -369,51 +369,6 @@ class PortalRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
-      String portalName = "";
-      String key = ADMIN_KEY;
-      switch (portal) {
-        case (0):
-          {
-            portalName = "Admin";
-            key = ADMIN_KEY;
-            break;
-          }
-        case (1):
-          {
-            portalName = "Customer Service";
-            key = CUSTOMER_SERVICE_KEY;
-            break;
-          }
-        case (2):
-          {
-            portalName = "Ramp Services";
-            key = RAMP_SERVICES_KEY;
-            break;
-          }
-      }
-      showDialog<dynamic>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-                title: const Text("Sign out?"),
-                content: Text(
-                    "You are logged into the $portalName portal already. Would you like to sign out?"),
-                actions: <Widget>[
-                  TextButton(
-                      child: const Text('Yes'),
-                      onPressed: () {
-                        prefs.remove(key);
-                        Navigator.pop(context, 'ack');
-                      }),
-                  TextButton(
-                      child: const Text('No'),
-                      onPressed: () {
-                        Navigator.pop(context, 'ack');
-                      }),
-                ],
-              ));
-    }
-
     if (kIsWeb) {
       return Scaffold(
         backgroundColor: Colors.white,
@@ -449,14 +404,6 @@ class PortalRoute extends StatelessWidget {
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                          child: SelectionArea(
-                              child: Text(
-                            'United Airlines Safety Rodeo',
-                            style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
                         ),
                         GestureDetector(
                           onTap: () async {
