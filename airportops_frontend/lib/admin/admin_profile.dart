@@ -93,12 +93,14 @@ class AdminRouteState extends State<AdminRoute> {
               children: [
                 Text("Generate random data?"),
                 Checkbox(
-                  value: genData, 
+                  value: genData,
                   onChanged: (change) {
+                    String txt = controller.text;
                     setState(() {
                       events.clear();
                       genData = change!;
                       submit();
+                      controller.text = txt;
                       openDialog();
                     });
                   }
