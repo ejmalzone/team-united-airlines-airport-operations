@@ -42,6 +42,8 @@ class AdminRouteState extends State<AdminRoute> {
 
   late TextEditingController controller;
 
+  bool genData = false;
+
   @override
   void initState() {
     super.initState();
@@ -76,16 +78,59 @@ class AdminRouteState extends State<AdminRoute> {
       controller.clear();
     }
 
-    Future<String?> openDialog() => showDialog<String?>(
-        context: context,
-        builder: (context) => AlertDialog(
-              title: Text('Create Event'),
-              content: TextField(
-                decoration: InputDecoration(hintText: 'Enter event name'),
-                controller: controller,
-              ),
-              actions: [TextButton(onPressed: submit, child: Text('Submit'))],
-            ));
+    openDialog() => showDialog<String?>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Create Event'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              decoration: InputDecoration(hintText: 'Enter event name'),
+              controller: controller,
+            ),
+            Row(
+              children: [
+                Text("Generate random data?"),
+                Checkbox(
+                  value: genData, 
+                  onChanged: (change) {
+                    setState(() {
+                      events.clear();
+                      genData = change!;
+                      submit();
+                      openDialog();
+                    });
+                  }
+                ),
+              ]
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                child: Text("Submit"),
+                onPressed: () async {
+                  String eventName = controller.text;
+                  if (eventName.isEmpty) return;
+                  setState(() async {
+                    List<Event> temp = [];
+                    events.clear();
+                    var data = eventPost(eventName, genData);
+                    print(data);
+                    newEventName = eventName;
+                    Event newE =
+                        Event(newEventName, 0, 0, 0, 0, 0, 0, [], [], []);
+                    temp.add(newE);
+                    genData = false;
+                    submit();
+                  });
+                }
+              )
+            )
+          ]
+        ),
+      ),
+    );
     for (var e in widget.eventmap['data']) {
       if (e['name'] != widget.curreventmap['data']['name']) {
         Event cEvent = Event(e['name'], 0, 0, 0, 0, 0, 0, [], [], []);
@@ -204,21 +249,7 @@ class AdminRouteState extends State<AdminRoute> {
                 backgroundColor: Color(0xFF00239E),
               ),
               onPressed: () async {
-                final eventName = await openDialog();
-                if (eventName == null || eventName.isEmpty) return;
-                setState(() {
-                  List<Event> temp = [];
-                  events.clear();
-                  //temp = events;
-                  var e = eventPost(eventName);
-                  newEventName = eventName;
-                  Event newE =
-                      Event(newEventName, 0, 0, 0, 0, 0, 0, [], [], []);
-                  temp.add(newE);
-                  //events = temp;
-                  print(e);
-                });
-                print(eventRequest());
+                openDialog();
               },
               child: Text(
                 "Generate New Event",

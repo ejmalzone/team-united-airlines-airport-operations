@@ -25,10 +25,10 @@ Future<Map<String, dynamic>> currPassengerRequest() async {
   return data;
 }
 
-Future<Map<String, dynamic>> eventPost(String name) async {
+Future<Map<String, dynamic>> eventPost(String name, bool generateRandom) async {
   var reply = await Requests.post(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/event/',
-      json: {"name": name});
+      json: {"name": name, "generateRandom": generateRandom});
   String body = reply.content();
 // decoding with convert
   Map<String, dynamic> data = jsonDecode(body);
