@@ -36,10 +36,10 @@ Future<Map<String, dynamic>> eventPost(String name, bool generateRandom) async {
   return (data);
 }
 
-Future<Map<String, dynamic>> deleteEvent({required String eventId}) async {
+Future<Map<String, dynamic>> deleteEvent({required String eventName}) async {
   var reply = await Requests.delete(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/event/',
-      json: {"eventId": eventId});
+      json: {"eventName": eventName});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   return data;
