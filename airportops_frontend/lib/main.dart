@@ -42,6 +42,7 @@ Future<void> main() async {
       '/customerservice': (context) => CSRRoute(),
       '/honeywell': (context) => HoneywellScanApp(),
     },
+    debugShowCheckedModeBanner: false,
   ));
 }
 
