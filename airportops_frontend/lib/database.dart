@@ -130,6 +130,12 @@ Future<Map<String, dynamic>> setEvent(String name) async {
   return data;
 }
 
+Future<List> doubleRequest() async {
+  Map<String, dynamic> eventMap = await eventRequest();
+  Map<String, dynamic> currEventMap = await getCurrentEvent();
+  return [eventMap, currEventMap];
+}
+
 Future<Map<String, dynamic>> createPassenger(
     {required String first,
     required String last,
@@ -156,7 +162,7 @@ Future<Map<String, dynamic>> createPassenger(
         "accommodations": accommodations,
         "event": event,
         "connection": connection,
-        "wrongGate" : gate,
+        "wrongGate": gate,
         "wrongDeparture": wrongFlight
       });
   String body = reply.content();
@@ -272,11 +278,7 @@ Future<Map<String, dynamic>> scanBag(
   final String formatted = formatter.format(now);
   var reply = await Requests.put(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/bag/',
-      json: {
-        "bagId": bagId,
-        "competitor": competitor,
-        "scanTime": formatted
-      });
+      json: {"bagId": bagId, "competitor": competitor, "scanTime": formatted});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   return data;
@@ -298,5 +300,3 @@ Future<Map<String, dynamic>> scanPassenger(
   Map<String, dynamic> data = jsonDecode(body);
   return data;
 }
-
-

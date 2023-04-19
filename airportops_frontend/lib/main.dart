@@ -17,6 +17,7 @@ import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/rampservices/rampservices_profile.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import 'classes/competitor.dart';
@@ -25,8 +26,9 @@ import 'login.dart';
 Future<void> main() async {
   //var req = await passengerRequest();
   //Map<String, dynamic> eventMap = await eventRequest();
-  runApp(MaterialApp(
-    initialRoute: '/',
+  runApp(MaterialApp.router(
+    routerConfig: _router,
+    /*initialRoute: '/',
     routes: {
       //'/': (context) => LoginRoute(),
       //'/portal': (context) => PortalRoute(),
@@ -41,10 +43,61 @@ Future<void> main() async {
       '/camera': (context) => UniversalScanApp(),
       '/customerservice': (context) => CSRRoute(),
       '/honeywell': (context) => HoneywellScanApp(),
-    },
+    },*/
     debugShowCheckedModeBanner: false,
   ));
 }
+
+final _router = GoRouter(routes: [
+  GoRoute(
+    path: '/',
+    builder: (context, state) => PortalRoute(),
+  ),
+  GoRoute(
+    path: '/portal',
+    builder: (context, state) => LoginRoute(),
+  ),
+  GoRoute(
+    path: '/home',
+    builder: (context, state) => const HomeRoute(),
+  ),
+  GoRoute(
+    path: '/examplePassenger',
+    builder: (context, state) => ExamplePassengerProfileApp(),
+  ),
+  GoRoute(
+    path: '/baggage',
+    builder: (context, state) => BaggageRoute(),
+  ),
+  GoRoute(
+    path: '/bars',
+    builder: (context, state) => const ProgressBarRoute(),
+  ),
+  GoRoute(
+    path: '/dbTesting',
+    builder: (context, state) => const DatabaseRoute(),
+  ),
+  GoRoute(
+    path: '/scanning',
+    builder: (context, state) => const ScanRoute(),
+  ),
+  GoRoute(
+    path: '/camera',
+    builder: (context, state) => UniversalScanApp(),
+  ),
+  GoRoute(
+    path: '/customerservice',
+    builder: (context, state) => CSRRoute(),
+  ),
+  GoRoute(
+    path: '/honeywell',
+    builder: (context, state) => HoneywellScanApp(),
+  ),
+  GoRoute(
+    path: '/admin',
+    builder: (context, state) => AdminRoute(),
+  ),
+]);
 
 class PassengerDisplayRoute extends StatelessWidget {
   final Map<String, dynamic> data;

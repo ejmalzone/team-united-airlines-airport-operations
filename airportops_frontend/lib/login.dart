@@ -196,7 +196,10 @@ class LoginRoute extends StatelessWidget {
             onLogin: _authUser,
             onSubmitAnimationCompleted: () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => AdminRoute(eventmap: _events, curreventmap: curr_event)));
+                  builder: (context) => AdminRoute(
+                      //eventmap: _events,
+                      //curreventmap: curr_event,
+                      )));
             },
             onRecoverPassword: _recoverPassword,
             messages:
