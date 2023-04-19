@@ -24,7 +24,7 @@ import 'login.dart';
 
 Future<void> main() async {
   //var req = await passengerRequest();
-  Map<String, dynamic> eventMap = await eventRequest();
+  //Map<String, dynamic> eventMap = await eventRequest();
   runApp(MaterialApp(
     initialRoute: '/',
     routes: {
@@ -35,13 +35,14 @@ Future<void> main() async {
       '/home': (context) => const HomeRoute(),
       '/examplePassenger': (context) => ExamplePassengerProfileApp(),
       '/baggage': (context) => BaggageRoute(),
-      '/bars': (context) => ProgressBarRoute(),
-      '/dbTesting': (context) => DatabaseRoute(),
-      '/scanning': (context) => ScanRoute(),
+      '/bars': (context) => const ProgressBarRoute(),
+      '/dbTesting': (context) => const DatabaseRoute(),
+      '/scanning': (context) => const ScanRoute(),
       '/camera': (context) => UniversalScanApp(),
       '/customerservice': (context) => CSRRoute(),
       '/honeywell': (context) => HoneywellScanApp(),
     },
+    debugShowCheckedModeBanner: false,
   ));
 }
 

@@ -35,7 +35,8 @@ class AdminRouteState extends State<AdminRoute> {
   late Event currentEvent;
   late List<Event> events = [];
 
-  final Admin c = Admin("Stanley", "Duru", Position.Admin);
+  //final Admin c = Admin("Stanley", "Duru", Position.Admin);
+  final Admin c = Admin("Admin", "User", Position.Admin);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   String newEventName = '';
@@ -79,60 +80,52 @@ class AdminRouteState extends State<AdminRoute> {
     }
 
     openDialog() => showDialog<String?>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Create Event'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              decoration: InputDecoration(hintText: 'Enter event name'),
-              controller: controller,
-            ),
-            Row(
-              children: [
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Create Event'),
+            content: Column(mainAxisSize: MainAxisSize.min, children: [
+              TextField(
+                decoration: InputDecoration(hintText: 'Enter event name'),
+                controller: controller,
+              ),
+              Row(children: [
                 Text("Generate random data?"),
                 Checkbox(
-                  value: genData,
-                  onChanged: (change) {
-                    String txt = controller.text;
-                    setState(() {
-                      events.clear();
-                      genData = change!;
-                      submit();
-                      controller.text = txt;
-                      openDialog();
-                    });
-                  }
-                ),
-              ]
-            ),
-            Container(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                child: Text("Submit"),
-                onPressed: () async {
-                  String eventName = controller.text;
-                  if (eventName.isEmpty) return;
-                  setState(() async {
-                    List<Event> temp = [];
-                    events.clear();
-                    var data = eventPost(eventName, genData);
-                    print(data);
-                    newEventName = eventName;
-                    Event newE =
-                        Event(newEventName, 0, 0, 0, 0, 0, 0, [], [], []);
-                    temp.add(newE);
-                    genData = false;
-                    submit();
-                  });
-                }
-              )
-            )
-          ]
-        ),
-      ),
-    );
+                    value: genData,
+                    onChanged: (change) {
+                      String txt = controller.text;
+                      setState(() {
+                        events.clear();
+                        genData = change!;
+                        submit();
+                        controller.text = txt;
+                        openDialog();
+                      });
+                    }),
+              ]),
+              Container(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                      child: Text("Submit"),
+                      onPressed: () async {
+                        String eventName = controller.text;
+                        if (eventName.isEmpty) return;
+                        setState(() async {
+                          List<Event> temp = [];
+                          events.clear();
+                          var data = eventPost(eventName, genData);
+                          print(data);
+                          newEventName = eventName;
+                          Event newE =
+                              Event(newEventName, 0, 0, 0, 0, 0, 0, [], [], []);
+                          temp.add(newE);
+                          genData = false;
+                          submit();
+                        });
+                      }))
+            ]),
+          ),
+        );
     for (var e in widget.eventmap['data']) {
       if (e['name'] != widget.curreventmap['data']['name']) {
         Event cEvent = Event(e['name'], 0, 0, 0, 0, 0, 0, [], [], []);
