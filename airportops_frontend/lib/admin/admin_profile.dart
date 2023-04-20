@@ -20,10 +20,11 @@ import 'package:airportops_frontend/progress_bar.dart';
 import '../printing/pdfs.dart';
 
 class AdminRoute extends StatefulWidget {
-  Map<String, dynamic> eventmap;
-  Map<String, dynamic> curreventmap;
-  AdminRoute({Key? key, required this.eventmap, required this.curreventmap})
-      : super(key: key);
+  late Map<String, dynamic> eventmap;
+  late Map<String, dynamic> curreventmap;
+  //AdminRoute({Key? key, required this.eventmap, required this.curreventmap})
+  //    : super(key: key);
+  AdminRoute({Key? key}) : super(key: key);
 
   @override
   State<AdminRoute> createState() => AdminRouteState();
@@ -80,6 +81,15 @@ class AdminRouteState extends State<AdminRoute> {
       controller.clear();
     }
 
+    //print(widget.curreventmap);
+    return FutureBuilder(
+      future: doubleRequest(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          print("DATA FOUND!!!");
+          print(snapshot.data![1]['status']);
+          widget.eventmap = snapshot.data![0];
+          widget.curreventmap = snapshot.data![1];
     openDialog() => showDialog<String?>(
           context: context,
           builder: (context) => AlertDialog(
@@ -115,10 +125,10 @@ class AdminRouteState extends State<AdminRoute> {
                           List<Event> temp = [];
                           events.clear();
                           var data = eventPost(eventName, genData);
-                          print(data);
+                                //print(data);
                           newEventName = eventName;
-                          Event newE =
-                              Event(newEventName, 0, 0, 0, 0, 0, 0, [], [], []);
+                                Event newE = Event(
+                                    newEventName, 0, 0, 0, 0, 0, 0, [], [], []);
                           temp.add(newE);
                           genData = false;
                           submit();
@@ -228,13 +238,13 @@ class AdminRouteState extends State<AdminRoute> {
                           return Color.fromARGB(100, 151, 151, 151);
                         }),
                         alignment: Alignment.center,
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0),
                                     side: BorderSide(
-                                        color:
-                                            Color.fromARGB(100, 31, 31, 31)))),
+                                          color: Color.fromARGB(
+                                              100, 31, 31, 31)))),
                       ),
                       child: Image.asset("assets/logout.png",
                           width: 45, alignment: Alignment.centerRight),
@@ -269,6 +279,11 @@ class AdminRouteState extends State<AdminRoute> {
         ],
       ),
       //),
+          );
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
     );
   }
 }

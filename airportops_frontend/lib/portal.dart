@@ -184,50 +184,50 @@ class PortalRoute extends StatelessWidget {
 //   }
 // }
 
-makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
-  String portalName = "";
-  String key = ADMIN_KEY;
-  switch (portal) {
-    case (0):
-      {
-        portalName = "Admin";
-        key = ADMIN_KEY;
-        break;
-      }
-    case (1):
-      {
-        portalName = "Customer Service";
-        key = CUSTOMER_SERVICE_KEY;
-        break;
-      }
-    case (2):
-      {
-        portalName = "Ramp Services";
-        key = RAMP_SERVICES_KEY;
-        break;
-      }
+  makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
+    String portalName = "";
+    String key = ADMIN_KEY;
+    switch (portal) {
+      case (0):
+        {
+          portalName = "Admin";
+          key = ADMIN_KEY;
+          break;
+        }
+      case (1):
+        {
+          portalName = "Customer Service";
+          key = CUSTOMER_SERVICE_KEY;
+          break;
+        }
+      case (2):
+        {
+          portalName = "Ramp Services";
+          key = RAMP_SERVICES_KEY;
+          break;
+        }
+    }
+    showDialog<dynamic>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+              title: const Text("Sign out?"),
+              content: Text(
+                  "You are logged into the $portalName portal already. Would you like to sign out?"),
+              actions: <Widget>[
+                TextButton(
+                    child: const Text('No'),
+                    onPressed: () {
+                      Navigator.pop(context, 'ack');
+                    }),
+                TextButton(
+                    child: const Text('Yes'),
+                    onPressed: () {
+                      prefs.remove(key);
+                      Navigator.pop(context, 'ack');
+                    })
+              ],
+            ));
   }
-  showDialog<dynamic>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-            title: const Text("Sign out?"),
-            content: Text(
-                "You are logged into the $portalName portal already. Would you like to sign out?"),
-            actions: <Widget>[
-              TextButton(
-                  child: const Text('No'),
-                  onPressed: () {
-                    Navigator.pop(context, 'ack');
-                  }),
-              TextButton(
-                  child: const Text('Yes'),
-                  onPressed: () {
-                    prefs.remove(key);
-                    Navigator.pop(context, 'ack');
-                  })
-            ],
-          ));
-}
 
   ElevatedButton makeButton(BuildContext context, String text, String img,
       [String? endRoute]) {
@@ -259,13 +259,16 @@ makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
               await usernameValidation(user).then((data) async => {
                     if (data["status"] == "success")
                       {
-                        if(currEventMap['status'] != 'error'){
-                          await Navigator.of(context)
-                            .push(MaterialPageRoute(builder: ((context) {
-                          return AdminRoute(
-                              eventmap: eventMap, curreventmap: currEventMap);
-                          })))                      
-                        }
+                        if (currEventMap['status'] != 'error')
+                          {
+                            await Navigator.of(context)
+                                .push(MaterialPageRoute(builder: ((context) {
+                              return AdminRoute(
+                                  //eventmap: eventMap,
+                                  //curreventmap: currEventMap,
+                                  );
+                            })))
+                          }
                       }
                     else
                       {
@@ -429,12 +432,15 @@ makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
                                 await usernameValidation(user)
                                     .then((data) async => {
                                           if (data["status"] == "success")
-                                            {  
-                                              await Navigator.of(context)
-                                                  .push(MaterialPageRoute(builder: ((context) {
+                                            {
+                                              await Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: ((context) {
                                                 return AdminRoute(
-                                                    eventmap: eventMap, curreventmap: currEventMap);
-                                                })))
+                                                    //eventmap: eventMap,
+                                                    //curreventmap: currEventMap,
+                                                    );
+                                              })))
                                             }
                                           else
                                             {
