@@ -79,6 +79,22 @@ class _CompetitorsPageState extends State<CompetitorsPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                ElevatedButton(
+                    onPressed: () async {
+                      await deleteEvent(eventName: widget.event.name);
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color(0xFF850000),
+                    ),
+                    child: Text(
+                      'Delete Event',
+                      style: TextStyle(
+                        fontFamily: 'Open Sans',
+                        fontSize: 15,
+                      ),
+                    )),
               ],
             ),
           ],

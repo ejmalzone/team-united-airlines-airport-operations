@@ -190,7 +190,7 @@ class DatabaseRoute extends StatelessWidget {
                 onPressed: () async {
                   //print('Testing: ');
 
-                  var req = getCurrentEvent();
+                  var req = deleteEvent(eventName: 'fortnite');
                   print(req);
                 },
                 child: const Text('Event Query'),

@@ -22,11 +22,11 @@ class CSRRoute extends StatelessWidget {
 
   late Map<String, dynamic> competitor;
 
-  Event e1 = Event("Line Dancing", 0, 0, 0, 0, 0, 0, [], [], []);
+
 
   List<Event> events = [];
 
-  late Event e2 = Event("Cowboy Rodeo", 0, 15, 0, 0, 0, 0, [], [], []);
+
 
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 

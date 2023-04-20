@@ -259,11 +259,13 @@ makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
               await usernameValidation(user).then((data) async => {
                     if (data["status"] == "success")
                       {
-                        await Navigator.of(context)
+                        if(currEventMap['status'] != 'error'){
+                          await Navigator.of(context)
                             .push(MaterialPageRoute(builder: ((context) {
                           return AdminRoute(
                               eventmap: eventMap, curreventmap: currEventMap);
-                        })))
+                          })))                      
+                        }
                       }
                     else
                       {
@@ -427,15 +429,12 @@ makeLogoutAlert(BuildContext context, int portal, SharedPreferences prefs) {
                                 await usernameValidation(user)
                                     .then((data) async => {
                                           if (data["status"] == "success")
-                                            {
-                                              await Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: ((context) {
+                                            {  
+                                              await Navigator.of(context)
+                                                  .push(MaterialPageRoute(builder: ((context) {
                                                 return AdminRoute(
-                                                  eventmap: eventMap,
-                                                  curreventmap: currEventMap,
-                                                );
-                                              })))
+                                                    eventmap: eventMap, curreventmap: currEventMap);
+                                                })))
                                             }
                                           else
                                             {
