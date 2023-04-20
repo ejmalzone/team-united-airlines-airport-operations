@@ -319,6 +319,19 @@ class PCardState extends State<PCard> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
+                      child: Text(
+                        //'R-${p.reservationNum}|
+                        'Scantime: ${widget.p.scanTime}',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontFamily: 'Open Sans',
+                          fontSize: 10,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 20,
                     )
