@@ -140,6 +140,7 @@ class AdminRouteState extends State<AdminRoute> {
                 ),
               );
           if (widget.curreventmap['status'] != 'error') {
+            print(widget.curreventmap);
             for (var e in widget.eventmap['data']) {
               if (e['name'] != widget.curreventmap['data']['name']) {
                 Event cEvent = Event(e['name'], 0, 0, 0, 0, 0, 0, [], [], []);

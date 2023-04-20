@@ -22,12 +22,7 @@ class LoginRoute extends StatelessWidget {
       if (loginData["status"] == "success") {
         Map<String, dynamic> eventMap = await eventRequest();
         Map<String, dynamic> curr_eventMap = await getCurrentEvent();
-        if (eventMap['status'] == 'success') {
-          await SharedPreferences.getInstance()
-              .then((final prefs) => {prefs.setString(ADMIN_KEY, data.name)});
-          return null;
-        }
-        return "Something went wrong! Please try again.";
+        return null;
       }
       return "Password does not match";
     });
