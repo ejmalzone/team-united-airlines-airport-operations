@@ -511,6 +511,19 @@ class BCardState extends State<BCard> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
+                      child: Text(
+                        //'R-${p.reservationNum}|
+                        'Scantime: ${widget.b.scanTime}',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontFamily: 'Open Sans',
+                          fontSize: 10,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 20,
                     )

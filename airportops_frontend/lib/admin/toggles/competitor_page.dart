@@ -180,6 +180,7 @@ class CCardState extends State<CCard> {
                     event: b["event"],
                     checked: b["checked"],
                     id: b["_id"],
+                    scanTime: b["scanTime"],
                     wrongDestination: b["wrongDestination"],
                     status: b["checked"] == true
                         ? Status.boarded

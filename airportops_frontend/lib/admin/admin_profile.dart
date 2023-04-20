@@ -278,7 +278,28 @@ class AdminRouteState extends State<AdminRoute> {
                       ),
                     ),
                   ),
-                )
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color(0xFF00239E),
+                    ),
+                    onPressed: () async {
+                      newAdmin createAdmin = await Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => NewAdmin()));
+                      await signupRequest(
+                          createAdmin.usernameAdmin, createAdmin.passwordAdmin);
+                    },
+                    child: Text(
+                      "Create New Admin",
+                      style: TextStyle(
+                        fontFamily: 'Open Sans',
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
             //),
@@ -417,6 +438,7 @@ class _CurrBoxState extends State<CurrBox> {
                                     event: bag["event"],
                                     checked: bag["checked"],
                                     id: bag["_id"],
+                                    scanTime: bag["scanTime"],
                                     wrongDestination: bag["wrongDestination"],
                                     status: bag["checked"] == true
                                         ? Status.boarded
@@ -599,6 +621,7 @@ class EventBox extends StatelessWidget {
                                       event: bag["event"],
                                       checked: bag["checked"],
                                       id: bag["_id"],
+                                      scanTime: bag["scanTime"],
                                       wrongDestination: bag["wrongDestination"],
                                       status: bag["checked"] == true
                                           ? Status.boarded

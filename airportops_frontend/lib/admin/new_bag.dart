@@ -180,6 +180,7 @@ class _NewBagState extends State<NewBag> {
           weight: int.parse(_weightController.text),
           event: '',
           checked: false,
+          scanTime: '',
           id: '',
           status: Status.unboarded);
       Navigator.pop(context, newBag);
