@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, avoid_print, use_build_context_synchronously, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables
 
+import 'package:airportops_frontend/classes/admin.dart';
 import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/database.dart';
@@ -18,6 +19,7 @@ import 'package:airportops_frontend/login.dart';
 import 'package:airportops_frontend/progress_bar.dart';
 
 import '../printing/pdfs.dart';
+import 'new_admin.dart';
 
 class AdminRoute extends StatefulWidget {
   late Map<String, dynamic> eventmap;
@@ -90,195 +92,217 @@ class AdminRouteState extends State<AdminRoute> {
           print(snapshot.data![1]['status']);
           widget.eventmap = snapshot.data![0];
           widget.curreventmap = snapshot.data![1];
-    openDialog() => showDialog<String?>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Create Event'),
-            content: Column(mainAxisSize: MainAxisSize.min, children: [
-              TextField(
-                decoration: InputDecoration(hintText: 'Enter event name'),
-                controller: controller,
-              ),
-              Row(children: [
-                Text("Generate random data?"),
-                Checkbox(
-                    value: genData,
-                    onChanged: (change) {
-                      String txt = controller.text;
-                      setState(() {
-                        events.clear();
-                        genData = change!;
-                        submit();
-                        controller.text = txt;
-                        openDialog();
-                      });
-                    }),
-              ]),
-              Container(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                      child: Text("Submit"),
-                      onPressed: () async {
-                        String eventName = controller.text;
-                        if (eventName.isEmpty) return;
-                        setState(() async {
-                          List<Event> temp = [];
-                          events.clear();
-                          var data = eventPost(eventName, genData);
+          openDialog() => showDialog<String?>(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Create Event'),
+                  content: Column(mainAxisSize: MainAxisSize.min, children: [
+                    TextField(
+                      decoration: InputDecoration(hintText: 'Enter event name'),
+                      controller: controller,
+                    ),
+                    Row(children: [
+                      Text("Generate random data?"),
+                      Checkbox(
+                          value: genData,
+                          onChanged: (change) {
+                            String txt = controller.text;
+                            setState(() {
+                              events.clear();
+                              genData = change!;
+                              submit();
+                              controller.text = txt;
+                              openDialog();
+                            });
+                          }),
+                    ]),
+                    Container(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                            child: Text("Submit"),
+                            onPressed: () async {
+                              String eventName = controller.text;
+                              if (eventName.isEmpty) return;
+                              setState(() async {
+                                List<Event> temp = [];
+                                events.clear();
+                                var data = eventPost(eventName, genData);
                                 //print(data);
-                          newEventName = eventName;
+                                newEventName = eventName;
                                 Event newE = Event(
                                     newEventName, 0, 0, 0, 0, 0, 0, [], [], []);
-                          temp.add(newE);
-                          genData = false;
-                          submit();
-                        });
-                      }))
-            ]),
-          ),
-        );
-    if (widget.curreventmap['status'] != 'error') {
-      for (var e in widget.eventmap['data']) {
-        if (e['name'] != widget.curreventmap['data']['name']) {
-          Event cEvent = Event(e['name'], 0, 0, 0, 0, 0, 0, [], [], []);
-          events.add(cEvent);
-        } else {
-          currentEvent = Event(widget.curreventmap['data']['name'], 0, 0, 0, 0,
-              0, 0, [], [], []);
-          currentEvent.b_unboarded = widget.curreventmap['data']['bags'];
-          currentEvent.p_unboarded = widget.curreventmap['data']['passengers'];
-        }
-      }
-    } else {
-      res = false;
-      currentEvent = Event('none', 0, 0, 0, 0, 0, 0, [], [], []);
-      if (widget.eventmap['status'] != 'error') {
-        for (var e in widget.eventmap['data']) {
-          Event cEvent = Event(e['name'], 0, 0, 0, 0, 0, 0, [], [], []);
-          events.add(cEvent);
-        }
-      }
-    }
-    print(widget.curreventmap);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Image.asset(
-            'assets/kisspng-logo-brand-font-airline-logo-5b1d7561d2b990.7344765815286572498631.png',
-            fit: BoxFit.contain,
-            height: 80),
-        centerTitle: true,
-      ),
-      //body: SafeArea(
-      body: ListView(
-        //child: Column(
-        //child: ListView(
-        //mainAxisSize: MainAxisSize.max,
-        //crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          AdminProfileBox(admin: c, image: image),
-          Align(
-            alignment: AlignmentDirectional(-1, -1),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(30, 30, 0, 0),
-              child: Text(
-                'Current Event',
-                style: TextStyle(
-                  fontFamily: 'Open Sans',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                                temp.add(newE);
+                                genData = false;
+                                submit();
+                              });
+                            }))
+                  ]),
                 ),
-              ),
+              );
+          if (widget.curreventmap['status'] != 'error') {
+            for (var e in widget.eventmap['data']) {
+              if (e['name'] != widget.curreventmap['data']['name']) {
+                Event cEvent = Event(e['name'], 0, 0, 0, 0, 0, 0, [], [], []);
+                events.add(cEvent);
+              } else {
+                currentEvent = Event(widget.curreventmap['data']['name'], 0, 0,
+                    0, 0, 0, 0, [], [], []);
+                currentEvent.b_unboarded = widget.curreventmap['data']['bags'];
+                currentEvent.p_unboarded =
+                    widget.curreventmap['data']['passengers'];
+              }
+            }
+          } else {
+            res = false;
+            currentEvent = Event('none', 0, 0, 0, 0, 0, 0, [], [], []);
+            if (widget.eventmap['status'] != 'error') {
+              for (var e in widget.eventmap['data']) {
+                Event cEvent = Event(e['name'], 0, 0, 0, 0, 0, 0, [], [], []);
+                events.add(cEvent);
+              }
+            }
+          }
+          print(widget.curreventmap);
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.black,
+              title: Image.asset(
+                  'assets/kisspng-logo-brand-font-airline-logo-5b1d7561d2b990.7344765815286572498631.png',
+                  fit: BoxFit.contain,
+                  height: 80),
+              centerTitle: true,
             ),
-          ),
-          CurrBox(event: currentEvent, isTrue: res),
-          Align(
-            alignment: AlignmentDirectional(-1, -1),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(30, 30, 0, 0),
-              child: Text(
-                'Saved Events',
-                style: TextStyle(
-                  fontFamily: 'Open Sans',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-            child: SizedBox(
-                child: Column(
+            //body: SafeArea(
+            body: ListView(
+              //child: Column(
               //child: ListView(
-              children: List.generate(events.length, (index) {
-                return EventBox(
-                  event: events[index],
-                );
-              }),
-            )),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-            child: Expanded(
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  margin: EdgeInsets.only(left: 40, top: 10),
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                        shadowColor:
-                            MaterialStateProperty.resolveWith((states) {
-                          if (states.contains(MaterialState.hovered)) {
-                            return Color.fromARGB(150, 0, 0, 0);
-                          }
-                          return Color.fromARGB(100, 0, 0, 0);
-                        }),
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith((states) {
-                          return Color.fromARGB(100, 151, 151, 151);
-                        }),
-                        alignment: Alignment.center,
+              //mainAxisSize: MainAxisSize.max,
+              //crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AdminProfileBox(admin: c, image: image),
+                Align(
+                  alignment: AlignmentDirectional(-1, -1),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(30, 30, 0, 0),
+                    child: Text(
+                      'Current Event',
+                      style: TextStyle(
+                        fontFamily: 'Open Sans',
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                CurrBox(event: currentEvent, isTrue: res),
+                Align(
+                  alignment: AlignmentDirectional(-1, -1),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(30, 30, 0, 0),
+                    child: Text(
+                      'Saved Events',
+                      style: TextStyle(
+                        fontFamily: 'Open Sans',
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                Flexible(
+                  child: SizedBox(
+                      child: Column(
+                    //child: ListView(
+                    children: List.generate(events.length, (index) {
+                      return EventBox(
+                        event: events[index],
+                      );
+                    }),
+                  )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                  child: Expanded(
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(left: 40, top: 10),
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                              shadowColor:
+                                  MaterialStateProperty.resolveWith((states) {
+                                if (states.contains(MaterialState.hovered)) {
+                                  return Color.fromARGB(150, 0, 0, 0);
+                                }
+                                return Color.fromARGB(100, 0, 0, 0);
+                              }),
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith((states) {
+                                return Color.fromARGB(100, 151, 151, 151);
+                              }),
+                              alignment: Alignment.center,
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    side: BorderSide(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                      side: BorderSide(
                                           color: Color.fromARGB(
                                               100, 31, 31, 31)))),
+                            ),
+                            child: Image.asset("assets/logout.png",
+                                width: 45, alignment: Alignment.centerRight),
+                            onPressed: () async {
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.remove(ADMIN_KEY);
+                              Navigator.of(context).pop();
+                            }),
                       ),
-                      child: Image.asset("assets/logout.png",
-                          width: 45, alignment: Alignment.centerRight),
-                      onPressed: () async {
-                        final SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.remove(ADMIN_KEY);
-                        Navigator.of(context).pop();
-                      }),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 20),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Color(0xFF00239E),
-              ),
-              onPressed: () async {
-                openDialog();
-              },
-              child: Text(
-                "Generate New Event",
-                style: TextStyle(
-                  fontFamily: 'Open Sans',
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color(0xFF00239E),
+                    ),
+                    onPressed: () async {
+                      openDialog();
+                    },
+                    child: Text(
+                      "Generate New Event",
+                      style: TextStyle(
+                        fontFamily: 'Open Sans',
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Color(0xFF00239E),
+                    ),
+                    onPressed: () async {
+                      newAdmin createAdmin = await Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => NewAdmin()));
+                      await signupRequest(
+                          createAdmin.usernameAdmin, createAdmin.passwordAdmin);
+                    },
+                    child: Text(
+                      "Create New Admin",
+                      style: TextStyle(
+                        fontFamily: 'Open Sans',
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          )
-        ],
-      ),
-      //),
+            //),
           );
         } else {
           return CircularProgressIndicator();
