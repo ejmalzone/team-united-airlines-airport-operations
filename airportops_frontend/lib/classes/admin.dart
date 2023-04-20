@@ -7,11 +7,11 @@ class newAdmin {
   newAdmin({required this.username, required this.password});
 
   String get usernameAdmin {
-    return '$username ';
+    return username;
   }
 
   String get passwordAdmin {
-    return '$username ';
+    return password;
   }
 
   static newAdmin fromJson(Map instance) {

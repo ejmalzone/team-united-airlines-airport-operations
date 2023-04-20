@@ -52,8 +52,8 @@ class _NewAdminState extends State<NewAdmin> {
                     border: OutlineInputBorder(),
                   ),
                   validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text.';
+                    if (value == null || value.isEmpty || value.length < 4) {
+                      return 'Please enter a username greater than 4 characters.';
                     }
                     return null;
                   },
@@ -65,9 +65,10 @@ class _NewAdminState extends State<NewAdmin> {
                     labelText: 'Password',
                     border: OutlineInputBorder(),
                   ),
+                  obscureText: true,
                   validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text.';
+                    if (value == null || value.isEmpty || value.length < 5) {
+                      return 'Please enter a password of at least 5 characters.';
                     }
                     return null;
                   },

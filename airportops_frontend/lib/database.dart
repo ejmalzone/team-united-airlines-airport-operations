@@ -68,7 +68,7 @@ Future<Map<String, dynamic>> signupRequest(
     String username, String password) async {
   var reply = await Requests.post(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/admin/signup',
-      json: {"username": username, "password": password, "access": 2});
+      json: {"username": username, "password": password});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
   print("DATA: ${data}");
