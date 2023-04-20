@@ -7,14 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'dart:math';
 
+import 'package:intl/intl.dart';
+
 class BagProfile extends StatelessWidget {
   // static final rng = Random();
-
-  static const _assetLocations = [
-    "assets/bag-backpack.png",
-    "assets/bag-purse.png",
-    "assets/bag-suitcase.png"
-  ];
 
   Baggage bag;
   BagProfile({super.key, required this.bag});
@@ -22,7 +18,9 @@ class BagProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rng = Random(Object.hash(bag.nameFirst, bag.nameLast));
-    final thumbnail = Image.asset(_assetLocations[rng.nextInt(_assetLocations.length)]);
+    final String departureTime = '${rng.nextInt(12)}:${rng.nextInt(12).toString().padLeft(2, '0')}';
+    final String arrivalTime = '${rng.nextInt(12)}:${rng.nextInt(12).toString().padLeft(2, '0')}';
+    final nowString = DateFormat('MMMM dd').format(DateTime.now());
 
     return SafeArea(
       child: Column(
@@ -138,13 +136,13 @@ class BagProfile extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              thumbnail,
+                              bag.thumbnail,
                               Column(
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '7:50am',
+                                    departureTime,
                                     style: TextStyle(
                                       fontFamily: 'Open Sans',
                                       fontSize: 12,
@@ -159,7 +157,7 @@ class BagProfile extends StatelessWidget {
                                         fontSize: 20),
                                   ),
                                   Text(
-                                    'May 5th',
+                                    nowString,
                                     style: TextStyle(
                                       fontFamily: 'Open Sans',
                                       fontSize: 12,
@@ -182,7 +180,7 @@ class BagProfile extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    '5:40am',
+                                    arrivalTime,
                                     style: TextStyle(
                                       fontFamily: 'Open Sans',
                                       fontSize: 12,
@@ -197,7 +195,7 @@ class BagProfile extends StatelessWidget {
                                         fontSize: 20),
                                   ),
                                   Text(
-                                    'May 5th',
+                                    nowString,
                                     style: TextStyle(
                                       fontFamily: 'Open Sans',
                                       fontSize: 12,

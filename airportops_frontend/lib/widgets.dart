@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_const_literals_to_create_immutables
 
+import 'dart:math';
+
 import 'package:airportops_frontend/admin/profiles/bagprofile.dart';
 import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
@@ -489,12 +491,14 @@ class BCardState extends State<BCard> {
           color: Color.fromARGB(255, 238, 238, 238),
           elevation: 5,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(width: 5),
+                widget.b.thumbnail,
                 Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -542,6 +546,7 @@ class BCardState extends State<BCard> {
                     )
                   ],
                 ),
+                Spacer(),
                 Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [

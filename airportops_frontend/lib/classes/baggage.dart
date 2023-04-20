@@ -1,4 +1,14 @@
+import 'dart:math';
+import 'dart:ui';
+import 'package:flutter/material.dart';
+
 import '../enums.dart';
+
+const _assetLocations = [
+  "assets/bag-backpack.png",
+  "assets/bag-purse.png",
+  "assets/bag-suitcase.png"
+];
 
 class Baggage {
   final String nameFirst;
@@ -11,6 +21,7 @@ class Baggage {
   final String id;
   final bool wrongDestination;
   final String? scanTime;
+  late Image thumbnail;
 
   Status status = Status.unboarded;
 
@@ -25,7 +36,11 @@ class Baggage {
       required this.id,
       required this.status,
       required this.wrongDestination,
-      required this.scanTime});
+      required this.scanTime}
+  ) {
+    final rng = Random(Object.hash(nameFirst, nameLast));
+    thumbnail = Image.asset(_assetLocations[rng.nextInt(_assetLocations.length)]);
+  }
 
   String get fullName {
     return '$nameFirst $nameLast';
