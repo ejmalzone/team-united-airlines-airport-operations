@@ -7,6 +7,7 @@ import 'package:jiffy/jiffy.dart';
 class Event {
   final String name;
 
+
   int p_boarded;
   int p_unboarded;
   int p_wrong;

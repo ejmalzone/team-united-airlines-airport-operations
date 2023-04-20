@@ -259,13 +259,16 @@ class PortalRoute extends StatelessWidget {
               await usernameValidation(user).then((data) async => {
                     if (data["status"] == "success")
                       {
-                        await Navigator.of(context)
-                            .push(MaterialPageRoute(builder: ((context) {
-                          return AdminRoute(
-                              //eventmap: eventMap,
-                              //curreventmap: currEventMap,
-                              );
-                        })))
+                        if (currEventMap['status'] != 'error')
+                          {
+                            await Navigator.of(context)
+                                .push(MaterialPageRoute(builder: ((context) {
+                              return AdminRoute(
+                                  //eventmap: eventMap,
+                                  //curreventmap: currEventMap,
+                                  );
+                            })))
+                          }
                       }
                     else
                       {
