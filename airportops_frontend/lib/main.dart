@@ -26,9 +26,11 @@ import 'login.dart';
 Future<void> main() async {
   //var req = await passengerRequest();
   //Map<String, dynamic> eventMap = await eventRequest();
-  runApp(MaterialApp.router(
-    routerConfig: _router,
-    /*initialRoute: '/',
+  //runApp(MaterialApp.router(
+  runApp(MaterialApp(
+    //routerConfig: _router,
+    debugShowCheckedModeBanner: false,
+    //initialRoute: '/',
     routes: {
       //'/': (context) => LoginRoute(),
       //'/portal': (context) => PortalRoute(),
@@ -43,61 +45,207 @@ Future<void> main() async {
       '/camera': (context) => UniversalScanApp(),
       '/customerservice': (context) => CSRRoute(),
       '/honeywell': (context) => HoneywellScanApp(),
-    },*/
-    debugShowCheckedModeBanner: false,
+    },
   ));
 }
 
-final _router = GoRouter(routes: [
-  GoRoute(
-    path: '/',
-    builder: (context, state) => PortalRoute(),
-  ),
-  GoRoute(
-    path: '/portal',
-    builder: (context, state) => LoginRoute(),
-  ),
-  GoRoute(
-    path: '/home',
-    builder: (context, state) => const HomeRoute(),
-  ),
-  GoRoute(
-    path: '/examplePassenger',
-    builder: (context, state) => ExamplePassengerProfileApp(),
-  ),
-  GoRoute(
-    path: '/baggage',
-    builder: (context, state) => BaggageRoute(),
-  ),
-  GoRoute(
-    path: '/bars',
-    builder: (context, state) => const ProgressBarRoute(),
-  ),
-  GoRoute(
-    path: '/dbTesting',
-    builder: (context, state) => const DatabaseRoute(),
-  ),
-  GoRoute(
-    path: '/scanning',
-    builder: (context, state) => const ScanRoute(),
-  ),
-  GoRoute(
-    path: '/camera',
-    builder: (context, state) => UniversalScanApp(),
-  ),
-  GoRoute(
-    path: '/customerservice',
-    builder: (context, state) => CSRRoute(),
-  ),
-  GoRoute(
-    path: '/honeywell',
-    builder: (context, state) => HoneywellScanApp(),
-  ),
-  GoRoute(
-    path: '/admin',
-    builder: (context, state) => AdminRoute(),
-  ),
-]);
+/*final _router = GoRouter(
+  initialLocation: '/',
+  routes: [
+    GoRoute(
+      path: '/',
+      //builder: (context, state) => PortalRoute(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: PortalRoute(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+    GoRoute(
+      path: '/portal',
+      //builder: (context, state) => LoginRoute(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: LoginRoute(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+    GoRoute(
+      path: '/home',
+      //builder: (context, state) => const HomeRoute(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: const HomeRoute(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+    GoRoute(
+      path: '/examplePassenger',
+      //builder: (context, state) => ExamplePassengerProfileApp(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: ExamplePassengerProfileApp(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+    GoRoute(
+      path: '/baggage',
+      //builder: (context, state) => BaggageRoute(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: BaggageRoute(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+    GoRoute(
+      path: '/bars',
+      //builder: (context, state) => const ProgressBarRoute(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: const ProgressBarRoute(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+    GoRoute(
+      path: '/dbTesting',
+      //builder: (context, state) => const DatabaseRoute(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: const DatabaseRoute(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+    GoRoute(
+      path: '/scanning',
+      //builder: (context, state) => const ScanRoute(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: const ScanRoute(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+    GoRoute(
+      path: '/camera',
+      //builder: (context, state) => UniversalScanApp(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: UniversalScanApp(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+    GoRoute(
+      path: '/customerservice',
+      //builder: (context, state) => CSRRoute(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: CSRRoute(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+    GoRoute(
+      path: '/honeywell',
+      //builder: (context, state) => HoneywellScanApp(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: HoneywellScanApp(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+    GoRoute(
+      path: '/admin',
+      //builder: (context, state) => AdminRoute(),
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+            child: AdminRoute(),
+            transitionsBuilder:
+                ((context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            }));
+      },
+    ),
+  ],
+);*/
 
 class PassengerDisplayRoute extends StatelessWidget {
   final Map<String, dynamic> data;

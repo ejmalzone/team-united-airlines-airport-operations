@@ -10,6 +10,7 @@ import 'package:airportops_frontend/rampservices/rampservices_profile.dart';
 import 'package:airportops_frontend/scanning.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'database.dart';
@@ -277,6 +278,7 @@ class PortalRoute extends StatelessWidget {
                             .push(MaterialPageRoute(builder: ((context) {
                           return LoginRoute();
                         })))
+                        //context.go('/portal')
                       }
                   });
             } else {
@@ -284,6 +286,8 @@ class PortalRoute extends StatelessWidget {
                   .push(MaterialPageRoute(builder: ((context) {
                 return LoginRoute();
               })));
+              //context.go(endRoute.toString());
+              //GoRouter.of(context).go(endRoute.toString());
             }
           } else if (endRoute == '/csrSelect') {
             //Navigator.pushNamed(context, endRoute);
@@ -353,7 +357,8 @@ class PortalRoute extends StatelessWidget {
               );
             }
           } else {
-            await Navigator.of(context).pushNamed(endRoute.toString());
+            //await Navigator.of(context).pushNamed(endRoute.toString());
+            await GoRouter.of(context).push(endRoute.toString());
           }
           // if (endRoute == '/admin') {
           //   Navigator.pushNamed(context, '/admin');
@@ -764,7 +769,7 @@ class PortalRoute extends StatelessWidget {
               ) ,
                * */
 
-                  Padding(
+                  /* Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -772,11 +777,9 @@ class PortalRoute extends StatelessWidget {
                         backgroundColor: Colors.green,
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeRoute()));
-                        print("link to debug button");
+                        //Navigator.push(context,MaterialPageRoute(builder: (context) => HomeRoute()));
+                        //print("link to debug button");
+                        context.go('/home');
                       },
                       child: Text(
                         "DEBUG",
@@ -785,7 +788,7 @@ class PortalRoute extends StatelessWidget {
                         ),
                       ),
                     ),
-                  )
+                  )*/
                 ],
               ),
             ),
@@ -828,12 +831,12 @@ class PortalRoute extends StatelessWidget {
             //  children: [
             makeButton(
                 context, 'Admin', 'assets/united-square-64.png', '/admin'),
-            makeButton(
+            /*makeButton(
                 //TEMPORARY DEBUG BUTTON
                 context,
                 'Debug',
                 'assets/united-square-64.png',
-                '/home'),
+                '/home'),*/
             //  ].withSpaceBetween(
             //    width: 18,
             //  ),
