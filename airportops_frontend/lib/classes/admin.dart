@@ -1,10 +1,10 @@
 import '../enums.dart';
 
-class Admin {
+class newAdmin {
   final String username;
   final String password;
 
-  Admin({required this.username, required this.password});
+  newAdmin({required this.username, required this.password});
 
   String get usernameAdmin {
     return '$username ';
@@ -14,8 +14,8 @@ class Admin {
     return '$username ';
   }
 
-  static Admin fromJson(Map instance) {
-    return Admin(
+  static newAdmin fromJson(Map instance) {
+    return newAdmin(
         password: instance['password'], username: instance['username']);
   }
 }

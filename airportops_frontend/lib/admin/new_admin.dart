@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 
 import '../widgets.dart';
 
-class NewBag extends StatefulWidget {
-  const NewBag({Key? key}) : super(key: key);
+class NewAdmin extends StatefulWidget {
+  const NewAdmin({Key? key}) : super(key: key);
 
   @override
-  State<NewBag> createState() => _NewBagState();
+  State<NewAdmin> createState() => _NewAdminState();
 }
 
-class _NewBagState extends State<NewBag> {
+class _NewAdminState extends State<NewAdmin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _passwordController = TextEditingController();
@@ -25,10 +25,10 @@ class _NewBagState extends State<NewBag> {
   void submitForm() async {
     // validate form and create new admin object
     if (_formKey.currentState!.validate()) {
-      Admin newAdmin = Admin(
+      newAdmin admin2 = newAdmin(
           password: _passwordController.text,
           username: _usernameController.text);
-      Navigator.pop(context, newAdmin);
+      Navigator.pop(context, admin2);
     }
   }
 
