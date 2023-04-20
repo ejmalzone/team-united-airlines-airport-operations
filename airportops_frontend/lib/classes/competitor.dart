@@ -366,7 +366,7 @@ class CustomerServiceLogin extends StatelessWidget {
             ],
             onRecoverPassword: _recoverPassword,
             theme: LoginTheme(
-              primaryColor: const Color.fromARGB(255, 0, 94, 170),
+              primaryColor: const Color(0xFF005DAA),
               accentColor: Colors.black,
               errorColor: const Color.fromARGB(255, 78, 78, 78),
             )));
@@ -490,7 +490,7 @@ class RampServicesLogin extends StatelessWidget {
             ],
             onRecoverPassword: _recoverPassword,
             theme: LoginTheme(
-              primaryColor: const Color.fromARGB(255, 0, 94, 170),
+              primaryColor: const Color(0xFF005DAA),
               accentColor: Colors.black,
               errorColor: const Color.fromARGB(255, 78, 78, 78),
             )));
