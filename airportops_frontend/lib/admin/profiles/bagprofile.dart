@@ -5,13 +5,25 @@ import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'dart:math';
 
 class BagProfile extends StatelessWidget {
+  // static final rng = Random();
+
+  static const _assetLocations = [
+    "assets/bag-backpack.png",
+    "assets/bag-purse.png",
+    "assets/bag-suitcase.png"
+  ];
+
   Baggage bag;
   BagProfile({super.key, required this.bag});
 
   @override
   Widget build(BuildContext context) {
+    final rng = Random(Object.hash(bag.nameFirst, bag.nameLast));
+    final thumbnail = Image.asset(_assetLocations[rng.nextInt(_assetLocations.length)]);
+
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -23,7 +35,7 @@ class BagProfile extends StatelessWidget {
                 padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 20, 0),
                 child: Container(
                     width: double.infinity,
-                    height: 179.8,
+                    height: 202,
                     decoration: const BoxDecoration(
                       color: Color(0xFFE9E9E9),
                       boxShadow: [
@@ -121,11 +133,12 @@ class BagProfile extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
+                              thumbnail,
                               Column(
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,7 +231,7 @@ class BagProfile extends StatelessWidget {
                     behavior: SnackBarBehavior.floating,
                     backgroundColor: Colors.transparent,
                     elevation: 0,
-                    duration: Duration(seconds: 2),
+                    duration: const Duration(seconds: 2),
                   ));
                 },
                 style: ElevatedButton.styleFrom(
