@@ -65,14 +65,16 @@ class BaggageRoute extends StatelessWidget {
     final Competitor c = Competitor(
         firstname: competitor["first"],
         lastname: competitor["last"],
-        stationCode: 'stationCode',
+        stationCode: "stationCode",
         username: competitor["username"],
-        event: 'event',
+        event: "event",
         bagsScanned: [],
         passengersScanned: [],
         position: Position.Ramp,
         wrong: 0,
-        scanned: 0);
+        scanned: 0,
+        startTime: "",
+        endTime: "");
 
     void submit() {
       Navigator.of(context).pop();

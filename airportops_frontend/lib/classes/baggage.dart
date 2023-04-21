@@ -36,10 +36,10 @@ class Baggage {
       required this.id,
       required this.status,
       required this.wrongDestination,
-      required this.scanTime}
-  ) {
+      required this.scanTime}) {
     final rng = Random(Object.hash(nameFirst, nameLast));
-    thumbnail = Image.asset(_assetLocations[rng.nextInt(_assetLocations.length)]);
+    thumbnail =
+        Image.asset(_assetLocations[rng.nextInt(_assetLocations.length)]);
   }
 
   String get fullName {
@@ -55,17 +55,19 @@ class Baggage {
   }
 
   static Baggage fromJson(Map instance) {
+    print(instance['scanTime'].runtimeType);
     return Baggage(
-        checked: instance['checked'],
-        destinationAirport: instance['destination'],
-        event: instance['event'],
-        nameFirst: instance['passengerFirst'],
-        nameLast: instance['passengerLast'],
-        originatingAirport: instance['origin'],
-        weight: instance['weight'],
-        id: instance['_id'],
-        scanTime: instance['scanTime'] ? '' : instance['scanTime'],
-        status: instance['checked'] ? Status.unboarded : Status.boarded,
-        wrongDestination: instance['wrongDestination']);
+      checked: instance['checked'],
+      destinationAirport: instance['destination'],
+      event: instance['event'],
+      nameFirst: instance['passengerFirst'],
+      nameLast: instance['passengerLast'],
+      originatingAirport: instance['origin'],
+      weight: instance['weight'],
+      id: instance['_id'],
+      status: instance['checked'] ? Status.unboarded : Status.boarded,
+      wrongDestination: instance['wrongDestination'],
+      scanTime: (instance['scanTime'] ?? 'Not yet scanned.')
+    );
   }
 }

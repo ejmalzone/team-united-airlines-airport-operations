@@ -70,6 +70,7 @@ class Passenger {
         connection: instance['connection'],
         wrongGate: instance['wrongGate'],
         wrongDeparture: instance['wrongDeparture'],
-        scanTime: instance['scanTime']);
+        scanTime: (instance['scanTime'] ?? 'Not yet scanned.')
+    );
   }
 }

@@ -300,3 +300,29 @@ Future<Map<String, dynamic>> scanPassenger(
   Map<String, dynamic> data = jsonDecode(body);
   return data;
 }
+
+Future<Map<String, dynamic>> scanStart(
+    {required String competitor}) async {
+  final DateTime now = DateTime.now();
+  final DateFormat formatter = DateFormat('yyyy-MM-dd-HH-mm-ss');
+  final String formatted = formatter.format(now);
+  var reply = await Requests.put(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/competitor/start',
+      json: {"competitor": competitor, "scanTime": formatted});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  return data;
+}
+
+Future<Map<String, dynamic>> scanFinish(
+    {required String competitor}) async {
+  final DateTime now = DateTime.now();
+  final DateFormat formatter = DateFormat('yyyy-MM-dd-HH-mm-ss');
+  final String formatted = formatter.format(now);
+  var reply = await Requests.put(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/competitor/finish',
+      json: {"competitor": competitor, "scanTime": formatted});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  return data;
+}

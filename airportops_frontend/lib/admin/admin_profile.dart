@@ -478,7 +478,9 @@ class _CurrBoxState extends State<CurrBox> {
                                         ? Position.Csr
                                         : Position.Ramp,
                                     wrong: 0,
-                                    scanned: 0));
+                                    scanned: 0,
+                                    startTime: comp["startTime"] ?? "Not started.",
+                                    endTime: comp["endTime"] ?? "Not ended."));
                               }
                             }
                           });
@@ -660,7 +662,9 @@ class EventBox extends StatelessWidget {
                                           ? Position.Csr
                                           : Position.Ramp,
                                       wrong: 0,
-                                      scanned: 0));
+                                      scanned: 0,
+                                      startTime: comp["startTime"],
+                                      endTime: comp["endTime"]));
                                 }
                               }
                             });

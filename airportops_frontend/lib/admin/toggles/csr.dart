@@ -222,12 +222,9 @@ class _AdminPassengersState extends State<AdminPassengers> {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  print("pressed add passengers");
-                  print(widget.event.passengers);
-                
                   Passenger newPassenger = await Navigator.push(context,
                       MaterialPageRoute(builder: (context) => NewPassenger()));
-                
+
                   setState(() {
                     widget.event.addPassenger(newPassenger);
                     var newPass = createPassenger(

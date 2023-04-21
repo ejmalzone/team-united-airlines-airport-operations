@@ -24,7 +24,9 @@ class CSRRoute extends StatelessWidget {
       passengersScanned: [],
       position: Position.Ramp,
       wrong: 0,
-      scanned: 0);
+      scanned: 0,
+      startTime: "",
+      endTime: "");
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
   @override
@@ -94,7 +96,7 @@ class CSRRoute extends StatelessWidget {
   }
 }
 
-/** 
+/**
 @override
   Widget build(BuildContext context) {
     return Scaffold(

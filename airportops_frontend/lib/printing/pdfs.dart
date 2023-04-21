@@ -15,8 +15,6 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:universal_html/html.dart' as html;
 import 'package:airportops_frontend/classes/baggage.dart';
 
-
-
 import '../classes/passenger.dart';
 
 class PdfCreator {
@@ -29,6 +27,38 @@ class PdfCreator {
 
   static int _id = 0;
 
+  static createStartStopQR(final pw.Document document, bool CSR, bool start) {
+    String workerMsg = "CUSTOMER SERVICE COMPETITORS:";
+    String startStopMsg = "SCAN THIS CODE TO START!";
+    String toEncode = "start";
+    if (!CSR) {
+      workerMsg = "RAMP SERVICES COMPETITORS:";
+    }
+    if (!start) {
+      startStopMsg = "SCAN THIS CODE TO FINISH!";
+      toEncode = "finish";
+    }
+    document.addPage(pw.Page(
+        pageFormat: const PdfPageFormat(
+            8.5 * PdfPageFormat.inch, 11 * PdfPageFormat.inch),
+        build: (pw.Context context) {
+          return pw.Center(
+              child: pw.Column(children: [
+            pw.Padding(padding: const pw.EdgeInsets.fromLTRB(0, 100, 0, 0)),
+            pw.Text(workerMsg, textScaleFactor: 2.0),
+            pw.Padding(padding: const pw.EdgeInsets.fromLTRB(0, 50, 0, 0)),
+            pw.Text(startStopMsg, textScaleFactor: 1.5),
+            pw.Padding(padding: const pw.EdgeInsets.fromLTRB(0, 100, 0, 0)),
+            pw.BarcodeWidget(
+              data: toEncode,
+              barcode: pw.Barcode.qrCode(),
+              width: 200,
+              height: 200,
+            ),
+          ]));
+        }));
+  }
+
   static generateBoardingPassPages(final List<Passenger> passengers) async {
     if (passengers.isEmpty) {
       return;
@@ -39,9 +69,13 @@ class PdfCreator {
 
     final pdf = pw.Document();
 
+    createStartStopQR(pdf, true, true);
+
     for (var value in passengers) {
       addBoardingPassPage(unitedLogo, pdf, value);
     }
+
+    createStartStopQR(pdf, true, false);
 
     final Uint8List pdfInBytes = await pdf.save();
     final name = 'boarding_pass_$_id.pdf';
@@ -59,9 +93,13 @@ class PdfCreator {
 
     final pdf = pw.Document();
 
+    createStartStopQR(pdf, false, true);
+
     for (var value in bags) {
       addBaggageTagPage(unitedLogo, pdf, value);
     }
+
+    createStartStopQR(pdf, false, false);
 
     final Uint8List pdfInBytes = await pdf.save();
     final name = 'baggage_tag_${_id++}.pdf';
@@ -69,8 +107,13 @@ class PdfCreator {
     await savePdf(pdfInBytes, name);
   }
 
-  static addBoardingPassPage(final pw.MemoryImage unitedLogo, final pw.Document document, final Passenger passenger) async {
-    final flag = (passenger.wrongDeparture || passenger.wrongGate || passenger.connection) ? '*' : '';
+  static addBoardingPassPage(final pw.MemoryImage unitedLogo,
+      final pw.Document document, final Passenger passenger) async {
+    final flag = (passenger.wrongDeparture ||
+            passenger.wrongGate ||
+            passenger.connection)
+        ? '*'
+        : '';
 
     var boardTime = '12:';
     if (passenger.wrongDeparture) {
@@ -105,100 +148,122 @@ class PdfCreator {
       flightSource = flightDestination;
 
       do {
-        flightDestination = countries.keys.elementAt(rng.nextInt(countries.keys.length));
+        flightDestination =
+            countries.keys.elementAt(rng.nextInt(countries.keys.length));
       } while (flightDestination == passenger.flightDestination);
 
       gate = _getRandomGate();
       boardTime = '${10 + rng.nextInt(10)}:${rng.nextBool() ? '35' : '25'}';
     }
 
-    document.addPage(
-      pw.Page(
+    document.addPage(pw.Page(
         pageFormat: const PdfPageFormat(
-            (7 + 3/8) * PdfPageFormat.inch,
-            (3 + 1/4) * PdfPageFormat.inch,
-            marginTop: .25 * PdfPageFormat.inch,
-            marginLeft: .25 * PdfPageFormat.inch,
-            marginRight: .05 * PdfPageFormat.inch,
+          (7 + 3 / 8) * PdfPageFormat.inch,
+          (3 + 1 / 4) * PdfPageFormat.inch,
+          marginTop: .25 * PdfPageFormat.inch,
+          marginLeft: .25 * PdfPageFormat.inch,
+          marginRight: .05 * PdfPageFormat.inch,
         ),
         build: (pw.Context context) {
           return pw.Row(children: [
             pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Row(children: [
-                  pw.Image(unitedLogo, width: 200, height: 50),
-                  pw.SizedBox(width: 190),
-                  pw.Text((_id++).toString() + flag, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 24))
-                ]),
-                pw.Row(children: [
-                  pw.Text('${passenger.nameFirst.toUpperCase()} / ${passenger.nameLast.toUpperCase()}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 12))
-                ]),
-                pw.SizedBox(height: 5),
-                pw.Text('----------------------------------------------------------------------------------------------------------'),
-                pw.SizedBox(height: 5),
-                pw.Row(children: [
-                  pw.Column(children: [
-                    pw.SizedBox(height: 0.05 * PdfPageFormat.inch),
-                    pw.Table(
-                        defaultColumnWidth: const pw.FixedColumnWidth(100),
-                        children: [
-                          pw.TableRow(
-                            verticalAlignment: pw.TableCellVerticalAlignment.top,
-                            children: [
-                              pw.Text('UA 1047', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 12)),
-                              pw.Text('GATE', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 12)),
-                              pw.Text('BOARD TIME', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 12)),
-                              pw.Text('SEAT', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 12)),
-                            ]
-                          ),
-                          pw.TableRow(
-                              verticalAlignment: pw.TableCellVerticalAlignment.top,
-                              children: [
-                                pw.Text('$flightSource -> $flightDestination', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 16)),
-                                pw.Text(gate, style: const pw.TextStyle(fontSize: 18)),
-                                pw.Text(boardTime, style: const pw.TextStyle(fontSize: 18)),
-                                pw.Text('${passenger.row}${passenger.seat}', style: const pw.TextStyle(fontSize: 18)),
-                              ]
-                          ),
-                        ]
-                    ),
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Row(children: [
+                    pw.Image(unitedLogo, width: 200, height: 50),
+                    pw.SizedBox(width: 190),
+                    pw.Text((_id++).toString() + flag,
+                        style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold, fontSize: 24))
                   ]),
-                  pw.Container(
-                    // transform: Matrix4Transform()
-                    //   .rotateDegrees(90, origin: const Offset(75/2, 25/2))
-                    //   .translate(x: -50.0, y: -10.0)
-                    //   .matrix4,
-                    child: pw.BarcodeWidget(
-                      data: passenger.passengerId,
-                      barcode: pw.Barcode.qrCode(),
-                      width: 100,
-                      height: 100,
-                      drawText: false,
-                    ),
-                  )
+                  pw.Row(children: [
+                    pw.Text(
+                        '${passenger.nameFirst.toUpperCase()} / ${passenger.nameLast.toUpperCase()}',
+                        style: pw.TextStyle(
+                            fontWeight: pw.FontWeight.bold, fontSize: 12))
+                  ]),
+                  pw.SizedBox(height: 5),
+                  pw.Text(
+                      '----------------------------------------------------------------------------------------------------------'),
+                  pw.SizedBox(height: 5),
+                  pw.Row(children: [
+                    pw.Column(children: [
+                      pw.SizedBox(height: 0.05 * PdfPageFormat.inch),
+                      pw.Table(
+                          defaultColumnWidth: const pw.FixedColumnWidth(100),
+                          children: [
+                            pw.TableRow(
+                                verticalAlignment:
+                                    pw.TableCellVerticalAlignment.top,
+                                children: [
+                                  pw.Text('UA 1047',
+                                      style: pw.TextStyle(
+                                          fontWeight: pw.FontWeight.bold,
+                                          fontSize: 12)),
+                                  pw.Text('GATE',
+                                      style: pw.TextStyle(
+                                          fontWeight: pw.FontWeight.bold,
+                                          fontSize: 12)),
+                                  pw.Text('BOARD TIME',
+                                      style: pw.TextStyle(
+                                          fontWeight: pw.FontWeight.bold,
+                                          fontSize: 12)),
+                                  pw.Text('SEAT',
+                                      style: pw.TextStyle(
+                                          fontWeight: pw.FontWeight.bold,
+                                          fontSize: 12)),
+                                ]),
+                            pw.TableRow(
+                                verticalAlignment:
+                                    pw.TableCellVerticalAlignment.top,
+                                children: [
+                                  pw.Text('$flightSource -> $flightDestination',
+                                      style: pw.TextStyle(
+                                          fontWeight: pw.FontWeight.bold,
+                                          fontSize: 16)),
+                                  pw.Text(gate,
+                                      style: const pw.TextStyle(fontSize: 18)),
+                                  pw.Text(boardTime,
+                                      style: const pw.TextStyle(fontSize: 18)),
+                                  pw.Text('${passenger.row}${passenger.seat}',
+                                      style: const pw.TextStyle(fontSize: 18)),
+                                ]),
+                          ]),
+                    ]),
+                    pw.Container(
+                      // transform: Matrix4Transform()
+                      //   .rotateDegrees(90, origin: const Offset(75/2, 25/2))
+                      //   .translate(x: -50.0, y: -10.0)
+                      //   .matrix4,
+                      child: pw.BarcodeWidget(
+                        data: passenger.passengerId,
+                        barcode: pw.Barcode.qrCode(),
+                        width: 100,
+                        height: 100,
+                        drawText: false,
+                      ),
+                    )
+                  ]),
+                  pw.SizedBox(height: 5),
+                  pw.Text(
+                      '----------------------------------------------------------------------------------------------------------'),
+                  pw.SizedBox(height: 5),
+                  // pw.Divider(height: 0.1 * PdfPageFormat.inch, thickness: 2, indent: 5, endIndent: 60),
+                  pw.Row(
+                      children: [pw.Text('Ticket: ${passenger.passengerId}')])
                 ]),
-                pw.SizedBox(height: 5),
-                pw.Text('----------------------------------------------------------------------------------------------------------'),
-                pw.SizedBox(height: 5),
-                // pw.Divider(height: 0.1 * PdfPageFormat.inch, thickness: 2, indent: 5, endIndent: 60),
-                pw.Row(children: [
-                  pw.Text('Ticket: ${passenger.passengerId}')
-                ])
-              ]
-            ),
             pw.SizedBox(width: 10)
           ]);
-        }
-      )
-    );
+        }));
   }
 
-  static addBaggageTagPage(final pw.MemoryImage unitedLogo, final pw.Document document, final Baggage bag) async {
+  static addBaggageTagPage(final pw.MemoryImage unitedLogo,
+      final pw.Document document, final Baggage bag) async {
     var destination = bag.destinationAirport;
     if (bag.wrongDestination) {
       do {
-        destination = countries.keys.elementAt(rng.nextInt(countries.keys.length));
+        destination =
+            countries.keys.elementAt(rng.nextInt(countries.keys.length));
       } while (destination == bag.destinationAirport);
     }
 
@@ -254,8 +319,7 @@ class PdfCreator {
               height: 50,
               drawText: false,
             ),
-            pw.Text(
-                "${bag.nameLast}/${bag.nameFirst}       ${destination}"),
+            pw.Text("${bag.nameLast}/${bag.nameFirst}       ${destination}"),
             pw.BarcodeWidget(
               data: bag.id,
               barcode: pw.Barcode.code128(),
@@ -287,7 +351,8 @@ class PdfCreator {
             ),
             //pw.SizedBox(height: 10),
             //pw.Text(DateTime.now().toIso8601String()),
-            pw.Text("${DateTime.now().day.toString()} ${DateFormat('MMM').format(DateTime(0, DateTime.now().month))} ${DateTime.now().year.toString()}"),
+            pw.Text(
+                "${DateTime.now().day.toString()} ${DateFormat('MMM').format(DateTime(0, DateTime.now().month))} ${DateTime.now().year.toString()}"),
             //pw.Text("4016 649626"), // bag ID number?
             pw.Text(bag.id),
             pw.Text(destination),
@@ -308,9 +373,7 @@ class PdfCreator {
               drawText: false,
             ),
           ])); // Center
-        }
-      )
-    ); // Page
+        })); // Page
   }
 
   static savePdf(final Uint8List bytes, final String name) async {
@@ -318,13 +381,13 @@ class PdfCreator {
       final content = base64Encode(bytes);
       final anchor = html.AnchorElement(
           href:
-          "data:application/octet-stream;charset=utf-16le;base64,$content")
+              "data:application/octet-stream;charset=utf-16le;base64,$content")
         ..setAttribute("download", name)
         ..click();
     } else {
       final file = io.File('${await _localPath}/$name');
       await file.writeAsBytes(bytes);
-    }// Page
+    } // Page
   }
 
   static String _getRandomGate() {

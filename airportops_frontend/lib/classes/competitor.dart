@@ -35,6 +35,8 @@ class Competitor {
   final Position position;
   int scanned;
   int wrong;
+  String? startTime;
+  String? endTime;
 
   Competitor(
       {required this.firstname,
@@ -46,7 +48,9 @@ class Competitor {
       required this.passengersScanned,
       required this.position,
       required this.scanned,
-      required this.wrong});
+      required this.wrong,
+      required this.startTime,
+      required this.endTime});
 
   String get fullname {
     return '$firstname $lastname';

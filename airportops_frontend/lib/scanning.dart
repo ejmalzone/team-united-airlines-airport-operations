@@ -36,13 +36,15 @@ class _HoneywellScanAppState extends State<HoneywellScanApp> {
         var compJson = prefs.getString(RAMP_SERVICES_KEY);
         var compData = jsonDecode(compJson!);
 
-        await scanBag(
-            bagId: scannedData!.code!, competitor: compData["username"]);
-        
-        
-        
+        if (scannedData!.code! == "start") {
+          scanStart(competitor: compData["username"]);
+        } else if (scannedData.code! == "finish") {
+          scanFinish(competitor: compData["username"]);
+        } else {
+          await scanBag(
+              bagId: scannedData.code!, competitor: compData["username"]);
+        }
       },
-
       onScannerErrorCallback: (error) {},
     );
     honeywellScanner.startScanner();
@@ -61,7 +63,7 @@ class _HoneywellScanAppState extends State<HoneywellScanApp> {
   }
 }
 
-/* 
+/*
   Mobile/Web Scanning
 */
 class UniversalScanApp extends StatefulWidget {
@@ -89,44 +91,49 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
               children: [
                 ElevatedButton(
                   onPressed: () async {
-                    var person = await Requests.post(
-                        'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/passenger/',
-                        json: {"_id": this.code});
-                    if (person.json()['data'][0]['accommodations'].length !=
-                        0) {
-                      showDialog<dynamic>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                                title: const Text('Accommodations present:'),
-                                content: SingleChildScrollView(
-                                  child: ListBody(children: <Widget>[
-                                    for (var req in person.json()['data'][0]
-                                        ['accommodations'])
-                                      Text(req)
-                                  ]),
-                                ),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: const Text('Acknowledge'),
-                                    onPressed: () =>
-                                        Navigator.pop(context, 'ack'),
+                    if (code != "start" && code != "finish") {
+                      var person = await Requests.post(
+                          'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/passenger/',
+                          json: {"_id": code});
+                      if (person.json()['data'][0]['accommodations'].length !=
+                          0) {
+                        showDialog<dynamic>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Accommodations present:'),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(children: <Widget>[
+                                      for (var req in person.json()['data'][0]
+                                          ['accommodations'])
+                                        Text(req)
+                                    ]),
                                   ),
-                                ],
-                              ));
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text('Acknowledge'),
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'ack'),
+                                    ),
+                                  ],
+                                ));
+                      }
+                      person.raiseForStatus();
                     }
-                    // }
-
-                    person.raiseForStatus();
 
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
                     var compJson = prefs.getString(CUSTOMER_SERVICE_KEY);
                     var compData = jsonDecode(compJson!);
-
-                    var reply = scanPassenger(
-                        passengerId: code!, competitor: compData["username"]);
+                    if (code == "start") {
+                      scanStart(competitor: compData["username"]);
+                    } else if (code == "finish") {
+                      scanFinish(competitor: compData["username"]);
+                    } else {
+                      await scanPassenger(
+                          passengerId: code!, competitor: compData["username"]);
+                    }
                   },
-                  child: Text('Query based on ${this.code}'),
+                  child: Text('Query based on $code'),
                 ),
                 ElevatedButton(
                     onPressed: () {
@@ -236,13 +243,19 @@ class _RSEScanAppState extends State<RSEScanApp> {
                         context: context,
                         onCode: (code) async {
                           await SharedPreferences.getInstance()
-                          .then((prefs) async {
+                              .then((prefs) async {
                             var comp = prefs.getString(RAMP_SERVICES_KEY);
                             var compData = jsonDecode(comp!);
-                            await scanBag(
-                              bagId: code!, competitor: compData["username"])
-                              .then((reply) {
-                              });
+                            if (code! == "start") {
+                              scanStart(competitor: compData["username"]);
+                            } else if (code == "finish") {
+                              scanFinish(competitor: compData["username"]);
+                            } else {
+                              await scanBag(
+                                      bagId: code,
+                                      competitor: compData["username"])
+                                  .then((reply) {});
+                            }
                           });
                           setState(() {
                             this.code = code;

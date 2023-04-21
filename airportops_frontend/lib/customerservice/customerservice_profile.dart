@@ -17,16 +17,13 @@ import 'package:airportops_frontend/classes/competitor.dart';
 
 class CSRRoute extends StatelessWidget {
   CSRRoute({Key? key, Map<String, dynamic>? competitor}) : super(key: key) {
+    print(competitor);
     this.competitor = competitor!;
   }
 
   late Map<String, dynamic> competitor;
 
-
-
   List<Event> events = [];
-
-
 
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
@@ -74,12 +71,14 @@ class CSRRoute extends StatelessWidget {
         lastname: competitor["last"],
         stationCode: 'stationCode',
         username: competitor["username"],
-        event: 'event',
+        event: "event",
         bagsScanned: [],
         passengersScanned: [],
         position: Position.Csr,
         wrong: 0,
-        scanned: 0);
+        scanned: 0,
+        startTime: "",
+        endTime: "");
 
     void submit() async {
       //c = await customerRetreval();

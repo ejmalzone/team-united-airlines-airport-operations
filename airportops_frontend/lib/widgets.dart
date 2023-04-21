@@ -325,7 +325,7 @@ class PCardState extends State<PCard> {
                       padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
                       child: Text(
                         //'R-${p.reservationNum}|
-                        'Scantime: ${widget.p.scanTime}',
+                        'Time Scanned: ${widget.p.scanTime}',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontFamily: 'Open Sans',
@@ -472,6 +472,7 @@ class BCardState extends State<BCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+      print(widget.b.scanTime);
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -532,7 +533,7 @@ class BCardState extends State<BCard> {
                       padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
                       child: Text(
                         //'R-${p.reservationNum}|
-                        'Scantime: ${widget.b.scanTime}',
+                        'Time Scanned: ${widget.b.scanTime ?? 'Not yet scanned.'}',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontFamily: 'Open Sans',

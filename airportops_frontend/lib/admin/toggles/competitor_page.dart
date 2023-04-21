@@ -279,7 +279,7 @@ class CCardState extends State<CCard> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             //'R-${p.reservationNum}|
-                            '@${widget.c.username}',
+                            '@${widget.c.username}\n\nStarted at: ${widget.c.startTime}\nEnded at: ${widget.c.endTime}',
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontFamily: 'Open Sans',
