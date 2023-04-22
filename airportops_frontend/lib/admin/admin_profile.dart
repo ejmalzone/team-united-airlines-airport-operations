@@ -210,20 +210,23 @@ class AdminRouteState extends State<AdminRoute> {
                     ),
                   ),
                 ),
-                Flexible(
-                  child: SizedBox(
-                      child: Column(
-                    //child: ListView(
-                    children: List.generate(events.length, (index) {
-                      return EventBox(
-                        event: events[index],
-                      );
-                    }),
-                  )),
-                ),
+                //Flexible(
+                //child: SizedBox(
+                SizedBox(
+                    child: Column(
+                  //child: ListView(
+                  children: List.generate(events.length, (index) {
+                    return EventBox(
+                      event: events[index],
+                    );
+                  }),
+                )),
+                //),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                  child: Expanded(
+                  //child: Expanded(
+                  child: SizedBox(
+                    height: 100,
                     child: Align(
                       alignment: Alignment.bottomLeft,
                       child: Container(
@@ -479,7 +482,8 @@ class _CurrBoxState extends State<CurrBox> {
                                         : Position.Ramp,
                                     wrong: 0,
                                     scanned: 0,
-                                    startTime: comp["startTime"] ?? "Not started.",
+                                    startTime:
+                                        comp["startTime"] ?? "Not started.",
                                     endTime: comp["endTime"] ?? "Not ended."));
                               }
                             }
