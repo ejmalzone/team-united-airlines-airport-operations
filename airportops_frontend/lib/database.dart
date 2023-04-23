@@ -298,11 +298,11 @@ Future<Map<String, dynamic>> scanPassenger(
       });
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  //print(data);
   return data;
 }
 
-Future<Map<String, dynamic>> scanStart(
-    {required String competitor}) async {
+Future<Map<String, dynamic>> scanStart({required String competitor}) async {
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('yyyy-MM-dd-HH-mm-ss');
   final String formatted = formatter.format(now);
@@ -311,11 +311,11 @@ Future<Map<String, dynamic>> scanStart(
       json: {"competitor": competitor, "scanTime": formatted});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
+  //print(data);
   return data;
 }
 
-Future<Map<String, dynamic>> scanFinish(
-    {required String competitor}) async {
+Future<Map<String, dynamic>> scanFinish({required String competitor}) async {
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('yyyy-MM-dd-HH-mm-ss');
   final String formatted = formatter.format(now);

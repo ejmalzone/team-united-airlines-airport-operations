@@ -265,43 +265,56 @@ class AdminRouteState extends State<AdminRoute> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Color(0xFF00239E),
-                    ),
-                    onPressed: () async {
-                      openDialog();
-                    },
-                    child: Text(
-                      "Generate New Event",
-                      style: TextStyle(
-                        fontFamily: 'Open Sans',
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 30, 10, 20),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Color(0xFF00239E),
+                            ),
+                            onPressed: () async {
+                              openDialog();
+                            },
+                            child: Text(
+                              "New Event",
+                              style: TextStyle(
+                                fontFamily: 'Open Sans',
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(50, 30, 50, 20),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Color(0xFF00239E),
-                    ),
-                    onPressed: () async {
-                      newAdmin createAdmin = await Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => NewAdmin()));
-                      await signupRequest(
-                          createAdmin.usernameAdmin, createAdmin.passwordAdmin);
-                    },
-                    child: Text(
-                      "Create New Admin",
-                      style: TextStyle(
-                        fontFamily: 'Open Sans',
+                      Flexible(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 30, 0, 20),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Color(0xFF00239E),
+                            ),
+                            onPressed: () async {
+                              newAdmin createAdmin = await Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => NewAdmin()));
+                              await signupRequest(
+                                  createAdmin.usernameAdmin, createAdmin.passwordAdmin);
+                            },
+                            child: Text(
+                              "New Admin",
+                              style: TextStyle(
+                                fontFamily: 'Open Sans',
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ],

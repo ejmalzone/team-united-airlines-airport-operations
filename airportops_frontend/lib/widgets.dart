@@ -274,7 +274,7 @@ class PCardState extends State<PCard> {
                       backgroundColor: Colors.black,
                       centerTitle: true,
                     ),
-                    body: PassengerProfile(
+                    body: AdminPassengerProfile(
                         title: "${widget.p.fullName} 's Profile",
                         passenger: widget.p))));
         print('tapped card');
@@ -472,7 +472,7 @@ class BCardState extends State<BCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-      print(widget.b.scanTime);
+        print(widget.b.scanTime);
         Navigator.push(
             context,
             MaterialPageRoute(

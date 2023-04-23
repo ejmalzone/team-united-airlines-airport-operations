@@ -166,14 +166,9 @@ class BagProfile extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  SizedBox(
-                                    width: 300,
-                                    child: DottedLine(),
-                                  ),
-                                ],
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width/2,
+                                child: DottedLine(),
                               ),
                               Column(
                                 mainAxisSize: MainAxisSize.max,

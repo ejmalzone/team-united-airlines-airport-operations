@@ -254,13 +254,13 @@ class PassengerDisplayRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Passenger> passengers = [];
-    List<PassengerProfile> profiles = [];
+    List<AdminPassengerProfile> profiles = [];
     for (var passenger in data['data']) {
       passengers.add(Passenger.fromJson(passenger));
     }
 
     for (var person in passengers) {
-      profiles.add(PassengerProfile(title: 'test', passenger: person));
+      profiles.add(AdminPassengerProfile(title: 'test', passenger: person));
     }
     return Scaffold(
         appBar: AppBar(
@@ -555,7 +555,8 @@ class ExamplePassengerProfileApp extends StatelessWidget {
         title: const Text('Passenger Profile'),
       ),
       body: Center(
-        child: PassengerProfile(title: 'Passenger Profile', passenger: testP),
+        child:
+            AdminPassengerProfile(title: 'Passenger Profile', passenger: testP),
       ),
     );
   }
