@@ -30,7 +30,7 @@ Future<void> main() async {
   runApp(MaterialApp(
     //routerConfig: _router,
     debugShowCheckedModeBanner: false,
-    //initialRoute: '/',
+    initialRoute: '/',
     routes: {
       //'/': (context) => LoginRoute(),
       //'/portal': (context) => PortalRoute(),
