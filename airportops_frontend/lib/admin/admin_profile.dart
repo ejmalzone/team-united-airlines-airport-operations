@@ -611,6 +611,7 @@ class EventBox extends StatelessWidget {
                         child: IconButton(
                           onPressed: () async {
                             event.Reset();
+
                             await passengerRequest(event.name).then((pReq) {
                               if (pReq['status'] == 'success') {
                                 for (var passenger in pReq['data']) {

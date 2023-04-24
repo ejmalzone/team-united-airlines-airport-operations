@@ -8,6 +8,7 @@ import 'package:airportops_frontend/admin/toggles/ramp.dart';
 import 'package:airportops_frontend/customerservice/customerservice_profile.dart';
 import 'package:airportops_frontend/main.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
+import 'package:airportops_frontend/admin/toggles/results.dart';
 import 'package:flutter/material.dart';
 import '../classes/events.dart';
 import '../widgets.dart';
@@ -24,7 +25,7 @@ class EventRouteState extends State<EventRoute> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
@@ -36,26 +37,27 @@ class EventRouteState extends State<EventRoute> {
             children: [
               TabBar(
                 tabs: [
-                  Tab( 
+                  Tab(
                     icon: Icon(Icons.airplane_ticket, color: Colors.black),
                   ),
-                  Tab( 
+                  Tab(
                     icon: Icon(Icons.luggage, color: Colors.black),
                   ),
-                  Tab( 
+                  Tab(
                     icon: Icon(Icons.person, color: Colors.black),
+                  ),
+                  Tab(
+                    icon: Icon(Icons.grading_sharp, color: Colors.black),
                   )
                 ],
               ),
               Expanded(
-                child: TabBarView(
-                  children: [
-                    AdminPassengers(event: widget.event),
-                    AdminRamp(event: widget.event),
-                    CompetitorsPage(event: widget.event)
-              
-                  ]
-                ),
+                child: TabBarView(children: [
+                  AdminPassengers(event: widget.event),
+                  AdminRamp(event: widget.event),
+                  CompetitorsPage(event: widget.event),
+                  ResultsPage(),
+                ]),
               ),
             ],
           ),
