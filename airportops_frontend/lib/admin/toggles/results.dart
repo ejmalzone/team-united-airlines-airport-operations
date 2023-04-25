@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/enums.dart';
@@ -11,6 +12,7 @@ import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/customerservice/event_details.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:airportops_frontend/database.dart';
+import 'package:intl/intl.dart';
 
 class ResultsPage extends StatefulWidget {
   Event event;
@@ -21,30 +23,88 @@ class ResultsPage extends StatefulWidget {
 }
 
 class _ResultsPageState extends State<ResultsPage> {
-  List<Event> _foundResults = [];
+  List<Competitor> _foundCompetitors = [];
   @override
   void initState() {
-    _foundResults = widget.event.results;
+    _foundCompetitors = widget.event.competitors;
     super.initState();
   }
 
-  void filter(String keyword) {
-    List<Event> results = [];
-    if (keyword.isEmpty) {
-      results = widget.event.results;
-    } else {
-      results = widget.event.results
-          .where((b) => b.name.toLowerCase().contains(keyword.toLowerCase()))
-          .toList();
+  String firstScan(Event event1) {
+    String lowestTime = '';
+
+    List<Competitor> results;
+    List<DateTime> dateTimes = [];
+
+    for (Competitor results in event1.competitors) {
+      if (results.startTime != 'Not started.') {
+        String? dateString = results.startTime;
+        DateTime dateTime = DateTime.parse(dateString!);
+        dateTimes.add(dateTime);
+        dateTimes.sort((a, b) => a.compareTo(b));
+        DateTime lowestDateTime = dateTimes.first;
+
+        DateTime now = DateTime.now();
+        String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+        DateTime dateTime2 = DateTime.parse(formattedDate);
+
+        Duration diff = dateTime2.difference(lowestDateTime);
+
+        lowestTime = diff.toString();
+      }
     }
-    setState(() {
-      _foundResults = results;
-    });
+    return '$lowestTime is how long the event has been going on for';
+  }
+
+  String timeGraph(Event event1) {
+    String lowestTime = '';
+    String totalTimes = '';
+    String totalNames = '';
+    String masterListStr = '';
+
+    List<Competitor> results;
+    List<String> dateTimes = [];
+    List<String> usernameString = []; //username string
+    List<String> masterList = [];
+
+    for (Competitor results in event1.competitors) {
+      if (results.startTime != 'Not started.' &&
+          results.endTime != 'Not started.') {
+        String? dateString = results.startTime;
+        String? dateString2 = results.endTime;
+        String nameString = results.username; //username
+
+        DateTime dateTime = DateTime.parse(dateString!);
+
+        DateTime dateTime2 = DateTime.parse(dateString2!);
+
+        Duration difference = dateTime2.difference(dateTime);
+
+        lowestTime = difference.toString();
+        dateTimes.add(lowestTime);
+        usernameString.add(nameString); //add name  
+      }
+    }
+
+    totalTimes = dateTimes.join(', ');
+    totalNames = usernameString.join(', ');
+
+    //print(totalNames);
+    //print(totalTimes);
+
+    for (int i = 0; i < usernameString.length && i < dateTimes.length; i++) {
+      masterList.add('${usernameString[i]} took ${dateTimes[i]}');
+    }
+
+    masterListStr = masterList.join(', ');
+    //print(masterListStr);
+
+
+    return masterListStr;
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.event.competitors.length.toString());
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -83,7 +143,7 @@ class _ResultsPageState extends State<ResultsPage> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  'How long did the rodeo take?',
+                  firstScan(widget.event),
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     color: Colors.black,
@@ -129,7 +189,7 @@ class _ResultsPageState extends State<ResultsPage> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  'time series graph of how long it took with when people were checked in.',
+                  timeGraph(widget.event),
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     color: Colors.black,
