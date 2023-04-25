@@ -7,7 +7,6 @@ import 'package:jiffy/jiffy.dart';
 class Event {
   final String name;
 
-
   int p_boarded;
   int p_unboarded;
   int p_wrong;
@@ -19,6 +18,7 @@ class Event {
   List<Passenger> passengers = [];
   List<Baggage> bags = [];
   List<Competitor> competitors = [];
+  List<Event> results = [];
 
   Event(
       this.name,

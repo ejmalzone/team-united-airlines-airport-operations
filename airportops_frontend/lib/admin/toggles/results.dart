@@ -10,12 +10,41 @@ import 'package:flutter/material.dart';
 import 'package:airportops_frontend/classes/events.dart';
 import 'package:airportops_frontend/customerservice/event_details.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:airportops_frontend/database.dart';
 
-class ResultsPage extends StatelessWidget {
-  const ResultsPage({Key? key}) : super(key: key);
+class ResultsPage extends StatefulWidget {
+  Event event;
+  ResultsPage({Key? key, required this.event}) : super(key: key);
+
+  @override
+  State<ResultsPage> createState() => _ResultsPageState();
+}
+
+class _ResultsPageState extends State<ResultsPage> {
+  List<Event> _foundResults = [];
+  @override
+  void initState() {
+    _foundResults = widget.event.results;
+    super.initState();
+  }
+
+  void filter(String keyword) {
+    List<Event> results = [];
+    if (keyword.isEmpty) {
+      results = widget.event.results;
+    } else {
+      results = widget.event.results
+          .where((b) => b.name.toLowerCase().contains(keyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundResults = results;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.event.competitors.length.toString());
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -31,7 +60,7 @@ class ResultsPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  'Current Event - Rodeo Name',
+                  'Results page for: ${widget.event.name}',
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     color: Colors.black,
@@ -77,7 +106,7 @@ class ResultsPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  'How mant people were involved',
+                  'Total number of competitors: ${widget.event.competitors.length.toString()}',
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     color: Colors.black,

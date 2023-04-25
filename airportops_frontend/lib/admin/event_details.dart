@@ -56,7 +56,7 @@ class EventRouteState extends State<EventRoute> {
                   AdminPassengers(event: widget.event),
                   AdminRamp(event: widget.event),
                   CompetitorsPage(event: widget.event),
-                  ResultsPage(),
+                  ResultsPage(event: widget.event),
                 ]),
               ),
             ],
