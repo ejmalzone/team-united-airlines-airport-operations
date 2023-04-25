@@ -1,5 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+//https://stackoverflow.com/questions/51579546/how-to-format-datetime-in-flutter
+//used the stackoverflow to help me format, also helped me learn about .parse
+
 import 'package:airportops_frontend/admin/admin_profile.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
 import 'package:airportops_frontend/database.dart';

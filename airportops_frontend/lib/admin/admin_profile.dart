@@ -390,9 +390,9 @@ class _CurrBoxState extends State<CurrBox> {
                   ),
                 ),
               ),
-              Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                  child: ProgressBar(size: size)),
+              //Padding(
+                  //padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  //child: ProgressBar(size: size)),
               //Padding(
               //padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 5),
               //child: ProgressBar(size: size)),
