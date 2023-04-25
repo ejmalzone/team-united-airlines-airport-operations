@@ -27,8 +27,8 @@ Future<void> main() async {
   //var req = await passengerRequest();
   //Map<String, dynamic> eventMap = await eventRequest();
   //runApp(MaterialApp.router(
+  //routerConfig: _router,
   runApp(MaterialApp(
-    //routerConfig: _router,
     debugShowCheckedModeBanner: false,
     initialRoute: '/',
     routes: {

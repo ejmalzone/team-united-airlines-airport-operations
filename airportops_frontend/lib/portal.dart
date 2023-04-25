@@ -208,6 +208,9 @@ class PortalRoute extends StatelessWidget {
           break;
         }
     }
+    /**
+     * Prompt confirming that the user wishes to sign out
+     */
     showDialog<dynamic>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -230,6 +233,9 @@ class PortalRoute extends StatelessWidget {
             ));
   }
 
+  /**
+   * Creates a clickable portal button, provided the text, image, and desired route
+   */
   ElevatedButton makeButton(BuildContext context, String text, String img,
       [String? endRoute]) {
     const buttonTextStyle = TextStyle(
@@ -379,6 +385,9 @@ class PortalRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /**
+     * Separate menu for web portal vs mobile. This is web
+     */
     if (kIsWeb) {
       return Scaffold(
         backgroundColor: Colors.white,
@@ -796,7 +805,9 @@ class PortalRoute extends StatelessWidget {
         ),
       );
     }
-
+    /**
+     * This is the mobile portal code
+     */
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

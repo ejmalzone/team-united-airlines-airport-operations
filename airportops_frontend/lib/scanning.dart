@@ -17,7 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 /*
-  Honeywell Scanner Code
+  Honeywell Scanner Widget
 */
 class HoneywellScanApp extends StatefulWidget {
   @override
@@ -403,6 +403,9 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
   }
 }
 
+/**
+ * Ramp Service Employee Scanning Widget
+ */
 class RSEScanApp extends StatefulWidget {
   @override
   _RSEScanAppState createState() => _RSEScanAppState();

@@ -4,6 +4,10 @@ import 'package:requests/requests.dart';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 
+/**
+ * database.dart contains the implementation of various different API requests
+ */
+
 //Future<String> testRequest() async {
 Future<Map<String, dynamic>> testRequest() async {
   var reply = await Requests.get(
@@ -171,7 +175,8 @@ Future<Map<String, dynamic>> createPassenger(
   return data;
 }
 
-Future<Map<String, dynamic>> changeSeat({required String passengerId, required int seat}) async {
+Future<Map<String, dynamic>> changeSeat(
+    {required String passengerId, required int seat}) async {
   var reply = await Requests.delete(
       'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/seat',
       json: {"passengerId": passengerId, "seat": seat});
