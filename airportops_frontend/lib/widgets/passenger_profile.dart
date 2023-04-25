@@ -21,14 +21,18 @@ class AdminPassengerProfile extends StatelessWidget {
   static const myStyle2 =
       TextStyle(fontWeight: FontWeight.normal, fontSize: 16);
 
-  final String reservation = 'R-${rng.nextInt(9000) + 999}';
+  // final String reservation = 'R-${rng.nextInt(9000) + 999}';
   final String title;
+  late String id;
   final Passenger passenger;
   final Image planeImage =
       Image.asset('assets/airplane_3.png', width: 50, height: 50);
 
   @override
   Widget build(BuildContext context) {
+    String hex = passenger.passengerId;
+    BigInt bin = BigInt.parse(hex, radix: 16);
+    id = "R-${bin.toString().characters.takeLast(5)}";
     return GestureDetector(
         child: Container(
           child: Padding(
@@ -72,6 +76,13 @@ class AdminPassengerProfile extends StatelessWidget {
                                             0], // | ${passenger.citizenship}',
                                         textAlign: TextAlign.justify,
                                         style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Text('Time Scanned: ${passenger.scanTime}',
+                                        textAlign: TextAlign.justify,
+                                        style: const TextStyle(fontSize: 12, color: Color(0xFF850000)),
                                       ),
                                     )
                                   ]),
@@ -117,7 +128,7 @@ class AdminPassengerProfile extends StatelessWidget {
                             children: <Widget>[
                               const Text('Reservation Number',
                                   style: TextStyle(fontSize: 14)),
-                              Text(reservation,
+                              Text(id,
                                   style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold))
@@ -303,7 +314,8 @@ class PassengerProfile extends StatelessWidget {
   static const myStyle2 =
       TextStyle(fontWeight: FontWeight.normal, fontSize: 16);
 
-  final String reservation = 'R-${rng.nextInt(9000) + 999}';
+  // final String reservation = 'R-${rng.nextInt(9000) + 999}';
+  late String id;
   final String title;
   final Passenger passenger;
   final Image planeImage =
@@ -311,8 +323,11 @@ class PassengerProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String hex = passenger.passengerId;
+    BigInt bin = BigInt.parse(hex, radix: 16);
+    id = "R-${bin.toString().characters.takeLast(5)}";
     return GestureDetector(
-        child: Container(
+        child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(16.0),
             child: Column(
@@ -399,7 +414,7 @@ class PassengerProfile extends StatelessWidget {
                             children: <Widget>[
                               const Text('Reservation Number',
                                   style: TextStyle(fontSize: 14)),
-                              Text(reservation,
+                              Text(id,
                                   style: TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold))
@@ -533,18 +548,30 @@ class PassengerProfile extends StatelessWidget {
                           ),
                         ])),
                 Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          Navigator.pop(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.green,
-                        ),
-                        child: const Text('Go Back')),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                          onPressed: () async {
+                            Navigator.pop(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.green,
+                              minimumSize: Size(30, 10)),
+                          child: const Text('Go Back')),
+                      ElevatedButton(
+                          onPressed: () async {
+                            Navigator.pop(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Color(0xFF850000),
+                          ),
+                          child: const Text('Edit')),
+                    ],
                   ),
                 )
               ],

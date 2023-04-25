@@ -261,8 +261,12 @@ class PCard extends StatefulWidget {
 }
 
 class PCardState extends State<PCard> {
+  late String pId;
   @override
   Widget build(BuildContext context) {
+    String hex = widget.p.passengerId;
+    BigInt bin = BigInt.parse(hex, radix: 16);
+    pId = "R-${bin.toString().characters.takeLast(5)}";
     return GestureDetector(
       onTap: () async {
         Navigator.push(
@@ -312,7 +316,7 @@ class PCardState extends State<PCard> {
                       padding: EdgeInsetsDirectional.fromSTEB(10, 6, 0, 10),
                       child: Text(
                         //'R-${p.reservationNum}|
-                        '${widget.p.passengerId} | ${widget.p.flightSource} to ${widget.p.flightDestination}',
+                        '$pId | ${widget.p.flightSource} to ${widget.p.flightDestination}',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontFamily: 'Open Sans',
@@ -511,7 +515,7 @@ class BCardState extends State<BCard> {
                         "${widget.b.fullName}'s bag",
                         style: TextStyle(
                           fontFamily: 'Open Sans',
-                          fontSize: 20,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

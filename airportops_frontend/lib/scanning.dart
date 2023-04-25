@@ -222,7 +222,7 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                                   setState(() {
                                     // Web scanning prepends "Scan Result:" onto
                                     // result, need substring to remove
-                                    this.code = code?.substring(15);
+                                    this.code = code.substring(15);
                                     last = person.fullName;
                                   });
                                 } else {
@@ -339,7 +339,7 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                               setState(() {
                                 // Web scanning prepends "Scan Result:" onto
                                 // result, need substring to remove
-                                this.code = code?.substring(15);
+                                this.code = code.substring(15);
                                 last = person.fullName;
                               });
                             } else {

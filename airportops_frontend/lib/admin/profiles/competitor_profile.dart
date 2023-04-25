@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/competitor.dart';
+import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,22 @@ class CompProfile extends StatefulWidget {
 
 class CompProfileState extends State<CompProfile> {
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
+
+  Widget output() {
+    if (widget.c.position == Position.Csr) {
+      return ListView(
+        children:List.generate(widget.c.passengersScanned.length, (index) {
+          return PCard(p:widget.c.passengersScanned[index]);}
+        )
+      );
+    }
+    return ListView(
+        children:List.generate(widget.c.bagsScanned.length, (index) {
+          return BCard(b:widget.c.bagsScanned[index]);}
+        )
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -96,18 +114,17 @@ class CompProfileState extends State<CompProfile> {
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(30, 10, 0,0),
+          padding: EdgeInsetsDirectional.fromSTEB(30, 10, 0, 0),
           child: SizedBox(
-            height: 40,
-            child: Text(
-              'Scanning History',
-              style: TextStyle(
-                fontFamily: 'Open Sans',
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            )
-          ),
+              height: 40,
+              child: Text(
+                'Scanning History',
+                style: TextStyle(
+                  fontFamily: 'Open Sans',
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              )),
         ),
         Flexible(
           child: Container(
@@ -115,16 +132,14 @@ class CompProfileState extends State<CompProfile> {
             decoration: BoxDecoration(
               color: Color.fromARGB(255, 201, 201, 201),
             ),
-            child: ListView(
-              // mainAxisSize: MainAxisSize.max,
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: List.generate(widget.c.passengersScanned.length, (index) {
-                return PCard(p: widget.c.passengersScanned[index]);
-              }),
-            ),
+            child: output(),
           ),
         )
       ],
     );
   }
 }
+
+                  // List.generate(widget.c.passengersScanned.length, (index) {
+                  //   return PCard(p:widget.c.passengersScanned[index]);
+                  // })

@@ -152,5 +152,6 @@ final Map<String, String> countries = {
   "AVL": "Asheville",
   "HSV": "Huntsville",
   "HND": "Tokyo",
-  "HYS": "Hays"
+  "HYS": "Hays",
+  "ORD": "Chicago",
 };
