@@ -171,6 +171,16 @@ Future<Map<String, dynamic>> createPassenger(
   return data;
 }
 
+Future<Map<String, dynamic>> changeSeat({required String passengerId, required int seat}) async {
+  var reply = await Requests.delete(
+      'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/passenger/seat',
+      json: {"passengerId": passengerId, "seat": seat});
+  String body = reply.content();
+  Map<String, dynamic> data = jsonDecode(body);
+  print(data);
+  return data;
+}
+
 Future<Map<String, dynamic>> deletePassenger(
     {required String passengerId}) async {
   var reply = await Requests.delete(
