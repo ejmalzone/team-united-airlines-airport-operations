@@ -5,8 +5,10 @@ import 'package:airportops_frontend/classes/baggage.dart';
 import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:airportops_frontend/printing/pdfs.dart';
+import 'package:airportops_frontend/progress_bar.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../classes/events.dart';
 import 'competitor_page.dart';
@@ -42,8 +44,23 @@ class _AdminPassengersState extends State<AdminPassengers> {
     });
   }
 
+  double getPercentage() {
+    int boarded = widget.event.p_boarded;
+    int unboarded = widget.event.p_unboarded;
+    int wrong = widget.event.p_wrong;
+    double percentage = ((boarded + wrong) / (boarded + unboarded + wrong));
+
+    return percentage;
+  }
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width / 3;
+    int height = 20;
+    Size size = Size(width.toDouble(), height.toDouble());
+
+    double percentageString = getPercentage() * 100;
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -189,6 +206,20 @@ class _AdminPassengersState extends State<AdminPassengers> {
             ],
           ),
         ),
+        //ProgressBar(size: size, event: widget.event),
+        Padding(
+          padding: EdgeInsets.all(15.0),  
+          child: LinearPercentIndicator(
+            width: MediaQuery.of(context).size.width / 3,
+            animation: true,
+            lineHeight: 20.0,
+            animationDuration: 2500,
+            percent: getPercentage(),
+            center: Text("${percentageString.toStringAsFixed(2)} %"),
+            linearStrokeCap: LinearStrokeCap.roundAll,
+            progressColor: Colors.green,
+          ),
+        ),
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(50, 10, 50, 8),
           child: TextField(
@@ -217,48 +248,44 @@ class _AdminPassengersState extends State<AdminPassengers> {
         ),
         SizedBox(
           height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () async {
-                  Passenger newPassenger = await Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => NewPassenger()));
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            ElevatedButton(
+              onPressed: () async {
+                Passenger newPassenger = await Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewPassenger()));
 
-                  setState(() {
-                    widget.event.addPassenger(newPassenger);
-                    var newPass = createPassenger(
-                        first: newPassenger.nameFirst,
-                        last: newPassenger.nameLast,
-                        DOB: newPassenger.birthday.toIso8601String(),
-                        row: newPassenger.row,
-                        seat: newPassenger.seat,
-                        originAirport: newPassenger.flightSource,
-                        destinationAirport: newPassenger.flightDestination,
-                        connection: newPassenger.connection,
-                        gate: newPassenger.wrongGate,
-                        wrongFlight: newPassenger.wrongDeparture,
-                        event: widget.event.name);
-                  });
-                  for (int i = 0; i < widget.event.passengers.length; i++) {
-                    print("${widget.event.passengers[i].fullName} - ${widget.event.passengers[i].connection}");
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF00239E),
-                ),
-                child: Text(
-                  "Add Passenger",
-                  style: TextStyle(
-                    fontFamily: 'Open Sans',
-                    fontSize: 10
-                  ),
-                ),
+                setState(() {
+                  widget.event.addPassenger(newPassenger);
+                  var newPass = createPassenger(
+                      first: newPassenger.nameFirst,
+                      last: newPassenger.nameLast,
+                      DOB: newPassenger.birthday.toIso8601String(),
+                      row: newPassenger.row,
+                      seat: newPassenger.seat,
+                      originAirport: newPassenger.flightSource,
+                      destinationAirport: newPassenger.flightDestination,
+                      connection: newPassenger.connection,
+                      gate: newPassenger.wrongGate,
+                      wrongFlight: newPassenger.wrongDeparture,
+                      event: widget.event.name);
+                });
+                for (int i = 0; i < widget.event.passengers.length; i++) {
+                  print(
+                      "${widget.event.passengers[i].fullName} - ${widget.event.passengers[i].connection}");
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Color(0xFF00239E),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                child: ElevatedButton(
+              child: Text(
+                "Add Passenger",
+                style: TextStyle(fontFamily: 'Open Sans', fontSize: 10),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+              child: ElevatedButton(
                   onPressed: () async {
                     var curr = await getCurrentEvent();
                     await setEvent(widget.event.name);
@@ -309,49 +336,45 @@ class _AdminPassengersState extends State<AdminPassengers> {
                       fontSize: 10,
                     ),
                   )),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                final data = (await currPassengerRequest())['data'];
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+              child: ElevatedButton(
+                onPressed: () async {
+                  final data = (await currPassengerRequest())['data'];
 
-                List<Passenger> passengers = [];
-                for (var passengerInstance in data) {
-                  passengers.add(Passenger.fromJson(passengerInstance));
-                }
+                  List<Passenger> passengers = [];
+                  for (var passengerInstance in data) {
+                    passengers.add(Passenger.fromJson(passengerInstance));
+                  }
 
-                PdfCreator.generateBoardingPassPages(passengers);
+                  PdfCreator.generateBoardingPassPages(passengers);
 
-                showDialog<dynamic>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                      title: const Text("Generating..."),
-                      content: const Text("Generating PDF"),
-                      actions: [
-                        TextButton(
-                            child: Text("Ok"),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            })
-                      ]),
-                );
-                  },
-                  style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Color(0xFF00239E),
-                  ),
-                  child: Text(
-                "Print Boarding Passes",
-                style: TextStyle(
-                  fontFamily: 'Open Sans',
-                  fontSize: 10
+                  showDialog<dynamic>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                        title: const Text("Generating..."),
+                        content: const Text("Generating PDF"),
+                        actions: [
+                          TextButton(
+                              child: Text("Ok"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              })
+                        ]),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xFF00239E),
                 ),
-                  ),
+                child: Text(
+                  "Print Boarding Passes",
+                  style: TextStyle(fontFamily: 'Open Sans', fontSize: 10),
                 ),
               ),
-            ]
-          ),
+            ),
+          ]),
         )
       ],
     );

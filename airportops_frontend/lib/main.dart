@@ -40,7 +40,7 @@ Future<void> main() async {
       '/home': (context) => const HomeRoute(),
       '/examplePassenger': (context) => ExamplePassengerProfileApp(),
       '/baggage': (context) => BaggageRoute(),
-      '/bars': (context) => const ProgressBarRoute(),
+      //'/bars': (context) => const ProgressBarRoute(),
       '/dbTesting': (context) => const DatabaseRoute(),
       '/scanning': (context) => const ScanRoute(),
       '/camera': (context) => UniversalScanApp(),
@@ -569,32 +569,32 @@ class ExamplePassengerProfileApp extends StatelessWidget {
   }
 }
 
-class ProgressBarRoute extends StatelessWidget {
-  const ProgressBarRoute({super.key});
+// class ProgressBarRoute extends StatelessWidget {
+//   const ProgressBarRoute({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    GlobalKey<ProgressState> myKey = GlobalKey();
-    var barA = ProgressBar(key: myKey, size: Size(200, 120));
+//   @override
+//   Widget build(BuildContext context) {
+//     GlobalKey<ProgressState> myKey = GlobalKey();
+//     //var barA = ProgressBar(key: myKey, size: Size(200, 120));
 
-    return Scaffold(
-        appBar: AppBar(title: const Text('Progress Bars Demo')),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            barA,
-            OutlinedButton(
-              onPressed: () {
-                myKey.currentState!.currentProgress =
-                    myKey.currentState!.currentProgress + 0.1;
-              },
-              child: Image.asset('assets/icons8-airport-64.png'),
-            )
-          ].withSpaceBetween(height: 8),
-        )));
-  }
-}
+//     return Scaffold(
+//         appBar: AppBar(title: const Text('Progress Bars Demo')),
+//         body: Center(
+//             child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             barA,
+//             OutlinedButton(
+//               onPressed: () {
+//                 myKey.currentState!.currentProgress =
+//                     myKey.currentState!.currentProgress + 0.1;
+//               },
+//               child: Image.asset('assets/icons8-airport-64.png'),
+//             )
+//           ].withSpaceBetween(height: 8),
+//         )));
+//   }
+// }
 
 class QRImage extends StatelessWidget {
   const QRImage(this.passId, {super.key});

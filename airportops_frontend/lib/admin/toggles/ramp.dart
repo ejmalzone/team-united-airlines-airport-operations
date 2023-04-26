@@ -6,6 +6,7 @@ import 'package:airportops_frontend/printing/pdfs.dart';
 import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../classes/events.dart';
 import 'competitor_page.dart';
@@ -41,8 +42,20 @@ class _AdminRampState extends State<AdminRamp> {
     });
   }
 
+  double getPercentage() {
+    int boarded = widget.event.b_boarded;
+    int unboarded = widget.event.b_unboarded;
+    int wrong = widget.event.b_wrong;
+    double percentage = ((boarded + wrong) / (boarded + unboarded + wrong));
+
+    return percentage;
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    double percentageString = getPercentage() * 100;
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -186,6 +199,19 @@ class _AdminRampState extends State<AdminRamp> {
                 ),
               ),
             ],
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(15.0),  
+          child: LinearPercentIndicator(
+            width: MediaQuery.of(context).size.width / 3,
+            animation: true,
+            lineHeight: 20.0,
+            animationDuration: 2500,
+            percent: getPercentage(),
+            center: Text("${percentageString.toStringAsFixed(2)} %"),
+            linearStrokeCap: LinearStrokeCap.roundAll,
+            progressColor: Colors.green,
           ),
         ),
         Padding(
