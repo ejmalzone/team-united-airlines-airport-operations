@@ -10,6 +10,7 @@ import 'package:airportops_frontend/enums.dart';
 import 'package:airportops_frontend/main.dart';
 import 'package:airportops_frontend/widgets/passenger_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 /* Creates Profile box
   params: competitor, icon image */

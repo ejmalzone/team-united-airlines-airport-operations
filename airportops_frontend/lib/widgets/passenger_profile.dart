@@ -8,6 +8,7 @@ import 'package:airportops_frontend/extensions.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 import '../classes/passenger.dart';
 import '../main.dart';
@@ -80,9 +81,12 @@ class AdminPassengerProfile extends StatelessWidget {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 10),
-                                      child: Text('Time Scanned: ${passenger.scanTime}',
+                                      child: Text(
+                                        'Time Scanned: ${passenger.scanTime}',
                                         textAlign: TextAlign.justify,
-                                        style: const TextStyle(fontSize: 12, color: Color(0xFF850000)),
+                                        style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Color(0xFF850000)),
                                       ),
                                     )
                                   ]),
@@ -306,9 +310,17 @@ class AdminPassengerProfile extends StatelessWidget {
   }
 }
 
-class PassengerProfile extends StatelessWidget {
-  PassengerProfile({super.key, required this.title, required this.passenger});
+class PassengerProfile extends StatefulWidget {
+  final String title;
+  final Passenger passenger;
+  const PassengerProfile(
+      {super.key, required this.title, required this.passenger});
 
+  @override
+  State<PassengerProfile> createState() => _PassengerProfileState();
+}
+
+class _PassengerProfileState extends State<PassengerProfile> {
   static final rng = Random();
   static const myStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
   static const myStyle2 =
@@ -316,16 +328,45 @@ class PassengerProfile extends StatelessWidget {
 
   // final String reservation = 'R-${rng.nextInt(9000) + 999}';
   late String id;
-  final String title;
-  final Passenger passenger;
   final Image planeImage =
       Image.asset('assets/airplane_3.png', width: 50, height: 50);
 
+  late TextEditingController controller;
+  String editSeat = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    String hex = passenger.passengerId;
+    String hex = widget.passenger.passengerId;
     BigInt bin = BigInt.parse(hex, radix: 16);
     id = "R-${bin.toString().characters.takeLast(5)}";
+    void submit() {
+      Navigator.of(context).pop(controller.text);
+    }
+
+    Future<String?> openDialog() => showDialog<String>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Input new seat"),
+            content: TextField(
+              autofocus: true,
+              decoration: InputDecoration(hintText: "Seat #"),
+              controller: controller,
+            ),
+            actions: [TextButton(onPressed: submit, child: Text('Submit'))],
+          ),
+        );
     return GestureDetector(
         child: SingleChildScrollView(
           child: Padding(
@@ -355,7 +396,7 @@ class PassengerProfile extends StatelessWidget {
                                     //     color: Color(0xFF987700),
                                     //   ),
                                     // ),
-                                    Text(passenger.fullName,
+                                    Text(widget.passenger.fullName,
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
                                             fontSize: 30,
@@ -363,7 +404,7 @@ class PassengerProfile extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 5),
                                       child: Text(
-                                        passenger.birthday
+                                        widget.passenger.birthday
                                                 .toString()
                                                 .split(' ')[
                                             0], // | ${passenger.citizenship}',
@@ -379,7 +420,7 @@ class PassengerProfile extends StatelessWidget {
                                   width: 100,
                                   height: 40,
                                   decoration: BoxDecoration(
-                                    color: passenger.status.color,
+                                    color: widget.passenger.status.color,
                                     borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(23),
                                       bottomRight: Radius.circular(20),
@@ -390,7 +431,7 @@ class PassengerProfile extends StatelessWidget {
                                   child: Align(
                                     alignment: AlignmentDirectional(0, 0),
                                     child: Text(
-                                      passenger.status.name,
+                                      widget.passenger.status.name,
                                       style: TextStyle(
                                         fontFamily: 'Open Sans',
                                         color: Colors.white,
@@ -425,7 +466,7 @@ class PassengerProfile extends StatelessWidget {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                Text(passenger.flightSource,
+                                Text(widget.passenger.flightSource,
                                     style: TextStyle(
                                       fontFamily: 'Open Sans',
                                       fontSize: 30,
@@ -440,7 +481,7 @@ class PassengerProfile extends StatelessWidget {
                                   width: MediaQuery.of(context).size.width / 4,
                                   child: DottedLine(),
                                 ),
-                                Text(passenger.flightDestination,
+                                Text(widget.passenger.flightDestination,
                                     style: TextStyle(
                                       fontFamily: 'Open Sans',
                                       fontSize: 30,
@@ -496,7 +537,8 @@ class PassengerProfile extends StatelessWidget {
                                                       Text('DOB: ',
                                                           style: myStyle),
                                                       Text(
-                                                        passenger.birthday
+                                                        widget
+                                                            .passenger.birthday
                                                             .toString()
                                                             .split(' ')[0],
                                                         style: myStyle2,
@@ -524,9 +566,11 @@ class PassengerProfile extends StatelessWidget {
                                               Text("Seat", style: myStyle),
                                               SizedBox(height: 5),
                                               Text(
-                                                  passenger.seat.toString() +
+                                                  widget.passenger.seat
+                                                          .toString() +
                                                       "-" +
-                                                      passenger.row.toString(),
+                                                      widget.passenger.row
+                                                          .toString(),
                                                   style: TextStyle(
                                                       color: Colors.red,
                                                       fontSize: 16))
@@ -542,7 +586,8 @@ class PassengerProfile extends StatelessWidget {
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(25, 20, 5, 5),
-                            child: Text('    ${passenger.requestsString}',
+                            child: Text(
+                                '    ${widget.passenger.requestsString}',
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold)),
                           ),
@@ -558,13 +603,59 @@ class PassengerProfile extends StatelessWidget {
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.green,
-                              minimumSize: Size(30, 10)),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.green,
+                          ),
                           child: const Text('Go Back')),
                       ElevatedButton(
                           onPressed: () async {
-                            Navigator.pop(context);
+                            final seat = await openDialog();
+                            if (seat == null || seat.isEmpty) return;
+                            // print(seat);
+                            int? seatInt = int.tryParse(seat);
+                            if (seatInt != null) {
+                              await changeSeat(
+                                  passengerId: widget.passenger.passengerId,
+                                  seat: seatInt);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Container(
+                                  padding: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Text(
+                                      "Successfully changed passengers seat",
+                                      textAlign: TextAlign.center),
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                duration: Duration(seconds: 2),
+                              ));
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Container(
+                                  padding: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFF850000),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Text("Error changing seats",
+                                      textAlign: TextAlign.center),
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                duration: Duration(seconds: 2),
+                              ));
+                            }
+                            // setState(() {
+                            //   this.editSeat = seat;
+                            // });
+                            // changeSeat(passengerId: passenger.passengerId, seat: seat)
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
@@ -581,7 +672,7 @@ class PassengerProfile extends StatelessWidget {
         onTap: () async => await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => QRImage(passenger.passengerId),
+                builder: (context) => QRImage(widget.passenger.passengerId),
               ),
             ));
   }
