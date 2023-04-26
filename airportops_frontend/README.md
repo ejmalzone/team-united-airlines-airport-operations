@@ -19,11 +19,12 @@
                 1.  The above command should show the newly created “api” tmux instance
         8.  Connect to the “api” tmux instance via: \$ tmux a -t api
         9.  Change to the “team-united-airlines-airport-operations-api-main” directory
-        10. Enter the following command:
-        11. \$ node ./index.js
-        12. Ctrl + b -\> d to exit the TMUX instance
-        13. The API is now actively running, with the TMUX session being kept alive.
-        14. To update the API endpoint URL in the flutter code:
+        10. Packaged in the API documents is a shell script called “install-prereqs.sh”. This script will download docker and anything that is necessary to deploy the server. Permissions will need to be set for the script to execute, which can be done by typing “chmod +rwx install-prereqs.sh”. Running the script can be done by typing “./install-prereqs.sh”.
+        11. Option 1 for starting: After running the prereqs script, simply type in “docker-compose up” and the server will start with a mongodb database attached to port 27017 and the API attached to port 5000. To change the API port, edit the value “API_PORT” in the script “index.js”.
+        12. Option 2: type “chmod +rwx install-and-start.sh” to give install-and-start execution permissions, then run it by typing “./install-and-start.sh”. This will both install docker and automatically run “docker-compose up”.
+        13. Ctrl + b -\> d to exit the TMUX instance
+        14. The API is now actively running within a Docker container.
+        15. To update the API endpoint URL in the flutter code:
             1.  Open the project file “database.dart” in any editor
             2.  Change the baseURL variable on line 10 to be your EC2 instance’s public IPv4 DNS with ‘/api/’ appended to the end  
                 ![](media/6e20440800b4422804fe1d36cbe0dbed.png)
@@ -47,6 +48,7 @@
         3.  If desired, the web application may be hosted through github pages, AWS S3 buckets, or another comparable host, but the application must run via an HTTPS page for the camera functionalities to work. As a result, the API must be hosted via an HTTPS endpoint, and all of the requests from within the application must also be converted to be HTTPS requests.
             1.  For setting up an EC2 instance using SSL/TLS, consult the following tutorial:
                 1.  <https://docs.aws.amazon.com/cloudhsm/latest/userguide/third-offload-linux-openssl.html>
+        4.  Local hosting of the web-app for access via mobile device is possible, but will also require EC2 TLS/SSL configuration, and may not behave as intended due to platform differences. To locally host the web-app via HTTPS, run "create_cert.py", and this will generate a file named "cert.pem". Build the application for web, put cert.pem and host_server.py in the /build/web directory, and in a terminal window, "python host_server.py" will host the server locally. https://{server_host_address}:4443 will allow access to the web app, but logins and other functionality will not function without TLS/SSL support. 
     6.  Windows:
         1.  Run “build_windows.bat” to generate windows files, program can be safely exited once it has run once
         2.  Program files can be found in /build/windows/runner/Debug
