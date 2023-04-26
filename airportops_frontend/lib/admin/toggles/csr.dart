@@ -208,16 +208,22 @@ class _AdminPassengersState extends State<AdminPassengers> {
         ),
         //ProgressBar(size: size, event: widget.event),
         Padding(
-          padding: EdgeInsets.all(15.0),  
-          child: LinearPercentIndicator(
-            width: MediaQuery.of(context).size.width / 3,
-            animation: true,
-            lineHeight: 20.0,
-            animationDuration: 2500,
-            percent: getPercentage(),
-            center: Text("${percentageString.toStringAsFixed(2)} %"),
-            linearStrokeCap: LinearStrokeCap.roundAll,
-            progressColor: Colors.green,
+          padding: const EdgeInsets.only(top: 8),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              LinearPercentIndicator(
+                width: MediaQuery.of(context).size.width /2,
+                animation: true,
+                lineHeight: 20.0,
+                animationDuration: 1500,
+                percent: getPercentage(),
+                center: Text("${percentageString.toStringAsFixed(2)} %"),
+                barRadius: Radius.circular(5),
+                progressColor: Colors.green,
+              ),
+            ],
           ),
         ),
         Padding(

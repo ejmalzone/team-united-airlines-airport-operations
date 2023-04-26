@@ -1,10 +1,12 @@
+import 'package:airportops_frontend/classes/events.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProgressBar extends StatefulWidget {
   final Size size;
+  final Event event;
 
-  ProgressBar({Key? key, required this.size}) : super(key: key);
+  ProgressBar({Key? key, required this.size, required this.event}) : super(key: key);
 
   @override
   ProgressState createState() => ProgressState();
