@@ -1,4 +1,4 @@
-**HOW TO USE**
+# **HOW TO USE**
 
 1.  Hosting Database/API Endpoints:
     1.  Included within the deliverables are all required files for the API and database.
@@ -30,9 +30,11 @@
     1.  Android
         1.  Run the file “build_android.bat”
         2.  The .apk file will be located under /build/app/outputs/flutter-apk/app-release.apk
+        3.  This file may be installed on Honeywell Scanners as well as most Android devices. 
     2.  iOS
         1.  <https://docs.flutter.dev/deployment/ios>
         2.  Follow flutter documentation for installation/hosting on app store
+        3.  Apple does not allow for the installation of an application in the way that android does with .apk files.
     3.  Web
         1.  Flutter Web is still in Beta, and due to this, Flutter web apps perform somewhat poorly when hosted. With this being the case, web hosting is still possible, but running the app locally will perform far better.
         2.  If running locally, flutter must be installed from <https://docs.flutter.dev/get-started/install>
