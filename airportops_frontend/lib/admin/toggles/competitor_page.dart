@@ -139,7 +139,7 @@ class CCard extends StatefulWidget {
 }
 
 class CCardState extends State<CCard> {
-  final String image = 'assets/united-square-64.png';
+  final String image = 'assets/united-airlines-logo-emblem-png-5.png';
   @override
   Widget build(BuildContext context) {
     widget.c.startTime ??= 'Not started.';

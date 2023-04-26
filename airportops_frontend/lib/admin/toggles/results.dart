@@ -309,36 +309,6 @@ class _ResultsPageState extends State<ResultsPage> {
             ),
           ),
         )
-        // Text(getChartData().toString()),
-
-        // Flexible(
-        //   child: Container(
-        //     child: SfCartesianChart(),
-        //   )
-        // )
-        // Container(
-        //   width: double.infinity,
-        //   height: 100,
-        //   decoration: BoxDecoration(
-        //     color: Colors.white,
-        //   ),
-        //   child: Padding(
-        //     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-        //     child: Column(
-        //       mainAxisSize: MainAxisSize.max,
-        //       children: [
-        //         Text(
-        //           timeGraph(widget.event),
-        //           style: TextStyle(
-        //             fontFamily: 'Poppins',
-        //             color: Colors.black,
-        //             fontSize: 22,
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }

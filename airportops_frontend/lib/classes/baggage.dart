@@ -39,7 +39,7 @@ class Baggage {
       required this.scanTime}) {
     final rng = Random(Object.hash(nameFirst, nameLast));
     thumbnail =
-        Image.asset(_assetLocations[rng.nextInt(_assetLocations.length)]);
+        Image.asset(_assetLocations[rng.nextInt(_assetLocations.length)], width: 50, height: 50);
   }
 
   String get fullName {
