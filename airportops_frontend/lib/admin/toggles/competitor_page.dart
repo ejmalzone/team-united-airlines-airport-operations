@@ -142,6 +142,8 @@ class CCardState extends State<CCard> {
   final String image = 'assets/icons8-circled-user-male-skin-type-6-96.png';
   @override
   Widget build(BuildContext context) {
+    widget.c.startTime ??= 'Not started.';
+    widget.c.endTime ??= 'Not ended.';
     return GestureDetector(
       onTap: () async {
         widget.c.Reset();
