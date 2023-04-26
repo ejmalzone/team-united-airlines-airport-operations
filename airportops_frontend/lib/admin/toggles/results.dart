@@ -12,7 +12,7 @@ import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/classes/events.dart';
-import 'package:airportops_frontend/customerservice/event_details.dart';
+
 import 'package:jiffy/jiffy.dart';
 import 'package:airportops_frontend/database.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +28,7 @@ class ResultsPage extends StatefulWidget {
 
 class _ResultsPageState extends State<ResultsPage> {
   List<Competitor> _foundCompetitors = [];
-  late List<GraphData> chartData;
+  late List<GraphData> chartData = [];
   late TooltipBehavior tooltip;
   @override
   void initState() {
@@ -88,19 +88,18 @@ class _ResultsPageState extends State<ResultsPage> {
 
   Map<String, double> timeGraph(Event event1) {
     String lowestTime = '';
-    // String totalTimes = '';
-    // String totalNames = '';
-    // String masterListStr = '';
     final Map<String, double> graphdata = {};
-
+    print(event1.competitors.length);
     List<Competitor> results;
     List<double> dateTimes = [];
     List<String> usernameString = []; //username string
     List<String> masterList = [];
 
     for (Competitor results in event1.competitors) {
-      if (results.startTime != 'Not started.' &&
-          results.endTime != 'Not started.') {
+      results.startTime ??= 'Not started.';
+      results.endTime ??= 'Not ended.';
+      if (results.startTime != null && results.endTime != null && results.startTime != 'Not started.' &&
+          results.endTime! != 'Not ended.') {
         String? dateString = results.startTime;
         String? dateString2 = results.endTime;
         String nameString = results.fullname; //username
@@ -114,7 +113,7 @@ class _ResultsPageState extends State<ResultsPage> {
         lowestTime = difference.toString();
         String formattedTime = lowestTime.substring(0, lowestTime.length - 7);
         dateTimes.add(toMinutes(formattedTime));
-        usernameString.add(nameString); //add name
+        usernameString.add(nameString); 
       }
     }
 
@@ -139,10 +138,10 @@ class _ResultsPageState extends State<ResultsPage> {
   List<GraphData> getChartData() {
     final List<GraphData> data = [];
     Map<String, double> graphdata = timeGraph(widget.event);
-    print("this is ${graphdata}");
     for (var item in graphdata.entries) {
       data.add(GraphData(item.key, item.value));
     }
+
     return data;
   }
 
@@ -217,36 +216,34 @@ class _ResultsPageState extends State<ResultsPage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 15), 
-          child: SfCartesianChart(
-            title: ChartTitle(
-                text: "Scanning durations",
-                textStyle: TextStyle(
-                  fontFamily: 'Open Sans',
-                  fontSize: 20,
-                  fontWeight: FontWeight.w800,
-                  color: Color(0xFF008525),
-                )),
-            tooltipBehavior: tooltip,
-            series: <ChartSeries>[
-              BarSeries<GraphData, String>(
-                  name: 'Duration',
-                  dataSource: chartData,
-                  xValueMapper: (GraphData item, _) => item.name,
-                  yValueMapper: (GraphData item, _) => item.time,
-                  dataLabelSettings: DataLabelSettings(isVisible: true),
-                  enableTooltip: true)
-            ],
-            primaryXAxis: CategoryAxis(title: AxisTitle(text: 'Competitors')),
-            primaryYAxis: NumericAxis(
-              edgeLabelPlacement: EdgeLabelPlacement.shift,
-              title: AxisTitle(text: 'Time in minutes'),
-            ),
-          )
-        ),
+            padding: const EdgeInsets.only(top: 15),
+            child: SfCartesianChart(
+              title: ChartTitle(
+                  text: "Scanning durations",
+                  textStyle: TextStyle(
+                    fontFamily: 'Open Sans',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF008525),
+                  )),
+              tooltipBehavior: tooltip,
+              series: <ChartSeries>[
+                BarSeries<GraphData, String>(
+                    name: 'Duration',
+                    dataSource: chartData,
+                    xValueMapper: (GraphData item, _) => item.name,
+                    yValueMapper: (GraphData item, _) => item.time,
+                    dataLabelSettings: DataLabelSettings(isVisible: true),
+                    enableTooltip: true)
+              ],
+              primaryXAxis: CategoryAxis(title: AxisTitle(text: 'Competitors')),
+              primaryYAxis: NumericAxis(
+                edgeLabelPlacement: EdgeLabelPlacement.shift,
+                title: AxisTitle(text: 'Time in minutes'),
+              ),
+            )),
       ],
     );
-  
   }
 
   @override
@@ -298,13 +295,12 @@ class _ResultsPageState extends State<ResultsPage> {
           ),
         ),
         Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 201, 201, 201),
-          ),
-          //height: 100,
-          child: displayGraph()
-        ),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 201, 201, 201),
+            ),
+            //height: 100,
+            child: displayGraph()),
         Flexible(
           child: Container(
             width: double.infinity,

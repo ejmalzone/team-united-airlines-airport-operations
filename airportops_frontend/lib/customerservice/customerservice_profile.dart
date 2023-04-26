@@ -8,7 +8,7 @@ import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/classes/events.dart';
-import 'package:airportops_frontend/customerservice/event_details.dart';
+
 import 'package:jiffy/jiffy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,45 +27,8 @@ class CSRRoute extends StatelessWidget {
 
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
-  // final Competitor c = Competitor(
-  //     firstname: 'firstname',
-  //     lastname: 'lastname',
-  //     stationCode: 'stationCode',
-  //     username: 'username',
-  //     event: 'event',
-  //     bagsScanned: [],
-  //     passengersScanned: [],
-  //     position: Position.Csr);
-
   @override
   Widget build(BuildContext context) {
-    // Future<Competitor> customerRetreval() async {
-    //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    //   String? competitorData = prefs.getString(CUSTOMER_SERVICE_KEY);
-
-    //   String firstName = '';
-    //   String lastName = '';
-    //   String username = '';
-
-    //   if (competitorData != null) {
-    //     Map<String, dynamic> competitor = jsonDecode(competitorData);
-    //     firstName = competitor["first"];
-    //     lastName = competitor["last"];
-    //     username = competitor["username"];
-    //   }
-
-    //   return Competitor(
-    //       firstname: firstName,
-    //       lastname: lastName,
-    //       stationCode: '0',
-    //       username: username,
-    //       event: 'default',
-    //       bagsScanned: [],
-    //       passengersScanned: [],
-    //       position: Position.Csr);
-    // }
-
     final Competitor c = Competitor(
         firstname: competitor["first"],
         lastname: competitor["last"],
@@ -80,11 +43,7 @@ class CSRRoute extends StatelessWidget {
         startTime: "",
         endTime: "");
 
-    void submit() async {
-      //c = await customerRetreval();
-    }
-
-    //submit();
+    void submit() async {}
 
     return Scaffold(
       appBar: AppBar(
