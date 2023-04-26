@@ -169,7 +169,7 @@ Future<Map<String, dynamic>> createPassenger(
 
 Future<Map<String, dynamic>> changeSeat(
     {required String passengerId, required int seat}) async {
-  var reply = await Requests.delete('${baseURL}passenger/seat',
+  var reply = await Requests.put('${baseURL}passenger/seat',
       json: {"passengerId": passengerId, "seat": seat});
   String body = reply.content();
   Map<String, dynamic> data = jsonDecode(body);
