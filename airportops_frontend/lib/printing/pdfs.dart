@@ -109,11 +109,15 @@ class PdfCreator {
 
   static addBoardingPassPage(final pw.MemoryImage unitedLogo,
       final pw.Document document, final Passenger passenger) async {
-    final flag = (passenger.wrongDeparture ||
-            passenger.wrongGate ||
-            passenger.connection)
-        ? '*'
-        : '';
+
+      // uncomment this to bring back flagging wrong passes
+    // final flag = (passenger.wrongDeparture ||
+    //         passenger.wrongGate ||
+    //         passenger.connection)
+    //     ? '*'
+    //     : '';
+
+    const flag = '';
 
     var boardTime = '12:';
     if (passenger.wrongDeparture) {
