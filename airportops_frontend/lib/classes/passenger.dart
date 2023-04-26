@@ -53,6 +53,10 @@ class Passenger {
     }
   }
 
+  bool get isWrong {
+    return wrongDeparture || wrongGate || connection;
+  }
+
   static Passenger fromJson(Map<String, dynamic> instance) {
     return Passenger(
         accommodations: instance['accommodations'] ?? <String>[],

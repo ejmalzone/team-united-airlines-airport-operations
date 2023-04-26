@@ -8,6 +8,7 @@ import 'package:airportops_frontend/classes/passenger.dart';
 import 'package:airportops_frontend/portal.dart';
 import 'package:airportops_frontend/printing/pdfs.dart';
 import 'package:airportops_frontend/progress_bar.dart';
+import 'package:airportops_frontend/scoreboard.dart';
 import 'package:airportops_frontend/widgets/passenger_profile.dart';
 import 'package:camera/camera.dart';
 import 'package:date_field/date_field.dart';
@@ -44,7 +45,7 @@ Future<void> main() async {
       '/scanning': (context) => const ScanRoute(),
       '/camera': (context) => UniversalScanApp(),
       '/customerservice': (context) => CSRRoute(),
-      '/honeywell': (context) => HoneywellScanApp(),
+      '/honeywell': (context) => HoneywellScanApp()
     },
   ));
 }
@@ -434,6 +435,12 @@ class HomeRoute extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              ElevatedButton(
+                child: const Text('Test Scoreboard'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/testScoreboard');
+                },
+              ),
               ElevatedButton(
                 child: const Text('Example Passenger'),
                 onPressed: () {
