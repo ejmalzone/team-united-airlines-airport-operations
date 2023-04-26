@@ -345,12 +345,14 @@ class BagProfile extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Text(
-                          ' ${countries[bag.originatingAirport]} Airport (${bag.originatingAirport})',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
+                        Flexible(
+                          child: Text(
+                            ' ${countries[bag.originatingAirport]} Airport (${bag.originatingAirport})',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
                       ],
@@ -370,12 +372,14 @@ class BagProfile extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Text(
-                          ' ${countries[bag.destinationAirport]} Airport (${bag.destinationAirport})',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
+                        Flexible(
+                          child: Text(
+                            ' ${countries[bag.destinationAirport]} Airport (${bag.destinationAirport})',
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 15,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                         ),
                       ],

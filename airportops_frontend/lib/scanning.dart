@@ -440,13 +440,66 @@ class _RSEScanAppState extends State<RSEScanApp> {
                               .then((prefs) async {
                             var comp = prefs.getString(RAMP_SERVICES_KEY);
                             var compData = jsonDecode(comp!);
-                            if (code! == "start") {
+
+                            if (code!.substring(15) == "start") {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Container(
+                                  padding: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      color: Color.fromARGB(206, 47, 124, 2),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Text(
+                                      "Your time has started. Start Scanning!",
+                                      textAlign: TextAlign.center),
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                duration: Duration(seconds: 2),
+                              ));
                               scanStart(competitor: compData["username"]);
-                            } else if (code == "finish") {
+                            } else if (code.substring(15) == "finish") {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Container(
+                                  padding: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFF850000),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Text(
+                                      "Your time has ended! Any other bag scans will not count",
+                                      textAlign: TextAlign.center),
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                duration: Duration(seconds: 2),
+                              ));
                               scanFinish(competitor: compData["username"]);
+                              Navigator.pop(context);
                             } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Container(
+                                  padding: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFF00239E),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Text(
+                                      "Bag Scanned!",
+                                      textAlign: TextAlign.center),
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                duration: Duration(seconds: 2),
+                              ));
                               await scanBag(
-                                      bagId: code,
+                                      bagId: code.substring(15),
                                       competitor: compData["username"])
                                   .then((reply) {});
                             }

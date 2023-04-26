@@ -54,7 +54,7 @@ class RankingCard extends StatelessWidget {
     var ch = [
       _letterGrade,
       const SizedBox(width: 10),
-      Text('${competitor.firstname} ${competitor.lastname}', style: const TextStyle(fontSize: 24))
+      Flexible(child: Text('${competitor.firstname} ${competitor.lastname}', style: const TextStyle(fontSize: 24)))
     ];
 
     if (rank != -1) {
