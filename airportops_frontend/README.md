@@ -8,7 +8,7 @@
             1.  <https://docs.aws.amazon.com/cloudhsm/latest/userguide/third-offload-linux-openssl.html>
             2.  Flutter web is heavily in Beta, and as such, local running is advised/preferred for performance, alleviating the necessity for SSL/TLS on the EC2 instance
         3.  Connect to EC2 Instance via preferred method, and upload Database/API files
-        4.  DO WE CREATE A REQUIREMENTS.TXT? IF SO, INCLUDE NODE, TMUX, ALL MONGO RELATED LIBS, ETC.
+        4.  If not already installed, install node via: $ sudo yum install -y nodejs
         5.  Create a new TMUX instance using the following command:
             1.  \$ tmux new -s api
             2.  Ctrl + b
@@ -28,6 +28,7 @@
             3.  Your baseURL should look something like: ‘http:// ec2-52-3-243-69.compute-1.amazonaws.com/api/’
 2.  Installation options:
     1. Note: Flutter must be installed from <https://docs.flutter.dev/get-started/install>
+    2. Run "initialize.bat" 
     1.  Android
         1.  Run the file “build_android.bat”
         2.  The .apk file will be located under /build/app/outputs/flutter-apk/app-release.apk
@@ -39,7 +40,7 @@
     3.  Web
         1.  Flutter Web is still in Beta, and due to this, Flutter web apps perform somewhat poorly when hosted. With this being the case, web hosting is still possible, but running the app locally will perform far better.
         2.  To run locally:
-            1.  Run the provided file, web_app.bat
+            1.  Run the provided file, build_web_and_run.bat
             2.  If prompted, press the number corresponding to the desired browser
         3.  If desired, the web application may be hosted through github pages, AWS S3 buckets, or another comparable host, but the application must run via an HTTPS page for the camera functionalities to work. As a result, the API must be hosted via an HTTPS endpoint, and all of the requests from within the application must also be converted to be HTTPS requests.
             1.  For setting up an EC2 instance using SSL/TLS, consult the following tutorial:
