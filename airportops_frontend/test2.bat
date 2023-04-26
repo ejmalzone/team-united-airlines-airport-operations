@@ -1,1 +1,0 @@
-flutter pub global deactivate peanut && flutter pub global activate peanut && flutter pub global run peanut && python create_ssl_cert.py && robocopy cert /build/web/
