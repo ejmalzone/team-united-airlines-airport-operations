@@ -16,7 +16,7 @@ class CompProfile extends StatefulWidget {
 }
 
 class CompProfileState extends State<CompProfile> {
-  final String image = 'icons8-circled-user-male-skin-type-6-96.png';
+  final String image = 'united-square-64.png';
 
   Widget output() {
     if (widget.c.position == Position.Csr) {

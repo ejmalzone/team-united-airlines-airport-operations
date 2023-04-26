@@ -22,7 +22,7 @@ class BaggageRoute extends StatelessWidget {
 
   late Map<String, dynamic> competitor;
 
-  final String image = 'icons8-circled-user-male-skin-type-6-96.png';
+  final String image = 'united-square-64.png';
 
   @override
   Widget build(BuildContext context) {

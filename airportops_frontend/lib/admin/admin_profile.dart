@@ -39,7 +39,7 @@ class AdminRouteState extends State<AdminRoute> {
   late List<Event> events = [];
 
   final Admin c = Admin("Admin", "User", Position.Admin);
-  final String image = 'icons8-circled-user-male-skin-type-6-96.png';
+  final String image = 'united-square-64.png';
 
   String newEventName = '';
 

@@ -21,7 +21,7 @@ class CompetitorsPage extends StatefulWidget {
 }
 
 class _CompetitorsPageState extends State<CompetitorsPage> {
-  final String image = 'icons8-circled-user-male-skin-type-6-96.png';
+  final String image = 'united-square-64.png';
 
   List<Competitor> _foundComps = [];
   @override
@@ -139,7 +139,7 @@ class CCard extends StatefulWidget {
 }
 
 class CCardState extends State<CCard> {
-  final String image = 'assets/icons8-circled-user-male-skin-type-6-96.png';
+  final String image = 'assets/united-square-64.png';
   @override
   Widget build(BuildContext context) {
     widget.c.startTime ??= 'Not started.';
