@@ -12,7 +12,7 @@ class RankingCard extends StatelessWidget {
   RankingCard({super.key, required this.competitor});
 
   void setRank(int newRank) {
-    rank = newRank;
+    rank = newRank + 1;
   }
 
   bool get isCSR {
@@ -20,7 +20,11 @@ class RankingCard extends StatelessWidget {
   }
 
   double get grade {
-    return competitor.wrong.toDouble() / competitor.scanned.toDouble();
+    if (competitor.scanned != 0) {
+      return (competitor.scanned.toDouble() - competitor.wrong.toDouble()) / competitor.scanned.toDouble();
+    } else {
+      return -1;
+    }
   }
 
   bool get hasScans {
@@ -34,18 +38,18 @@ class RankingCard extends StatelessWidget {
 
     final g = grade;
 
-    if (g > .25) {
-      return const Text('F', style: TextStyle(fontSize: 32, color: Colors.red));
-    } else if (g > .2) {
-      return const Text('D', style: TextStyle(fontSize: 32, color: Colors.orange));
-    }else if (g > .15) {
-      return const Text('C', style: TextStyle(fontSize: 32, color: Colors.yellow));
-    } else if (g > .05) {
-      return const Text('B', style: TextStyle(fontSize: 32, color: Colors.lightGreenAccent));
-    } else if (g == 0.0) {
+    if (g == 1.0) {
       return const Text('S', style: TextStyle(fontSize: 32, color: Colors.greenAccent));
-    } else {
+    } else if (g > 0.9) {
       return const Text('A', style: TextStyle(fontSize: 32, color: Colors.green));
+    } else if (g > 0.8) {
+      return const Text('B', style: TextStyle(fontSize: 32, color: Colors.lightGreenAccent));
+    } else if (g > 0.7) {
+      return const Text('C', style: TextStyle(fontSize: 32, color: Colors.yellow));
+    } else if (g > 0.6) {
+      return const Text('D', style: TextStyle(fontSize: 32, color: Colors.orange));
+    } else {
+      return const Text('F', style: TextStyle(fontSize: 32, color: Colors.red));
     }
   }
 
@@ -54,7 +58,9 @@ class RankingCard extends StatelessWidget {
     var ch = [
       _letterGrade,
       const SizedBox(width: 10),
-      Flexible(child: Text('${competitor.firstname} ${competitor.lastname}', style: const TextStyle(fontSize: 24)))
+      Flexible(child: Text('${competitor.firstname} ${competitor.lastname}', style: const TextStyle(fontSize: 24))),
+      Text('  ${competitor.scanned - competitor.wrong}/${competitor.scanned}',
+          style: TextStyle(fontSize: 22, color: (grade > 0.9) ? Colors.black : Colors.red))
     ];
 
     if (rank != -1) {

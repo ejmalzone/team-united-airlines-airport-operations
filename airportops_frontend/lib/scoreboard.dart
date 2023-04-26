@@ -81,7 +81,15 @@ class _ScoreboardWidgetState extends State<ScoreboardWidget> {
         .where((element) => element.competitor.position == widget.kind)
         .toList();
     // sort them by their grade
-    comps.sort((a, b) => a.grade.compareTo(b.grade));
+    comps.sort((a, b) {
+      final c = b.grade.compareTo(a.grade);
+
+      if (c != 0) {
+        return c;
+      } else {
+        return b.competitor.scanned.compareTo(a.competitor.scanned);
+      }
+    });
 
     // assign ranks to the display
     for (var i = 0; i < comps.length; i++) {
@@ -90,9 +98,9 @@ class _ScoreboardWidgetState extends State<ScoreboardWidget> {
 
     return Expanded(child:
         ListView(
+          shrinkWrap: true,
+          physics: const ClampingScrollPhysics(),
           scrollDirection: Axis.vertical,
-          // mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.start,
           // insert spacing between elements
           children: comps.withSpaceBetween(height: 5)
         )
