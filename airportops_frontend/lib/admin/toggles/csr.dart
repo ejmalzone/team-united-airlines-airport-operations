@@ -252,6 +252,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
                   "Add Passenger",
                   style: TextStyle(
                     fontFamily: 'Open Sans',
+                    fontSize: 10
                   ),
                 ),
               ),
@@ -305,7 +306,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
                     'Set Current Event',
                     style: TextStyle(
                       fontFamily: 'Open Sans',
-                      fontSize: 15,
+                      fontSize: 10,
                     ),
                   )),
               ),
@@ -344,6 +345,7 @@ class _AdminPassengersState extends State<AdminPassengers> {
                 "Print Boarding Passes",
                 style: TextStyle(
                   fontFamily: 'Open Sans',
+                  fontSize: 10
                 ),
                   ),
                 ),

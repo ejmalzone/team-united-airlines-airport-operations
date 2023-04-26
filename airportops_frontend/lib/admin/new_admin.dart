@@ -36,7 +36,7 @@ class _NewAdminState extends State<NewAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("New Bag"),
+          title: const Text("New Admin"),
           backgroundColor: Colors.black,
           centerTitle: true,
         ),

@@ -150,12 +150,12 @@ class AdminPassengerProfile extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                     )),
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width / 4,
+                                  width: MediaQuery.of(context).size.width / 5,
                                   child: DottedLine(),
                                 ),
                                 planeImage,
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width / 4,
+                                  width: MediaQuery.of(context).size.width / 5,
                                   child: DottedLine(),
                                 ),
                                 Text(passenger.flightDestination,

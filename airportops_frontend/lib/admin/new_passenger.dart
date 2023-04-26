@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import '../widgets.dart';
 
 class NewPassenger extends StatefulWidget {
-  final Passenger? p;
-  const NewPassenger({Key? key, this.p}) : super(key: key);
+  const NewPassenger({Key? key}) : super(key: key);
 
   @override
   State<NewPassenger> createState() => _NewPassengerState();
@@ -176,38 +175,38 @@ class _NewPassengerState extends State<NewPassenger> {
     // validate form and create new passenger object
     if (_formKey.currentState!.validate()) {
       Passenger newPassenger = Passenger(
-        nameFirst: _firstNameController.text,
-        nameLast: _lastNameController.text,
-        //reservationNum: 0, // You can set this to a unique value
-        birthday: _birthday, // Use the value from the DateTimeFormField
-        flightSource: _flightSourceController.text,
-        //flightSourceDate:
-        //    _flightSourceDate, // Use the value from the DateTimeFormField
-        flightDestination: _flightDestinationController.text,
-        //flightDestinationDate:
-        // _flightDestinationDate, // Use the value from the DateTimeFormField
-        //citizenship: _citizenshipController.text,
-        seat: _seatController.text,
-        passengerId: Object.hash(
-                _firstNameController.text,
-                _lastNameController.text,
-                _birthday.toIso8601String(),
-                _flightSourceController.text,
-                _flightDestinationController.text)
-            .toString(),
-        // row: int.parse(_rowController.text),
-        row: 5,
-        //requests: []); // You can add requests here if needed
-        accommodations: [],
-        status: _boardedController.text == 'true'
-            ? Status.boarded
-            : Status.unboarded,
-        connection: connection,
-        wrongGate: gate,
-        wrongDeparture: wrongFlight,
-        scanTime: null,
-        boarded: _boardedController.text == 'true',
-        event: _eventController.text,
+          nameFirst: _firstNameController.text,
+          nameLast: _lastNameController.text,
+          //reservationNum: 0, // You can set this to a unique value
+          birthday: _birthday, // Use the value from the DateTimeFormField
+          flightSource: _flightSourceController.text,
+          //flightSourceDate:
+          //    _flightSourceDate, // Use the value from the DateTimeFormField
+          flightDestination: _flightDestinationController.text,
+          //flightDestinationDate:
+          // _flightDestinationDate, // Use the value from the DateTimeFormField
+          //citizenship: _citizenshipController.text,
+          seat: _seatController.text,
+          passengerId: Object.hash(
+              _firstNameController.text,
+              _lastNameController.text,
+              _birthday.toIso8601String(),
+              _flightSourceController.text,
+              _flightDestinationController.text
+          ).toString(),
+          // row: int.parse(_rowController.text),
+          row: 5,
+          //requests: []); // You can add requests here if needed
+          accommodations: [],
+          status: _boardedController.text == 'true'
+              ? Status.boarded
+              : Status.unboarded,
+          connection: connection,
+          wrongGate: gate,
+          wrongDeparture: wrongFlight,
+          scanTime: null,
+          boarded: _boardedController.text == 'true',
+          event: _eventController.text,
       ); // TODO: Implement parsing accomodations
 
       Navigator.pop(context, newPassenger);
@@ -229,7 +228,6 @@ class _NewPassengerState extends State<NewPassenger> {
               children: [
                 TextFormField(
                   controller: _firstNameController,
-                  initialValue: widget.p?.nameFirst,
                   decoration: const InputDecoration(
                     labelText: 'First Name',
                     border: OutlineInputBorder(),
@@ -243,7 +241,6 @@ class _NewPassengerState extends State<NewPassenger> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
-                  initialValue: widget.p?.nameLast,
                   controller: _lastNameController,
                   decoration: const InputDecoration(
                     labelText: 'Last Name',
@@ -270,7 +267,6 @@ class _NewPassengerState extends State<NewPassenger> {
                             border: OutlineInputBorder(),
                           ),
                           mode: DateTimeFieldPickerMode.date,
-                          initialDate: widget.p?.birthday,
                           onDateSelected: (DateTime value) {
                             setState(() {
                               _birthday = value;
@@ -281,7 +277,6 @@ class _NewPassengerState extends State<NewPassenger> {
                     Container(
                       width: 80,
                       child: TextFormField(
-                        initialValue: 'USA',
                         controller: _citizenshipController,
                         decoration: const InputDecoration(
                           labelText: 'Citizenship',
@@ -299,7 +294,6 @@ class _NewPassengerState extends State<NewPassenger> {
                     Container(
                       width: 80,
                       child: TextFormField(
-                        initialValue: widget.p?.seat,
                         controller: _seatController,
                         decoration: const InputDecoration(
                           labelText: 'Seat No.',
