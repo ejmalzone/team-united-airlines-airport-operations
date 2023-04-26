@@ -25,16 +25,10 @@ import 'classes/competitor.dart';
 import 'login.dart';
 
 Future<void> main() async {
-  //var req = await passengerRequest();
-  //Map<String, dynamic> eventMap = await eventRequest();
-  //runApp(MaterialApp.router(
-  //routerConfig: _router,
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     initialRoute: '/',
     routes: {
-      //'/': (context) => LoginRoute(),
-      //'/portal': (context) => PortalRoute(),
       '/': (context) => PortalRoute(),
       '/portal': (context) => LoginRoute(),
       '/home': (context) => const HomeRoute(),
@@ -49,204 +43,6 @@ Future<void> main() async {
     },
   ));
 }
-
-/*final _router = GoRouter(
-  initialLocation: '/',
-  routes: [
-    GoRoute(
-      path: '/',
-      //builder: (context, state) => PortalRoute(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: PortalRoute(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-    GoRoute(
-      path: '/portal',
-      //builder: (context, state) => LoginRoute(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: LoginRoute(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-    GoRoute(
-      path: '/home',
-      //builder: (context, state) => const HomeRoute(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: const HomeRoute(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-    GoRoute(
-      path: '/examplePassenger',
-      //builder: (context, state) => ExamplePassengerProfileApp(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: ExamplePassengerProfileApp(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-    GoRoute(
-      path: '/baggage',
-      //builder: (context, state) => BaggageRoute(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: BaggageRoute(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-    GoRoute(
-      path: '/bars',
-      //builder: (context, state) => const ProgressBarRoute(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: const ProgressBarRoute(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-    GoRoute(
-      path: '/dbTesting',
-      //builder: (context, state) => const DatabaseRoute(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: const DatabaseRoute(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-    GoRoute(
-      path: '/scanning',
-      //builder: (context, state) => const ScanRoute(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: const ScanRoute(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-    GoRoute(
-      path: '/camera',
-      //builder: (context, state) => UniversalScanApp(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: UniversalScanApp(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-    GoRoute(
-      path: '/customerservice',
-      //builder: (context, state) => CSRRoute(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: CSRRoute(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-    GoRoute(
-      path: '/honeywell',
-      //builder: (context, state) => HoneywellScanApp(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: HoneywellScanApp(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-    GoRoute(
-      path: '/admin',
-      //builder: (context, state) => AdminRoute(),
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-            child: AdminRoute(),
-            transitionsBuilder:
-                ((context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity:
-                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
-                child: child,
-              );
-            }));
-      },
-    ),
-  ],
-);*/
 
 class PassengerDisplayRoute extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -277,70 +73,6 @@ class PassengerDisplayRoute extends StatelessWidget {
   }
 }
 
-/*class PassengerDisplayRoute extends StatefulWidget {
-  PassengerDisplayRoute({Key? key}) : super(key: key);
-  _PassengerDisplayRouteState createState() => _PassengerDisplayRouteState();
-}
-
-class _PassengerDisplayRouteState extends State<PassengerDisplayRoute> {
-  Map<String, dynamic>? data;
-  bool _isLoading = false;
-  @override
-  void initState() {
-    super.initState();
-    getPassengers();
-  }
-
-  getPassengers() async {
-    setState(() {
-      _isLoading = true;
-    });
-    var requestData = await passengerRequest();
-    setState(() {
-      data = requestData;
-      _isLoading = false;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<Passenger> passengers = [];
-    List<PassengerProfile> profiles = [];
-
-    for (var passenger in this.data?['data']) {
-      passengers.add(Passenger(
-          accommodations: passenger['accommodations'],
-          passengerId: passenger['_id'],
-          birthday: DateTime.now(),
-          boarded: passenger['boarded'] == 'true',
-          event: passenger['event'],
-          flightDestination: passenger['destination'],
-          flightSource: passenger['origin'],
-          nameFirst: passenger['firstName'],
-          nameLast: passenger['lastName'],
-          row: passenger['row'],
-          seat: passenger['seat']));
-    }
-
-    for (var person in passengers) {
-      profiles.add(PassengerProfile(title: 'test', passenger: person));
-    }
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Passenger Status Page'),
-        ),
-        body: _isLoading
-            ? CircularProgressIndicator()
-            : SingleChildScrollView(
-                child: Center(
-                  child: Column(children: <Widget>[
-                    ...profiles,
-                  ]),
-                ),
-              ));
-  }
-}
-*/
 class ScanRoute extends StatelessWidget {
   const ScanRoute({Key? key}) : super(key: key);
   @override
@@ -407,11 +139,6 @@ class DatabaseRoute extends StatelessWidget {
                       weight: 78,
                       wrongDestination: false,
                       event: 'Test3');
-                  //print(req['data'][0]['boarded'] is bool);
-                  //for (var person in req['data']) {
-                  //  print('ID: ${person['_id']}');
-                  //}
-                  //await Navigator.of(context).pushNamed('/passengerTesting');
                 },
                 child: const Text('Passenger Query'),
               ),
@@ -511,7 +238,6 @@ class HomeRoute extends StatelessWidget {
                   child: const Text('View Passenger Status'),
                   onPressed: () async {
                     var req = await currPassengerRequest();
-                    //Navigator.pushNamed(context, '/passengerTesting');
                     await Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
                             PassengerDisplayRoute(data: req)));
@@ -534,13 +260,9 @@ class ExamplePassengerProfileApp extends StatelessWidget {
   final Passenger testP = Passenger(
     nameFirst: "Ethan",
     nameLast: "Malzone",
-    //reservationNum: 1234,
     birthday: DateTime(2001, 1, 4),
     flightSource: "DTW",
-    //flightSourceDate: DateTime(2023, 2, 2),
     flightDestination: "IAH",
-    //flightDestinationDate: DateTime(2023, 2, 3),
-    //citizenship: "United States",
     seat: "A",
     accommodations: [],
     boarded: false,
@@ -556,7 +278,6 @@ class ExamplePassengerProfileApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //testP.status = Status.boarded;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Passenger Profile'),

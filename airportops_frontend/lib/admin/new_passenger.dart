@@ -175,38 +175,30 @@ class _NewPassengerState extends State<NewPassenger> {
     // validate form and create new passenger object
     if (_formKey.currentState!.validate()) {
       Passenger newPassenger = Passenger(
-          nameFirst: _firstNameController.text,
-          nameLast: _lastNameController.text,
-          //reservationNum: 0, // You can set this to a unique value
-          birthday: _birthday, // Use the value from the DateTimeFormField
-          flightSource: _flightSourceController.text,
-          //flightSourceDate:
-          //    _flightSourceDate, // Use the value from the DateTimeFormField
-          flightDestination: _flightDestinationController.text,
-          //flightDestinationDate:
-          // _flightDestinationDate, // Use the value from the DateTimeFormField
-          //citizenship: _citizenshipController.text,
-          seat: _seatController.text,
-          passengerId: Object.hash(
-              _firstNameController.text,
-              _lastNameController.text,
-              _birthday.toIso8601String(),
-              _flightSourceController.text,
-              _flightDestinationController.text
-          ).toString(),
-          // row: int.parse(_rowController.text),
-          row: 5,
-          //requests: []); // You can add requests here if needed
-          accommodations: [],
-          status: _boardedController.text == 'true'
-              ? Status.boarded
-              : Status.unboarded,
-          connection: connection,
-          wrongGate: gate,
-          wrongDeparture: wrongFlight,
-          scanTime: null,
-          boarded: _boardedController.text == 'true',
-          event: _eventController.text,
+        nameFirst: _firstNameController.text,
+        nameLast: _lastNameController.text,
+        birthday: _birthday, // Use the value from the DateTimeFormField
+        flightSource: _flightSourceController.text,
+        flightDestination: _flightDestinationController.text,
+        seat: _seatController.text,
+        passengerId: Object.hash(
+                _firstNameController.text,
+                _lastNameController.text,
+                _birthday.toIso8601String(),
+                _flightSourceController.text,
+                _flightDestinationController.text)
+            .toString(),
+        row: 5,
+        accommodations: [],
+        status: _boardedController.text == 'true'
+            ? Status.boarded
+            : Status.unboarded,
+        connection: connection,
+        wrongGate: gate,
+        wrongDeparture: wrongFlight,
+        scanTime: null,
+        boarded: _boardedController.text == 'true',
+        event: _eventController.text,
       ); // TODO: Implement parsing accomodations
 
       Navigator.pop(context, newPassenger);

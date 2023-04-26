@@ -22,7 +22,6 @@ class AdminPassengerProfile extends StatelessWidget {
   static const myStyle2 =
       TextStyle(fontWeight: FontWeight.normal, fontSize: 16);
 
-  // final String reservation = 'R-${rng.nextInt(9000) + 999}';
   final String title;
   late String id;
   final Passenger passenger;
@@ -57,12 +56,6 @@ class AdminPassengerProfile extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    // Container(
-                                    //   height: 5,
-                                    //   decoration: const BoxDecoration(
-                                    //     color: Color(0xFF987700),
-                                    //   ),
-                                    // ),
                                     Text(passenger.fullName,
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
@@ -72,9 +65,8 @@ class AdminPassengerProfile extends StatelessWidget {
                                       padding: const EdgeInsets.only(top: 5),
                                       child: Text(
                                         passenger.birthday
-                                                .toString()
-                                                .split(' ')[
-                                            0], // | ${passenger.citizenship}',
+                                            .toString()
+                                            .split(' ')[0],
                                         textAlign: TextAlign.justify,
                                         style: const TextStyle(fontSize: 12),
                                       ),
@@ -390,12 +382,6 @@ class _PassengerProfileState extends State<PassengerProfile> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    // Container(
-                                    //   height: 5,
-                                    //   decoration: const BoxDecoration(
-                                    //     color: Color(0xFF987700),
-                                    //   ),
-                                    // ),
                                     Text(widget.passenger.fullName,
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
@@ -652,10 +638,6 @@ class _PassengerProfileState extends State<PassengerProfile> {
                                 duration: Duration(seconds: 2),
                               ));
                             }
-                            // setState(() {
-                            //   this.editSeat = seat;
-                            // });
-                            // changeSeat(passengerId: passenger.passengerId, seat: seat)
                           },
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
@@ -668,7 +650,7 @@ class _PassengerProfileState extends State<PassengerProfile> {
               ],
             ),
           ),
-        ), //print('Tapped! ${passenger.passengerId}')
+        ),
         onTap: () async => await Navigator.push(
               context,
               MaterialPageRoute(

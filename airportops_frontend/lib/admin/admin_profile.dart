@@ -25,8 +25,6 @@ import 'new_admin.dart';
 class AdminRoute extends StatefulWidget {
   late Map<String, dynamic> eventmap;
   late Map<String, dynamic> curreventmap;
-  //AdminRoute({Key? key, required this.eventmap, required this.curreventmap})
-  //    : super(key: key);
   AdminRoute({Key? key}) : super(key: key);
 
   @override
@@ -40,7 +38,6 @@ class AdminRouteState extends State<AdminRoute> {
   bool res = true;
   late List<Event> events = [];
 
-  //final Admin c = Admin("Stanley", "Duru", Position.Admin);
   final Admin c = Admin("Admin", "User", Position.Admin);
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
 
@@ -54,26 +51,11 @@ class AdminRouteState extends State<AdminRoute> {
   void initState() {
     super.initState();
     controller = TextEditingController();
-    /*if (!kIsWeb) {
-      SystemChrome.setPreferredOrientations(
-          [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
-    }*/
-    // The above commented out block, as well as the block in dispose(), will force
-    // landscape orientation on mobile
   }
 
   @override
   void dispose() {
     controller.dispose();
-    /*if (!kIsWeb) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-        DeviceOrientation.portraitDown,
-        DeviceOrientation.portraitUp
-      ]);
-    }*/
-
     super.dispose();
   }
 
@@ -84,7 +66,6 @@ class AdminRouteState extends State<AdminRoute> {
       controller.clear();
     }
 
-    //print(widget.curreventmap);
     return FutureBuilder(
       future: doubleRequest(),
       builder: (context, snapshot) {
@@ -174,12 +155,7 @@ class AdminRouteState extends State<AdminRoute> {
                   height: 80),
               centerTitle: true,
             ),
-            //body: SafeArea(
             body: ListView(
-              //child: Column(
-              //child: ListView(
-              //mainAxisSize: MainAxisSize.max,
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 AdminProfileBox(admin: c, image: image),
                 Align(
@@ -274,7 +250,8 @@ class AdminRouteState extends State<AdminRoute> {
                     children: [
                       Flexible(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 30, 10, 20),
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(0, 30, 10, 20),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
@@ -294,17 +271,20 @@ class AdminRouteState extends State<AdminRoute> {
                       ),
                       Flexible(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(10, 30, 0, 20),
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(10, 30, 0, 20),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
                               backgroundColor: Color(0xFF00239E),
                             ),
                             onPressed: () async {
-                              newAdmin createAdmin = await Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => NewAdmin()));
-                              await signupRequest(
-                                  createAdmin.usernameAdmin, createAdmin.passwordAdmin);
+                              newAdmin createAdmin = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NewAdmin()));
+                              await signupRequest(createAdmin.usernameAdmin,
+                                  createAdmin.passwordAdmin);
                             },
                             child: Text(
                               "New Admin",
@@ -391,245 +371,231 @@ class _CurrBoxState extends State<CurrBox> {
                   ),
                 ),
               ),
-              //Padding(
-                  //padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                  //child: ProgressBar(size: size)),
-              //Padding(
-              //padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 5),
-              //child: ProgressBar(size: size)),
-              // Padding(
-              //   padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 0),
-              //   child: Text(
-              //     widget.event.p_unboarded.toString(),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-              //   child: Text(
-              //     widget.event.b_unboarded.toString(),
-              //   ),
-              // ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
                       height: 60,
                       child: Center(
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            widget.event.Reset();
-                            await passengerRequest(widget.event.name)
-                                .then((pReq) {
-                              if (pReq['status'] == 'success') {
-                                for (var passenger in pReq['data']) {
-                                  widget.event.addPassenger(
-                                      Passenger.fromJson(passenger));
-                                }
-
-                                for (var person in widget.event.passengers) {
-                                  if (person.boarded == true) {
-                                    if (person.connection == true ||
-                                        person.wrongGate == true ||
-                                        person.wrongDeparture == true) {
-                                      widget.event.p_wrong += 1;
-                                      person.status = Status.wrongflight;
-                                    } else {
-                                      widget.event.p_boarded += 1;
-                                    }
-                                  }
-
-                                  if (person.boarded == false) {
-                                    widget.event.p_unboarded += 1;
-                                  }
-                                }
+                          child: ElevatedButton(
+                        onPressed: () async {
+                          widget.event.Reset();
+                          await passengerRequest(widget.event.name)
+                              .then((pReq) {
+                            if (pReq['status'] == 'success') {
+                              for (var passenger in pReq['data']) {
+                                widget.event.addPassenger(
+                                    Passenger.fromJson(passenger));
                               }
-                            });
-                            await bagsRequest(widget.event.name).then((bReq) {
-                              if (bReq["status"] == "success") {
-                                for (var bag in bReq["data"]) {
-                                  widget.event.addBag(Baggage(
-                                      nameFirst: bag["passengerFirst"],
-                                      nameLast: bag["passengerLast"],
-                                      originatingAirport: bag["origin"],
-                                      destinationAirport: bag["destination"],
-                                      weight: bag["weight"],
-                                      event: bag["event"],
-                                      checked: bag["checked"],
-                                      id: bag["_id"],
-                                      scanTime: bag["scanTime"],
-                                      wrongDestination: bag["wrongDestination"],
-                                      status: bag["checked"] == true
-                                          ? Status.boarded
-                                          : Status.unboarded));
-                                }
-                              }
-                              for (var bag in widget.event.bags) {
-                                if (bag.checked == true) {
-                                  if (bag.wrongDestination == true) {
-                                    widget.event.b_wrong += 1;
-                                    bag.status = Status.wrongflight;
+
+                              for (var person in widget.event.passengers) {
+                                if (person.boarded == true) {
+                                  if (person.connection == true ||
+                                      person.wrongGate == true ||
+                                      person.wrongDeparture == true) {
+                                    widget.event.p_wrong += 1;
+                                    person.status = Status.wrongflight;
                                   } else {
-                                    widget.event.b_boarded += 1;
+                                    widget.event.p_boarded += 1;
                                   }
                                 }
 
-                                if (bag.checked == false) {
-                                  widget.event.b_unboarded += 1;
+                                if (person.boarded == false) {
+                                  widget.event.p_unboarded += 1;
                                 }
                               }
-                            });
-
-                            await competitorRequest(widget.event.name).then((cReq) {
-                              if (cReq['status'] == 'success') {
-                                for (var comp in cReq['data']) {
-                                  widget.event.addCompetitor(Competitor(
-                                      firstname: comp['firstName'],
-                                      lastname: comp['lastName'],
-                                      stationCode: comp['stationCode'],
-                                      username: comp['username'],
-                                      event: widget.event.name,
-                                      bagsScanned: [],
-                                      passengersScanned: [],
-                                      position: comp['position'] == 0
-                                          ? Position.Csr
-                                          : Position.Ramp,
-                                      wrong: 0,
-                                      scanned: 0,
-                                      startTime:
-                                          comp["startTime"] ?? "Not started.",
-                                      endTime: comp["endTime"] ?? "Not ended."));
+                            }
+                          });
+                          await bagsRequest(widget.event.name).then((bReq) {
+                            if (bReq["status"] == "success") {
+                              for (var bag in bReq["data"]) {
+                                widget.event.addBag(Baggage(
+                                    nameFirst: bag["passengerFirst"],
+                                    nameLast: bag["passengerLast"],
+                                    originatingAirport: bag["origin"],
+                                    destinationAirport: bag["destination"],
+                                    weight: bag["weight"],
+                                    event: bag["event"],
+                                    checked: bag["checked"],
+                                    id: bag["_id"],
+                                    scanTime: bag["scanTime"],
+                                    wrongDestination: bag["wrongDestination"],
+                                    status: bag["checked"] == true
+                                        ? Status.boarded
+                                        : Status.unboarded));
+                              }
+                            }
+                            for (var bag in widget.event.bags) {
+                              if (bag.checked == true) {
+                                if (bag.wrongDestination == true) {
+                                  widget.event.b_wrong += 1;
+                                  bag.status = Status.wrongflight;
+                                } else {
+                                  widget.event.b_boarded += 1;
                                 }
                               }
-                            });
-                            // for (var emp in employees) {
-                            //   event.addCompetitor(emp);
-                            // }
 
-                            // print(event.passengers);
+                              if (bag.checked == false) {
+                                widget.event.b_unboarded += 1;
+                              }
+                            }
+                          });
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        EventRoute(event: widget.event)));
-                          },
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Color(0xFF00239E),
+                          await competitorRequest(widget.event.name)
+                              .then((cReq) {
+                            if (cReq['status'] == 'success') {
+                              for (var comp in cReq['data']) {
+                                widget.event.addCompetitor(Competitor(
+                                    firstname: comp['firstName'],
+                                    lastname: comp['lastName'],
+                                    stationCode: comp['stationCode'],
+                                    username: comp['username'],
+                                    event: widget.event.name,
+                                    bagsScanned: [],
+                                    passengersScanned: [],
+                                    position: comp['position'] == 0
+                                        ? Position.Csr
+                                        : Position.Ramp,
+                                    wrong: 0,
+                                    scanned: 0,
+                                    startTime:
+                                        comp["startTime"] ?? "Not started.",
+                                    endTime: comp["endTime"] ?? "Not ended."));
+                              }
+                            }
+                          });
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      EventRoute(event: widget.event)));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFF00239E),
+                        ),
+                        child: Text(
+                          "View Event",
+                          style: TextStyle(
+                            fontFamily: 'Open Sans',
                           ),
-                          child: Text(
-                            "View Event",
-                            style: TextStyle(
-                              fontFamily: 'Open Sans',
-                            ),
-                          ),
-                        )
-                      ),
+                        ),
+                      )),
                     ),
                     SizedBox(
                       height: 60,
                       child: Center(
                           child: ElevatedButton(
-                            onPressed: () async {
-                              widget.event.Reset();
+                        onPressed: () async {
+                          widget.event.Reset();
 
-                              Map<String, Passenger> passengersForId = {};
-                              Map<String, Baggage> bagsForId = {};
+                          Map<String, Passenger> passengersForId = {};
+                          Map<String, Baggage> bagsForId = {};
 
-                              // add passengers
-                              await passengerRequest(widget.event.name).then((pReq) {
-                                if (pReq['status'] == 'success') {
-                                  for (var passenger in pReq['data']) {
-                                    final pass = Passenger.fromJson(passenger);
-                                    widget.event.addPassenger(pass);
-                                    passengersForId[pass.passengerId] = pass;
+                          // add passengers
+                          await passengerRequest(widget.event.name)
+                              .then((pReq) {
+                            if (pReq['status'] == 'success') {
+                              for (var passenger in pReq['data']) {
+                                final pass = Passenger.fromJson(passenger);
+                                widget.event.addPassenger(pass);
+                                passengersForId[pass.passengerId] = pass;
+                              }
+                            }
+                          });
+
+                          await bagsRequest(widget.event.name).then((bReq) {
+                            if (bReq["status"] == "success") {
+                              for (var bag in bReq["data"]) {
+                                final b = Baggage(
+                                    nameFirst: bag["passengerFirst"],
+                                    nameLast: bag["passengerLast"],
+                                    originatingAirport: bag["origin"],
+                                    destinationAirport: bag["destination"],
+                                    weight: bag["weight"],
+                                    event: bag["event"],
+                                    checked: bag["checked"],
+                                    id: bag["_id"],
+                                    scanTime: bag["scanTime"],
+                                    wrongDestination: bag["wrongDestination"],
+                                    status: bag["checked"] == true
+                                        ? Status.boarded
+                                        : Status.unboarded);
+
+                                widget.event.addBag(b);
+                                bagsForId[b.id] = b;
+                              }
+                            }
+                          });
+
+                          await competitorRequest(widget.event.name)
+                              .then((cReq) {
+                            if (cReq['status'] == 'success') {
+                              for (var comp in cReq['data']) {
+                                final List<String> bagsScanned =
+                                    (comp['bagsScanned'] as List)
+                                        .map((e) => e as String)
+                                        .toList();
+                                final List<String> passengersScanned =
+                                    (comp['passengersScanned'] as List)
+                                        .map((e) => e as String)
+                                        .toList();
+
+                                int wrong = 0;
+
+                                for (var bagId in bagsScanned) {
+                                  if (bagsForId[bagId]?.wrongDestination ??
+                                      false) {
+                                    wrong++;
                                   }
                                 }
-                              });
 
-                              await bagsRequest(widget.event.name).then((bReq) {
-                                if (bReq["status"] == "success") {
-                                  for (var bag in bReq["data"]) {
-                                    final b = Baggage(
-                                        nameFirst: bag["passengerFirst"],
-                                        nameLast: bag["passengerLast"],
-                                        originatingAirport: bag["origin"],
-                                        destinationAirport: bag["destination"],
-                                        weight: bag["weight"],
-                                        event: bag["event"],
-                                        checked: bag["checked"],
-                                        id: bag["_id"],
-                                        scanTime: bag["scanTime"],
-                                        wrongDestination: bag["wrongDestination"],
-                                        status: bag["checked"] == true
-                                            ? Status.boarded
-                                            : Status.unboarded
-                                    );
-
-                                    widget.event.addBag(b);
-                                    bagsForId[b.id] = b;
+                                for (var passId in passengersScanned) {
+                                  if (passengersForId[passId]?.isWrong ??
+                                      false) {
+                                    wrong++;
                                   }
                                 }
-                              });
 
-                              await competitorRequest(widget.event.name).then((cReq) {
-                                if (cReq['status'] == 'success') {
-                                  for (var comp in cReq['data']) {
-                                    final List<String> bagsScanned = (comp['bagsScanned'] as List).map((e) => e as String).toList();
-                                    final List<String> passengersScanned = (comp['passengersScanned'] as List).map((e) => e as String).toList();
-
-                                    int wrong = 0;
-
-                                    for (var bagId in bagsScanned) {
-                                      if (bagsForId[bagId]?.wrongDestination ?? false) {
-                                        wrong++;
-                                      }
-                                    }
-
-                                    for (var passId in passengersScanned) {
-                                      if (passengersForId[passId]?.isWrong ?? false) {
-                                        wrong++;
-                                      }
-                                    }
-
-                                    widget.event.addCompetitor(Competitor(
-                                        firstname: comp['firstName'],
-                                        lastname: comp['lastName'],
-                                        stationCode: comp['stationCode'],
-                                        username: comp['username'],
-                                        event: widget.event.name,
-                                        bagsScanned: [],
-                                        passengersScanned: [],
-                                        position: comp['position'] == 0
-                                            ? Position.Csr
-                                            : Position.Ramp,
-                                        wrong: wrong,
-                                        scanned: bagsScanned.length + passengersScanned.length,
-                                        startTime:
+                                widget.event.addCompetitor(Competitor(
+                                    firstname: comp['firstName'],
+                                    lastname: comp['lastName'],
+                                    stationCode: comp['stationCode'],
+                                    username: comp['username'],
+                                    event: widget.event.name,
+                                    bagsScanned: [],
+                                    passengersScanned: [],
+                                    position: comp['position'] == 0
+                                        ? Position.Csr
+                                        : Position.Ramp,
+                                    wrong: wrong,
+                                    scanned: bagsScanned.length +
+                                        passengersScanned.length,
+                                    startTime:
                                         comp["startTime"] ?? "Not started.",
-                                        endTime: comp["endTime"] ?? "Not ended."));
-                                  }
-                                }
-                              });
+                                    endTime: comp["endTime"] ?? "Not ended."));
+                              }
+                            }
+                          });
 
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ScoreboardRoute(event: widget.event)));
-                            },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Color(0xFF00239E),
-                            ),
-                            child: Text(
-                              'View Scoreboard',
-                              style: TextStyle(
-                                fontFamily: 'Open Sans',
-                              ),
-                            ),
-                          )
-                      ),
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ScoreboardRoute(event: widget.event)));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color(0xFF00239E),
+                        ),
+                        child: Text(
+                          'View Scoreboard',
+                          style: TextStyle(
+                            fontFamily: 'Open Sans',
+                          ),
+                        ),
+                      )),
                     )
                   ].withSpaceBetween(width: 20))
             ],
@@ -792,11 +758,6 @@ class EventBox extends StatelessWidget {
                                 }
                               }
                             });
-                            // for (var emp in employees) {
-                            //   event.addCompetitor(emp);
-                            // }
-
-                            // print(event.passengers);
 
                             Navigator.push(
                                 context,

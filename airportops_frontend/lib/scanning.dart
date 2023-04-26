@@ -133,60 +133,7 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                                         body: PassengerProfile(
                                             title: "${p.fullName} 's Profile",
                                             passenger: p))));
-                            // if (person.json()['data'][0]['accommodations'].length !=
-                            //     0) {
-                            //   showDialog<dynamic>(
-                            //       context: context,
-                            //       builder: (BuildContext context) => AlertDialog(
-                            //             title: const Text('Accommodations present:'),
-                            //             content: SingleChildScrollView(
-                            //               child: ListBody(children: <Widget>[
-                            //                 for (var req in person.json()['data'][0]
-                            //                     ['accommodations'])
-                            //                   Text(req)
-                            //               ]),
-                            //             ),
-                            //             actions: <Widget>[
-                            //               TextButton(
-                            //                 child: const Text('Acknowledge'),
-                            //                 onPressed: () =>
-                            //                     Navigator.pop(context, 'ack'),
-                            //               ),
-                            //             ],
-                            //           ));
-                            // }
-                            //person.raiseForStatus();
                           }
-
-                          // SharedPreferences prefs =
-                          //     await SharedPreferences.getInstance();
-                          // var compJson = prefs.getString(CUSTOMER_SERVICE_KEY);
-                          // var compData = jsonDecode(compJson!);
-
-                          // if (code == "start" || output == 'start') {
-                          //   print('entered if');
-                          //   // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          //   //   content: Container(
-                          //   //     padding: EdgeInsets.all(16),
-                          //   //     decoration: BoxDecoration(
-                          //   //         color: Color.fromARGB(206, 47, 124, 2),
-                          //   //         borderRadius:
-                          //   //             BorderRadius.all(Radius.circular(20))),
-                          //   //     child: Text("Your time has started. Start Scanning!",
-                          //   //         textAlign: TextAlign.center),
-                          //   //   ),
-                          //   //   behavior: SnackBarBehavior.floating,
-                          //   //   backgroundColor: Colors.transparent,
-                          //   //   elevation: 0,
-                          //   //   duration: Duration(seconds: 2),
-                          //   // ));
-                          //   scanStart(competitor: compData["username"]);
-                          // } else if (code == "finish") {
-                          //   scanFinish(competitor: compData["username"]);
-                          // } else {
-                          //   await scanPassenger(
-                          //       passengerId: code!, competitor: compData["username"]);
-                          // }
                         },
                         label: Text("View ${last!}'s details"),
                         icon: Icon(
@@ -210,74 +157,67 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                         _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
                             context: context,
                             onCode: (code) async {
-                              // if (kIsWeb) {
-                                if (code?.substring(15) != "start" &&
-                                    code?.substring(15) != "finish") {
-                                  Passenger person =
-                                      await getdata(code?.substring(15));
-                                  print(person.fullName);
-                                  await scanPassenger(
-                                      passengerId: code!.substring(15),
-                                      competitor: compData["username"]);
-                                  setState(() {
-                                    // Web scanning prepends "Scan Result:" onto
-                                    // result, need substring to remove
-                                    this.code = code.substring(15);
-                                    last = person.fullName;
-                                  });
-                                } else {
-                                  this.code = code?.substring(15);
-                                  if (this.code == 'start') {
-                                    print(
-                                        "this is the code: ${code?.substring(15)}");
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Container(
-                                        padding: EdgeInsets.all(16),
-                                        decoration: BoxDecoration(
-                                            color: Color(0xFFBCBF14),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20))),
-                                        child: Text(
-                                            "Your timer has already started. Continue scanning!",
-                                            textAlign: TextAlign.center),
-                                      ),
-                                      behavior: SnackBarBehavior.floating,
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                      duration: Duration(seconds: 2),
-                                    ));
-                                    scanStart(competitor: compData["username"]);
-                                    last = "start";
-                                  } else if (this.code == 'finish') {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Container(
-                                        padding: EdgeInsets.all(16),
-                                        decoration: BoxDecoration(
-                                            color: Color(0xFF850000),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20))),
-                                        child: Text(
-                                            "Your time has ended! Any other passenger scans will not count",
-                                            textAlign: TextAlign.center),
-                                      ),
-                                      behavior: SnackBarBehavior.floating,
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                      duration: Duration(seconds: 2),
-                                    ));
-                                    scanFinish(
-                                        competitor: compData["username"]);
-                                    last = "finish";
-                                    Navigator.pop(context);
-                                  }
+                              if (code?.substring(15) != "start" &&
+                                  code?.substring(15) != "finish") {
+                                Passenger person =
+                                    await getdata(code?.substring(15));
+                                print(person.fullName);
+                                await scanPassenger(
+                                    passengerId: code!.substring(15),
+                                    competitor: compData["username"]);
+                                setState(() {
+                                  // Web scanning prepends "Scan Result:" onto
+                                  // result, need substring to remove
+                                  this.code = code.substring(15);
+                                  last = person.fullName;
+                                });
+                              } else {
+                                this.code = code?.substring(15);
+                                if (this.code == 'start') {
+                                  print(
+                                      "this is the code: ${code?.substring(15)}");
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Container(
+                                      padding: EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                          color: Color(0xFFBCBF14),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20))),
+                                      child: Text(
+                                          "Your timer has already started. Continue scanning!",
+                                          textAlign: TextAlign.center),
+                                    ),
+                                    behavior: SnackBarBehavior.floating,
+                                    backgroundColor: Colors.transparent,
+                                    elevation: 0,
+                                    duration: Duration(seconds: 2),
+                                  ));
+                                  scanStart(competitor: compData["username"]);
+                                  last = "start";
+                                } else if (this.code == 'finish') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Container(
+                                      padding: EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                          color: Color(0xFF850000),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20))),
+                                      child: Text(
+                                          "Your time has ended! Any other passenger scans will not count",
+                                          textAlign: TextAlign.center),
+                                    ),
+                                    behavior: SnackBarBehavior.floating,
+                                    backgroundColor: Colors.transparent,
+                                    elevation: 0,
+                                    duration: Duration(seconds: 2),
+                                  ));
+                                  scanFinish(competitor: compData["username"]);
+                                  last = "finish";
+                                  Navigator.pop(context);
                                 }
-                              // } else {
-                              //   setState(() {
-                              //     this.code = code;
-                              //   });
-                              // }
+                              }
                             });
                       },
                       child: Text("Rescan"),
@@ -295,26 +235,6 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                /*ElevatedButton(
-                    onPressed: () {
-                      _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
-                          context: context,
-                          onCode: (code) {
-                            if (kIsWeb) {
-                              setState(() {
-                                // Web scanning prepends "Scan Result:" onto
-                                // result, need substring to remove
-                                this.code = code?.substring(15);
-                              });
-                            } else {
-                              setState(() {
-                                this.code = code;
-                              });
-                            }
-                          });
-                    },
-                    child: Text(code ?? "Scan Boarding Pass")),
-                    Material(color: Color.fromARGB(255, 0, 47, 149), ),*/
                 const Text('To scan a boarding pass, click the icon below'),
                 IconButton(
                   icon: const Icon(Icons.camera_enhance),
@@ -327,72 +247,63 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                     _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
                         context: context,
                         onCode: (code) async {
-                          // if (kIsWeb) {
-                            if (code?.substring(15) != "start" &&
-                                code?.substring(15) != "finish") {
-                              Passenger person =
-                                  await getdata(code?.substring(15));
-                              print(person.fullName);
-                              await scanPassenger(
-                                  passengerId: code!.substring(15),
-                                  competitor: compData["username"]);
-                              setState(() {
-                                // Web scanning prepends "Scan Result:" onto
-                                // result, need substring to remove
-                                this.code = code.substring(15);
-                                last = person.fullName;
-                              });
-                            } else {
-                              this.code = code?.substring(15);
-                              if (this.code == 'start') {
-                                print(
-                                    "this is the code: ${code?.substring(15)}");
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Container(
-                                    padding: EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                        color: Color.fromARGB(206, 47, 124, 2),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20))),
-                                    child: Text(
-                                        "Your time has started. Start Scanning!",
-                                        textAlign: TextAlign.center),
-                                  ),
-                                  behavior: SnackBarBehavior.floating,
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                  duration: Duration(seconds: 2),
-                                ));
-                                scanStart(competitor: compData["username"]);
-                                last = "start";
-                              } else if (this.code == 'finish') {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Container(
-                                    padding: EdgeInsets.all(16),
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFF850000),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20))),
-                                    child: Text(
-                                        "Your time has ended! Any other passenger scans will not count",
-                                        textAlign: TextAlign.center),
-                                  ),
-                                  behavior: SnackBarBehavior.floating,
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                  duration: Duration(seconds: 2),
-                                ));
-                                scanFinish(competitor: compData["username"]);
-                                last = "finish";
-                              }
+                          if (code?.substring(15) != "start" &&
+                              code?.substring(15) != "finish") {
+                            Passenger person =
+                                await getdata(code?.substring(15));
+                            print(person.fullName);
+                            await scanPassenger(
+                                passengerId: code!.substring(15),
+                                competitor: compData["username"]);
+                            setState(() {
+                              this.code = code.substring(15);
+                              last = person.fullName;
+                            });
+                          } else {
+                            this.code = code?.substring(15);
+                            if (this.code == 'start') {
+                              print("this is the code: ${code?.substring(15)}");
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Container(
+                                  padding: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      color: Color.fromARGB(206, 47, 124, 2),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Text(
+                                      "Your time has started. Start Scanning!",
+                                      textAlign: TextAlign.center),
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                duration: Duration(seconds: 2),
+                              ));
+                              scanStart(competitor: compData["username"]);
+                              last = "start";
+                            } else if (this.code == 'finish') {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Container(
+                                  padding: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFF850000),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Text(
+                                      "Your time has ended! Any other passenger scans will not count",
+                                      textAlign: TextAlign.center),
+                                ),
+                                behavior: SnackBarBehavior.floating,
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                duration: Duration(seconds: 2),
+                              ));
+                              scanFinish(competitor: compData["username"]);
+                              last = "finish";
                             }
-                          // } else {
-                          //   setState(() {
-                          //     this.code = code;
-                          //   });
-                          // }
+                          }
                         });
                   },
                 )
@@ -489,8 +400,7 @@ class _RSEScanAppState extends State<RSEScanApp> {
                                       color: Color(0xFF00239E),
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(20))),
-                                  child: Text(
-                                      "Bag Scanned!",
+                                  child: Text("Bag Scanned!",
                                       textAlign: TextAlign.center),
                                 ),
                                 behavior: SnackBarBehavior.floating,

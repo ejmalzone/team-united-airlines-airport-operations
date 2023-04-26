@@ -23,45 +23,9 @@ class BaggageRoute extends StatelessWidget {
   late Map<String, dynamic> competitor;
 
   final String image = 'icons8-circled-user-male-skin-type-6-96.png';
-  // final Competitor c = Competitor(
-  //     firstname: 'firstname',
-  //     lastname: 'lastname',
-  //     stationCode: 'stationCode',
-  //     username: 'username',
-  //     event: 'event',
-  //     bagsScanned: [],
-  //     passengersScanned: [],
-  //     position: Position.Ramp);
 
   @override
   Widget build(BuildContext context) {
-    // Future<Competitor> rampRetreval() async {
-    //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    //   String? competitorData = prefs.getString(RAMP_SERVICES_KEY);
-
-    //   String firstName = '';
-    //   String lastName = '';
-    //   String username = '';
-
-    //   if (competitorData != null) {
-    //     Map<String, dynamic> competitor = jsonDecode(competitorData);
-    //     firstName = competitor["first"];
-    //     lastName = competitor["last"];
-    //     username = competitor["username"];
-    //   }
-
-    //   return Competitor(
-    //       firstname: firstName,
-    //       lastname: lastName,
-    //       stationCode: '0',
-    //       username: username,
-    //       event: 'default',
-    //       bagsScanned: [],
-    //       passengersScanned: [],
-    //       position: Position.Csr);
-    // }
-
     final Competitor c = Competitor(
         firstname: competitor["first"],
         lastname: competitor["last"],
@@ -103,7 +67,6 @@ class BaggageRoute extends StatelessWidget {
                   print("LINK TO SCAN BUTTON");
                 },
                 child: Text(
-                  //"SCAN BOARDING PASS",
                   "SCAN BAGGAGE TAG",
                   style: TextStyle(
                     fontFamily: 'Open Sans',

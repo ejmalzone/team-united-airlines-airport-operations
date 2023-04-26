@@ -109,8 +109,7 @@ class PdfCreator {
 
   static addBoardingPassPage(final pw.MemoryImage unitedLogo,
       final pw.Document document, final Passenger passenger) async {
-
-      // uncomment this to bring back flagging wrong passes
+    // uncomment this to bring back flagging wrong passes
     // final flag = (passenger.wrongDeparture ||
     //         passenger.wrongGate ||
     //         passenger.connection)
@@ -123,7 +122,6 @@ class PdfCreator {
     if (passenger.wrongDeparture) {
       String wrongTime;
 
-      // have to do this in case it gets 25 again
       do {
         wrongTime = rng.nextInt(60).toString().padLeft(2, '0');
       } while (wrongTime == '25');
@@ -235,10 +233,6 @@ class PdfCreator {
                           ]),
                     ]),
                     pw.Container(
-                      // transform: Matrix4Transform()
-                      //   .rotateDegrees(90, origin: const Offset(75/2, 25/2))
-                      //   .translate(x: -50.0, y: -10.0)
-                      //   .matrix4,
                       child: pw.BarcodeWidget(
                         data: passenger.passengerId,
                         barcode: pw.Barcode.qrCode(),
@@ -252,7 +246,6 @@ class PdfCreator {
                   pw.Text(
                       '----------------------------------------------------------------------------------------------------------'),
                   pw.SizedBox(height: 5),
-                  // pw.Divider(height: 0.1 * PdfPageFormat.inch, thickness: 2, indent: 5, endIndent: 60),
                   pw.Row(
                       children: [pw.Text('Ticket: ${passenger.passengerId}')])
                 ]),
@@ -292,9 +285,7 @@ class PdfCreator {
               width: 150,
               height: 150,
             ),
-            //pw.SizedBox(height: 5),
             pw.Image(unitedLogo),
-            //pw.SizedBox(height: 10),
             pw.BarcodeWidget(
               data: bag.id,
               barcode: pw.Barcode.qrCode(),
@@ -308,14 +299,12 @@ class PdfCreator {
               height: 50,
               drawText: false,
             ),
-            //pw.SizedBox(height: 10),
-            //pw.Text(DateTime.now().toIso8601String()),
+
             pw.Text(
                 "${DateTime.now().day.toString()} ${DateFormat('MMM').format(DateTime(0, DateTime.now().month))} ${DateTime.now().year.toString()}"),
-            //pw.Text("4016 649626"), // bag ID number?
             pw.Text(bag.id),
             pw.Text(destination),
-            pw.Text("UA474 1340"), //Flight number?
+            pw.Text("UA474 1340"),
             pw.BarcodeWidget(
               data: bag.id,
               barcode: pw.Barcode.code128(),
@@ -337,9 +326,7 @@ class PdfCreator {
               width: 150,
               height: 150,
             ),
-            //pw.SizedBox(height: 5),
             pw.Image(unitedLogo),
-            //pw.SizedBox(height: 10),
             pw.BarcodeWidget(
               data: bag.id,
               barcode: pw.Barcode.qrCode(),
@@ -353,11 +340,8 @@ class PdfCreator {
               height: 50,
               drawText: false,
             ),
-            //pw.SizedBox(height: 10),
-            //pw.Text(DateTime.now().toIso8601String()),
             pw.Text(
                 "${DateTime.now().day.toString()} ${DateFormat('MMM').format(DateTime(0, DateTime.now().month))} ${DateTime.now().year.toString()}"),
-            //pw.Text("4016 649626"), // bag ID number?
             pw.Text(bag.id),
             pw.Text(destination),
             pw.Text("UA474 1340"), //Flight number?
@@ -376,8 +360,8 @@ class PdfCreator {
               height: 50,
               drawText: false,
             ),
-          ])); // Center
-        })); // Page
+          ]));
+        }));
   }
 
   static savePdf(final Uint8List bytes, final String name) async {
@@ -391,7 +375,7 @@ class PdfCreator {
     } else {
       final file = io.File('${await _localPath}/$name');
       await file.writeAsBytes(bytes);
-    } // Page
+    }
   }
 
   static String _getRandomGate() {

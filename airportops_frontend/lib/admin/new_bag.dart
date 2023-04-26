@@ -22,12 +22,6 @@ class _NewBagState extends State<NewBag> {
   final _flightSourceController = TextEditingController();
   final _flightDestinationController = TextEditingController();
   final _weightController = TextEditingController();
-  // final _seatController = TextEditingController();
-  // final _passengerIdController = TextEditingController();
-  // final _rowController = TextEditingController();
-  // final _boardedController = TextEditingController();
-  // final _eventController = TextEditingController();
-  // final _statusController = TextEditingController();
 
   late String selectedCountry = "Select a Country";
 

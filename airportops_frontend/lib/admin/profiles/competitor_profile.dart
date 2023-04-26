@@ -21,16 +21,14 @@ class CompProfileState extends State<CompProfile> {
   Widget output() {
     if (widget.c.position == Position.Csr) {
       return ListView(
-        children:List.generate(widget.c.passengersScanned.length, (index) {
-          return PCard(p:widget.c.passengersScanned[index]);}
-        )
-      );
+          children: List.generate(widget.c.passengersScanned.length, (index) {
+        return PCard(p: widget.c.passengersScanned[index]);
+      }));
     }
     return ListView(
-        children:List.generate(widget.c.bagsScanned.length, (index) {
-          return BCard(b:widget.c.bagsScanned[index]);}
-        )
-      );
+        children: List.generate(widget.c.bagsScanned.length, (index) {
+      return BCard(b: widget.c.bagsScanned[index]);
+    }));
   }
 
   @override
@@ -139,7 +137,3 @@ class CompProfileState extends State<CompProfile> {
     );
   }
 }
-
-                  // List.generate(widget.c.passengersScanned.length, (index) {
-                  //   return PCard(p:widget.c.passengersScanned[index]);
-                  // })
