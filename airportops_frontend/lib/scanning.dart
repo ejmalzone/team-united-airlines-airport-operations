@@ -82,8 +82,8 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
   String? last;
 
   Future<Passenger> getdata(String? code) async {
-    var person = await Requests.post(
-        'http://ec2-52-3-243-69.compute-1.amazonaws.com:5000/api/filtered/passenger/',
+    String baseURL = getBaseURL();
+    var person = await Requests.post('${baseURL}filtered/passenger/',
         json: {"_id": code});
     print(person.json());
     Passenger p = Passenger.fromJson(person.json()['data'][0]);
