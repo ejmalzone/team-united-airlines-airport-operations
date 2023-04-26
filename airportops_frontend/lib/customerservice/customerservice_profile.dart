@@ -8,7 +8,7 @@ import 'package:airportops_frontend/scanning.dart';
 import 'package:airportops_frontend/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:airportops_frontend/classes/events.dart';
-import 'package:airportops_frontend/customerservice/event_details.dart';
+
 import 'package:jiffy/jiffy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

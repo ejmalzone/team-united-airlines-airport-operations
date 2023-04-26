@@ -210,7 +210,7 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                         _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
                             context: context,
                             onCode: (code) async {
-                              if (kIsWeb) {
+                              // if (kIsWeb) {
                                 if (code?.substring(15) != "start" &&
                                     code?.substring(15) != "finish") {
                                   Passenger person =
@@ -273,11 +273,11 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                                     Navigator.pop(context);
                                   }
                                 }
-                              } else {
-                                setState(() {
-                                  this.code = code;
-                                });
-                              }
+                              // } else {
+                              //   setState(() {
+                              //     this.code = code;
+                              //   });
+                              // }
                             });
                       },
                       child: Text("Rescan"),
@@ -327,7 +327,7 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                     _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
                         context: context,
                         onCode: (code) async {
-                          if (kIsWeb) {
+                          // if (kIsWeb) {
                             if (code?.substring(15) != "start" &&
                                 code?.substring(15) != "finish") {
                               Passenger person =
@@ -388,11 +388,11 @@ class _UniversalScanAppState extends State<UniversalScanApp> {
                                 last = "finish";
                               }
                             }
-                          } else {
-                            setState(() {
-                              this.code = code;
-                            });
-                          }
+                          // } else {
+                          //   setState(() {
+                          //     this.code = code;
+                          //   });
+                          // }
                         });
                   },
                 )
